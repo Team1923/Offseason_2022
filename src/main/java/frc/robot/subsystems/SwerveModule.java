@@ -112,8 +112,8 @@ public class SwerveModule {
     // and verified that the math and logic works.
     public void resetEncoders() {
         driveMotor.setSelectedSensorPosition(0);
-        double radians_from_ticks = ((getAbsoluteEncoderRad() / (2 * Math.PI)) / ModuleConstants.kTurningGearRatio) * ModuleConstants.kTicksPerRotation;
-        turningMotor.setSelectedSensorPosition(radians_from_ticks);
+        double ticks_from_radians = ((getAbsoluteEncoderRad() / (2 * Math.PI)) / ModuleConstants.kTurningGearRatio) * ModuleConstants.kTicksPerRotation;
+        turningMotor.setSelectedSensorPosition(ticks_from_radians);
     }
 
     // ? A way to visualize the current state of the module. WPILib requires this format for a lot of the actual swerve drive code.
@@ -140,9 +140,7 @@ public class SwerveModule {
 
         // ? Similar to above, might be better to do closed-loop velocity control and multiply this output by the max RPM of a falcon
         turningMotor.set(ControlMode.PercentOutput, turningPidController.calculate(getTurningPositionRads(), state.angle.getRadians()));
-        SmartDashboard.putString(Integer.toString(absoluteEncoder.getChannel()), Double.toString(getTurningPositionRads()));
 
-        SmartDashboard.putString("PID OUTPUT " + absoluteEncoder.getChannel() + ":", Double.toString(turningPidController.calculate(getTurningPositionRads(), state.angle.getRadians())));
         // Recommended debug printout for swerve state
         SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "]", state.toString());
     }
