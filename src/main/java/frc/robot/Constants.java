@@ -101,10 +101,10 @@ public final class Constants {
     public static final class OIConstants {
         public static final double kDeadband = .03; // ? Needs to be toyed with. Just picked this number at random
         public static final int kDriverControllerPort = 0;
-        public static final int kDriverYAxis = 1; // ? Needs to be made the left stick Y axis, value unknown and this is my best guess
-        public static final int kDriverXAxis = 0; // ? Needs to be made the left stick X axis, value unknown and this is my best guess
-        public static final int kDriverRotAxis = 4; // ? Needs to be made the right stick X axis, value unknown and this is my best guess
-        public static final int kDriverFieldOrientedButtonIdx = 5; // ? Make this a bumper to start with
+        public static final int kDriverYAxis = 1; 
+        public static final int kDriverXAxis = 0; 
+        public static final int kDriverRotAxis = 4; 
+        public static final int kDriverFieldOrientedButtonIdx = 5; // Currently right bumper
     }
     // Pigeon 1/2 ID in Phoenix Tuner
     public static final int kPigeonCANID = 14; // ? Needs to be located. This is a number from last robot

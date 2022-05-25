@@ -103,7 +103,7 @@ public class SwerveModule {
     // and verified that the math and logic works.
     public void resetEncoders() {
         driveMotor.setSelectedSensorPosition(0);
-        double radians_from_ticks = ((absoluteEncoderOffsetRad / (2 * Math.PI)) / ModuleConstants.kTurningGearRatio) * ModuleConstants.kTicksPerRotation;
+        double radians_from_ticks = ((getAbsoluteEncoderRad() / (2 * Math.PI)) / ModuleConstants.kTurningGearRatio) * ModuleConstants.kTicksPerRotation;
         turningMotor.setSelectedSensorPosition(radians_from_ticks);
     }
 
