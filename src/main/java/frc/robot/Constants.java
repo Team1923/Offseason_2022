@@ -21,9 +21,9 @@ public final class Constants {
     // Constants for swerve modules
     public static final class ModuleConstants {
         public static final double kTicksPerRotation = 2048;
-        public static final double kWheelDiameterMeters = Units.inchesToMeters(4); // ? Pending review
-        public static final double kDriveMotorGearRatio = 1 / 6.55;                // ? Pending review
-        public static final double kTurningGearRatio = 1 / 10.2;                   // ? Pending review definitley not the correct number, pretty close though
+        public static final double kWheelDiameterMeters = Units.inchesToMeters(4); 
+        public static final double kDriveMotorGearRatio = 1 / 6.55;                
+        public static final double kTurningGearRatio = 1 / 10.29;                   
         public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
         public static final double kDriveEncoderTicks2Meter = kDriveEncoderRot2Meter / kTicksPerRotation; // ? Wrote this to convert from ticks -> rpm -> meters, 0-2-Auto used built in RPM measurements instead. Need to test this logic 
         public static final double kTurningEncoderRot2Rad = kTurningGearRatio * 2 * Math.PI;
@@ -34,27 +34,27 @@ public final class Constants {
                                                                                                                                    // RPM to meters per second to get MPS.
         public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
         public static final double kTurningEncoderTicks2RadPerSec = (10 * 60 / kTicksPerRotation) * kTurningEncoderRPM2RadPerSec; // ? Similar logic to kDriveEncoderTicks2MetersPerSec, must be tested and proven
-        public static final double kPTurning = 0.5;                                // ? Guess number, used by Zero to Autonomous so probably will be close
+        public static final double kPTurning = .5;                                // ? Guess number, used by Zero to Autonomous so probably will be close
     }
     
     // Constants relevant to the driving of the robot. All individual module constants subject to change
     public static final class DriveConstants {
 
         // Distance between right and left wheels
-        public static final double kTrackWidth = Units.inchesToMeters(1099999); // ? Needs to be measured and the placeholder has to be replaced
+        public static final double kTrackWidth = Units.inchesToMeters(20 + (5.0/16)); // ? Needs to be measured and the placeholder has to be replaced
         // Distance between front and back wheels
-        public static final double kWheelBase = Units.inchesToMeters(1099999); // ? Needs to be measured and the placeholder has to be replaced
+        public static final double kWheelBase = Units.inchesToMeters(20 + (3.0/16)); // ? Needs to be measured and the placeholder has to be replaced
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
                 new Translation2d(kWheelBase / 2, -kTrackWidth / 2),   // + -
                 new Translation2d(kWheelBase / 2, kTrackWidth / 2),    // + +
                 new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),  // - -
                 new Translation2d(-kWheelBase / 2, kTrackWidth / 2));  // - +
 
-        public static final double kPhysicalMaxSpeedMetersPerSecond = 3.5;                   // ? Guess number, better throw something better in here eventually
-        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 *2 *Math.PI; // ? Guess number, better throw something better in here eventually
+        public static final double kPhysicalMaxSpeedMetersPerSecond = 5.18;                   // ? Guess number, better throw something better in here eventually
+        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 64.89; // ? Guess number, better throw something better in here eventually
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
-        public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
+        public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
 
 
@@ -65,16 +65,16 @@ public final class Constants {
         public static final boolean kFrontLeftDriveReversed = false;
         public static final boolean kFrontLeftTurningReversed = false;
         public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0;
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = .57;
         public static final boolean kFrontLeftDriveAbsoluteEncoderOffsetReversed = false;
 
         // Front Right Module
         public static final int kFrontRightDriveMotorPort = 2;
         public static final int kFrontRightTurningMotorPort = 3;
-        public static final boolean kFrontRightDriveReversed = false;
+        public static final boolean kFrontRightDriveReversed = true;
         public static final boolean kFrontRightTurningReversed = false;
         public static final int kFrontRightDriveAbsoluteEncoderPort = 1;
-        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 0;
+        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 3.99;
         public static final boolean kFrontRightDriveAbsoluteEncoderOffsetReversed = false;
 
         // Back Right Module
@@ -83,16 +83,16 @@ public final class Constants {
         public static final boolean kBackRightDriveReversed = false;
         public static final boolean kBackRightTurningReversed = false;
         public static final int kBackRightDriveAbsoluteEncoderPort = 2;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 0;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 5.21;
         public static final boolean kBackRightDriveAbsoluteEncoderOffsetReversed = false;
 
         // Back Left Module
         public static final int kBackLeftDriveMotorPort = 6;
         public static final int kBackLeftTurningMotorPort = 7;
-        public static final boolean kBackLeftDriveReversed = false;
+        public static final boolean kBackLeftDriveReversed = true;
         public static final boolean kBackLeftTurningReversed = false;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.88;
         public static final boolean kBackLeftDriveAbsoluteEncoderOffsetReversed = false;
 
     }
@@ -102,9 +102,9 @@ public final class Constants {
         public static final double kDeadband = .03; // ? Needs to be toyed with. Just picked this number at random
         public static final int kDriverControllerPort = 0;
         public static final int kDriverYAxis = 1; // ? Needs to be made the left stick Y axis, value unknown and this is my best guess
-        public static final int kDriverXAxis = 2; // ? Needs to be made the left stick X axis, value unknown and this is my best guess
+        public static final int kDriverXAxis = 0; // ? Needs to be made the left stick X axis, value unknown and this is my best guess
         public static final int kDriverRotAxis = 4; // ? Needs to be made the right stick X axis, value unknown and this is my best guess
-        public static final int kDriverFieldOrientedButtonIdx = 10; // ? Make this a bumper to start with
+        public static final int kDriverFieldOrientedButtonIdx = 5; // ? Make this a bumper to start with
     }
     // Pigeon 1/2 ID in Phoenix Tuner
     public static final int kPigeonCANID = 14; // ? Needs to be located. This is a number from last robot

@@ -76,6 +76,11 @@ public class SwerveSubsystem extends SubsystemBase {
   public void periodic() {
     // Prints out robot heading for debug purposes
     SmartDashboard.putNumber("Robot Heading: ", getHeading());
+    SmartDashboard.putNumber("Front Left Absolute Encoder Radians: ", frontLeft.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Front Right Absolute Encoder Radians: ", frontRight.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Back Left Absolute Encoder Radians: ", backLeft.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Back Right Absolute Encoder Radians: ", backRight.getAbsoluteEncoderRad());
+
   }
 
   // Zeros the heading of the gyro
@@ -111,8 +116,8 @@ public class SwerveSubsystem extends SubsystemBase {
     // Actually send the desired states to the respective swerve modules
     frontLeft.setDesiredState(desiredStates[0]);
     frontRight.setDesiredState(desiredStates[1]);
-    backRight.setDesiredState(desiredStates[2]);
-    frontLeft.setDesiredState(desiredStates[3]);
+    backRight.setDesiredState(desiredStates[3]);
+    backLeft.setDesiredState(desiredStates[2]);
   }
 
 }

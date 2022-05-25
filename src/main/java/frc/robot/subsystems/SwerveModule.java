@@ -131,7 +131,9 @@ public class SwerveModule {
 
         // ? Similar to above, might be better to do closed-loop velocity control and multiply this output by the max RPM of a falcon
         turningMotor.set(ControlMode.PercentOutput, turningPidController.calculate(getTurningPositionRads(), state.angle.getRadians()));
+        SmartDashboard.putString(Integer.toString(absoluteEncoder.getChannel()), Double.toString(getTurningPositionRads()));
 
+        SmartDashboard.putString("PID OUTPUT " + absoluteEncoder.getChannel() + ":", Double.toString(turningPidController.calculate(getTurningPositionRads(), state.angle.getRadians())));
         // Recommended debug printout for swerve state
         SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "]", state.toString());
     }
