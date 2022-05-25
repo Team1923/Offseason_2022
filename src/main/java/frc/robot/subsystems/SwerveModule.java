@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -45,6 +46,14 @@ public class SwerveModule {
         // Initialize both motors of the module
         driveMotor = new WPI_TalonFX(driveMotorId);
         turningMotor = new WPI_TalonFX(turningMotorId);
+
+        // Reset all previously set settings on these motors
+        driveMotor.configFactoryDefault();
+        turningMotor.configFactoryDefault();
+
+        // Set the motors to either brake mode so the robot stops moving when its disabled or when the sticks are let go
+        driveMotor.setNeutralMode(NeutralMode.Brake);
+        turningMotor.setNeutralMode(NeutralMode.Brake);
 
         // Sets each of the motors to be reversed based on their respective inputs in the constructor
         if(driveMotorReversed) {
