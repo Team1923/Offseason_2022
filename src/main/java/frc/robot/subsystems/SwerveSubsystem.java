@@ -81,6 +81,7 @@ public class SwerveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Back Left Absolute Encoder Radians: ", backLeft.getAbsoluteEncoderRad());
     SmartDashboard.putNumber("Back Right Absolute Encoder Radians: ", backRight.getAbsoluteEncoderRad());
 
+    SmartDashboard.putNumber("Back Right Steering Encoder Ticks: ", backRight.getTurningTicks());
   }
 
   // Zeros the heading of the gyro
@@ -91,7 +92,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // Gets a gyro heading between 0 and 360 degrees
   public double getHeading() {
-    return Math.IEEEremainder(gyro.getFusedHeading(), 360);
+    return -Math.IEEEremainder(gyro.getFusedHeading(), 360);
   }
 
   // Returns a Rotation2d object from the gyro heading, for use with swerve classes

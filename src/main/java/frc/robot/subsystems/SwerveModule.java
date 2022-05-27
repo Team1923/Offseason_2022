@@ -99,9 +99,15 @@ public class SwerveModule {
         return turningMotor.getSelectedSensorVelocity() * ModuleConstants.kTurningEncoderTicks2RadPerSec;
     }
 
+    // Return encoder ticks of steering motor
+    public double getTurningTicks() {
+        return turningMotor.getSelectedSensorPosition();
+    }
+
     // ? Getter method that returns the offset absolute encoder position in radians
     public double getAbsoluteEncoderRad() {
         double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
+        SmartDashboard.putNumber("Absolute Encoder Value on Key " + absoluteEncoder.getChannel() + ": ", absoluteEncoder.getVoltage()/RobotController.getVoltage5V());
         angle *= 2.0 * Math.PI;
         angle -= absoluteEncoderOffsetRad;
         return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
@@ -122,14 +128,16 @@ public class SwerveModule {
         return new SwerveModuleState(getDriveVelocityMPS(), new Rotation2d(getTurningPositionRads()));
     }
 
+    
+
     // Update the goal of the swerve module
     public void setDesiredState(SwerveModuleState state) {
 
         // If there is no substantial change in velocity from current state to new state, do not change anything.
         // This just negates the fact that the motors are going to return to zero if you let go of the stick, which is very annoying when driving
         if(Math.abs(state.speedMetersPerSecond) < .001) {
-            stop();
-            return;
+             stop();
+             return;
         }
 
         state = SwerveModuleState.optimize(state, getState().angle);

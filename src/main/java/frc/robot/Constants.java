@@ -62,11 +62,11 @@ public final class Constants {
         // Front Left Module
         public static final int kFrontLeftDriveMotorPort = 0;
         public static final int kFrontLeftTurningMotorPort = 1;
-        public static final boolean kFrontLeftDriveReversed = false;
+        public static final boolean kFrontLeftDriveReversed = true;
         public static final boolean kFrontLeftTurningReversed = false;
         public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = .57;
-        public static final boolean kFrontLeftDriveAbsoluteEncoderOffsetReversed = false;
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 3.69;
+        public static final boolean kFrontLeftDriveAbsoluteEncoderOffsetReversed = true;
 
         // Front Right Module
         public static final int kFrontRightDriveMotorPort = 2;
@@ -74,17 +74,17 @@ public final class Constants {
         public static final boolean kFrontRightDriveReversed = true;
         public static final boolean kFrontRightTurningReversed = false;
         public static final int kFrontRightDriveAbsoluteEncoderPort = 1;
-        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 3.99;
-        public static final boolean kFrontRightDriveAbsoluteEncoderOffsetReversed = false;
+        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 4.01;
+        public static final boolean kFrontRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Right Module
         public static final int kBackRightDriveMotorPort = 4;
         public static final int kBackRightTurningMotorPort = 5;
-        public static final boolean kBackRightDriveReversed = false;
+        public static final boolean kBackRightDriveReversed = true;
         public static final boolean kBackRightTurningReversed = false;
         public static final int kBackRightDriveAbsoluteEncoderPort = 2;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 5.21;
-        public static final boolean kBackRightDriveAbsoluteEncoderOffsetReversed = false;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 2.06;
+        public static final boolean kBackRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Left Module
         public static final int kBackLeftDriveMotorPort = 6;
@@ -92,8 +92,8 @@ public final class Constants {
         public static final boolean kBackLeftDriveReversed = true;
         public static final boolean kBackLeftTurningReversed = false;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.88;
-        public static final boolean kBackLeftDriveAbsoluteEncoderOffsetReversed = false;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0.75;
+        public static final boolean kBackLeftDriveAbsoluteEncoderOffsetReversed = true;
 
     }
     
@@ -104,7 +104,7 @@ public final class Constants {
         public static final int kDriverYAxis = 1; 
         public static final int kDriverXAxis = 0; 
         public static final int kDriverRotAxis = 4; 
-        public static final int kDriverFieldOrientedButtonIdx = 5; // Currently right bumper
+        public static final int kDriverFieldOrientedButtonIdx = 6; // Currently right bumper
     }
     // Pigeon 1/2 ID in Phoenix Tuner
     public static final int kPigeonCANID = 14; // ? Needs to be located. This is a number from last robot

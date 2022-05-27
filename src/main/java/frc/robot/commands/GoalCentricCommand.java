@@ -9,29 +9,32 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class SwerveDriveCommand extends CommandBase {
+public class GoalCentricCommand extends CommandBase {
 
   private final SwerveSubsystem SWERVE_SUBSYSTEM;
-  private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
-  private final Supplier<Boolean> fieldOrientedFunction;
+  private final LimelightSubsystem LIMELIGHT_SUBSYSTEM;
+  private final Supplier<Double> xSpdFunction, ySpdFunction;
   private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
-  /** Creates a new SwerveDriveCommand. */
-  public SwerveDriveCommand(SwerveSubsystem swerve, Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, 
-                            Supplier<Double> turningSpdFunction, Supplier<Boolean> fieldOrientedFunction) {
+  // Value used to scale the x-offset of the limelight when targeting
+  // .1 was too fast, .01 was a little too slow, maybe try .02.
+  private final double kP = .01;
+
+  /** Creates a new GoalCentricCommand where the robot follows the goal rotationally as it translates in field-oriented mode. */
+  public GoalCentricCommand(SwerveSubsystem swerve, Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, 
+                            LimelightSubsystem limelight) {
 
     // Set instance variables equal to what was passed in
     this.SWERVE_SUBSYSTEM = swerve;
     this.xSpdFunction = xSpdFunction;
     this.ySpdFunction = ySpdFunction;
-    this.turningSpdFunction = turningSpdFunction;
-    this.fieldOrientedFunction = fieldOrientedFunction;
+    this.LIMELIGHT_SUBSYSTEM = limelight;
     
     // Slew Rate Limiters for smoother driving
     this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
@@ -54,7 +57,10 @@ public class SwerveDriveCommand extends CommandBase {
     // Get real-time joystick values
     double xSpeed = xSpdFunction.get();
     double ySpeed = ySpdFunction.get();
-    double turningSpeed = turningSpdFunction.get();
+
+    // Instead of turning based off an axis value, lets use the horizontal angle to the 
+    // target measured by the limelight times some value to make it fit within the scope of robot control
+    double turningSpeed = LIMELIGHT_SUBSYSTEM.getX() * kP;
 
     // Apply a deadband
     xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
@@ -63,24 +69,12 @@ public class SwerveDriveCommand extends CommandBase {
 
     // Make the driving smoother and make the max value the physical max speed of the robot
     xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-    SmartDashboard.putNumber("xSpeed: ", xSpeed);
     ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-    SmartDashboard.putNumber("ySpeed: ", ySpeed);
     turningSpeed = turningLimiter.calculate(turningSpeed) * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
-    // Handle field-oriented driving
-    ChassisSpeeds chassisSpeeds;
-    if (fieldOrientedFunction.get()) {
-      // Relative to field
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, SWERVE_SUBSYSTEM.getRotation2d());
-    } else {
-      // Relative to robot
-      chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
-    }
-
-    // Print robot-centric boolean for
-    SmartDashboard.putBoolean("Robot Centric: ", fieldOrientedFunction.get());
-
+    // Handle field-oriented driving with vision tracking input
+    ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, SWERVE_SUBSYSTEM.getRotation2d());
+    
     // Convert chassis speeds to individual module states
     SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 

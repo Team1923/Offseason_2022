@@ -4,15 +4,14 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.simulation.JoystickSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.GoalCentricCommand;
 import frc.robot.commands.SwerveDriveCommand;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 /**
@@ -25,6 +24,7 @@ public class RobotContainer {
 
   // Subsystem Instances
   private final SwerveSubsystem SWERVE_SUBSYSTEM = new SwerveSubsystem();
+  private final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
 
   // Joystick Instances
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
@@ -57,6 +57,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Creates an "instant command" that will execute the line of code past the "() ->"
     new JoystickButton(driverJoystick, 2).whenPressed(() -> SWERVE_SUBSYSTEM.zeroHeading());
+    new JoystickButton(driverJoystick, 1).whileHeld(new GoalCentricCommand(
+      SWERVE_SUBSYSTEM, 
+      () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
+      () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis), 
+      LIMELIGHT_SUBSYSTEM));
   }
 
   public Command getAutonomousCommand() {
