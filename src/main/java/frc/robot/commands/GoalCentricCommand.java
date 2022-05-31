@@ -43,7 +43,6 @@ public class GoalCentricCommand extends CommandBase {
 
     // Require the swerve subsystem to allow for it to be a default command
     addRequirements(SWERVE_SUBSYSTEM);
-
   }
 
   // Called when the command is initially scheduled.

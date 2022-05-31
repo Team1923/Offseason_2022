@@ -78,9 +78,6 @@ public class SwerveDriveCommand extends CommandBase {
       chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
     }
 
-    // Print robot-centric boolean for
-    SmartDashboard.putBoolean("Robot Centric: ", fieldOrientedFunction.get());
-
     // Convert chassis speeds to individual module states
     SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 

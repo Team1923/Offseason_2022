@@ -11,7 +11,7 @@ import frc.robot.interfaces.LimelightInterface;
 public class LimelightSubsystem extends SubsystemBase {
   /** Creates a new LimelightSubsystem. */
 
-  public final LimelightInterface Limelight = new LimelightInterface();
+  private final LimelightInterface Limelight = new LimelightInterface();
 
   // height in inches of camera from ground
   private double limelight_height = 20;
