@@ -6,9 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
+import frc.robot.autonomous.FollowTrajectory;
 import frc.robot.commands.GoalCentricCommand;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.LimelightSubsystem;
@@ -65,7 +65,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return new SequentialCommandGroup();
+    return new FollowTrajectory(SWERVE_SUBSYSTEM);
   }
 }

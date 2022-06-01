@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -105,6 +106,20 @@ public final class Constants {
         public static final int kDriverXAxis = 0; 
         public static final int kDriverRotAxis = 4; 
         public static final int kDriverFieldOrientedButtonIdx = 6; // Currently right bumper
+    }
+
+    public static final class AutoConstants {
+        public static final double kMaxSpeedMetersPerSecond = DriveConstants.kPhysicalMaxSpeedMetersPerSecond / 2;
+        public static final double kMaxAngularSpeedRadiansPerSecond = DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 7;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 4;
+        public static final double kPXController = 2;
+        public static final double kPYController = 2;
+        public static final double kPThetaController = 4;
+
+        public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
+            new TrapezoidProfile.Constraints(kMaxAngularSpeedRadiansPerSecond, 
+                                             kMaxAngularAccelerationRadiansPerSecondSquared);
     }
     // Pigeon 1/2 ID in Phoenix Tuner
     public static final int kPigeonCANID = 14; // ? Needs to be located. This is a number from last robot

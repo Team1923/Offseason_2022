@@ -6,8 +6,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -56,6 +58,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // ? Code is using a Pigeon 1 for testing, we will be upgrading to a Pigeon 2 so make sure that this gets updated to reflect that!
   private PigeonIMU gyro = new PigeonIMU(Constants.kPigeonCANID);
+  private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
 
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem() {
@@ -82,6 +85,10 @@ public class SwerveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Back Right Absolute Encoder Radians: ", backRight.getAbsoluteEncoderRad());
 
     SmartDashboard.putNumber("Back Right Steering Encoder Ticks: ", backRight.getTurningTicks());
+    SmartDashboard.putString("Robot Location: ", getPose().getTranslation().toString());
+
+    odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
+
   }
 
   // Zeros the heading of the gyro
@@ -98,6 +105,14 @@ public class SwerveSubsystem extends SubsystemBase {
   // Returns a Rotation2d object from the gyro heading, for use with swerve classes
   public Rotation2d getRotation2d() {
     return Rotation2d.fromDegrees(getHeading());
+  }
+
+  public Pose2d getPose() {
+    return odometer.getPoseMeters();
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    odometer.resetPosition(pose, getRotation2d());
   }
 
   // Stop all of the modules

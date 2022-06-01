@@ -24,7 +24,7 @@ public class GoalCentricCommand extends CommandBase {
 
   // Value used to scale the x-offset of the limelight when targeting
   // .1 was too fast, .01 was a little too slow, maybe try .02.
-  private final double kP = .01;
+  private final double kP = .015;
 
   /** Creates a new GoalCentricCommand where the robot follows the goal rotationally as it translates in field-oriented mode. */
   public GoalCentricCommand(SwerveSubsystem swerve, Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, 
