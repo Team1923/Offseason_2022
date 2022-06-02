@@ -22,7 +22,7 @@ public final class Constants {
     // Constants for swerve modules
     public static final class ModuleConstants {
         public static final double kTicksPerRotation = 2048;
-        public static final double kWheelDiameterMeters = Units.inchesToMeters(4); 
+        public static final double kWheelDiameterMeters = Units.inchesToMeters(3.7); 
         public static final double kDriveMotorGearRatio = 1 / 6.55;                
         public static final double kTurningGearRatio = 1 / 10.29;                   
         public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
@@ -113,9 +113,9 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 7;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 4;
-        public static final double kPXController = 2;
-        public static final double kPYController = 2;
-        public static final double kPThetaController = 4;
+        public static final double kPXController = 2.5; //2.5;
+        public static final double kPYController = 2.5;
+        public static final double kPThetaController = 1;
 
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
             new TrapezoidProfile.Constraints(kMaxAngularSpeedRadiansPerSecond, 

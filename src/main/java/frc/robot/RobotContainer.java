@@ -65,6 +65,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new FollowTrajectory(SWERVE_SUBSYSTEM, "pathplanner/2MeterForward.path");
+    return new FollowTrajectory(SWERVE_SUBSYSTEM, "2MeterSideways");
   }
 }

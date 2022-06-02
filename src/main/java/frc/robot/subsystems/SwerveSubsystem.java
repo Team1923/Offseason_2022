@@ -79,12 +79,6 @@ public class SwerveSubsystem extends SubsystemBase {
   public void periodic() {
     // Prints out robot heading for debug purposes
     SmartDashboard.putNumber("Robot Heading: ", getHeading());
-    SmartDashboard.putNumber("Front Left Absolute Encoder Radians: ", frontLeft.getAbsoluteEncoderRad());
-    SmartDashboard.putNumber("Front Right Absolute Encoder Radians: ", frontRight.getAbsoluteEncoderRad());
-    SmartDashboard.putNumber("Back Left Absolute Encoder Radians: ", backLeft.getAbsoluteEncoderRad());
-    SmartDashboard.putNumber("Back Right Absolute Encoder Radians: ", backRight.getAbsoluteEncoderRad());
-
-    SmartDashboard.putNumber("Back Right Steering Encoder Ticks: ", backRight.getTurningTicks());
     SmartDashboard.putString("Robot Location: ", getPose().getTranslation().toString());
 
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());

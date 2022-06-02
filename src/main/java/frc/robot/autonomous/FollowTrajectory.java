@@ -4,15 +4,12 @@
 
 package frc.robot.autonomous;
 
-
-import java.nio.file.Path;
-
 import com.pathplanner.lib.PathPlanner;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -31,19 +28,18 @@ public class FollowTrajectory extends SequentialCommandGroup {
   /** Creates a new FollowTrajectory. */
   public FollowTrajectory(SwerveSubsystem swerve, String path) {
 
-    // Find the exact filepath of the file on the roboRio given the path we want to access
-    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(path);
-
     // Set our local swerve subsystem to be equal to the one that was passed in, so we can access all of the same motors
+    //this.SWERVE_SUBSYSTEM = swerve;
     this.SWERVE_SUBSYSTEM = swerve;
-
+    
+    SmartDashboard.putString("Path ID: ", path);
     // Load a trajectory fron the specified path and convert it to a WPILib trajectory
     Trajectory loaded_trajectory = PathPlanner.loadPath(
-          trajectoryPath.toString(), 
+          path, 
           AutoConstants.kMaxSpeedMetersPerSecond, 
           AutoConstants.kMaxAccelerationMetersPerSecondSquared
     );
-
+    
     // Instantiate the x and y PID controllers. They operate indepentently (Holomonic system)
     PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
     PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);
@@ -70,6 +66,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
     );
 
 
+    SmartDashboard.putString("Initial Pose: ", loaded_trajectory.getInitialPose().toString());
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
