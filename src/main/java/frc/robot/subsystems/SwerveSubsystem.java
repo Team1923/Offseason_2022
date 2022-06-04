@@ -130,4 +130,11 @@ public class SwerveSubsystem extends SubsystemBase {
     backLeft.setDesiredState(desiredStates[2]);
   }
 
+  public void resetStates() {
+    frontLeft.resetState();
+    frontRight.resetState();
+    backRight.resetState();
+    backLeft.resetState();
+  }
+
 }

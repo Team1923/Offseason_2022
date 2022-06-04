@@ -45,10 +45,14 @@ public class FollowTrajectoryWPILib extends SequentialCommandGroup {
 
     Trajectory loaded_trajectory = TrajectoryGenerator.generateTrajectory(
         new Pose2d(0, 0, new Rotation2d(0)),
-        List.of(),
-        new Pose2d(0, 2, new Rotation2d(0)),
+        List.of(
+          
+        ),
+        new Pose2d(0, 0.1, new Rotation2d(Math.PI/2)),
         trajectoryConfig
-        );
+      );
+    
+
     
     // Instantiate the x and y PID controllers. They operate indepentently (Holomonic system)
     PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
@@ -81,6 +85,7 @@ public class FollowTrajectoryWPILib extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(() -> SWERVE_SUBSYSTEM.resetOdometry(loaded_trajectory.getInitialPose())), 
+      new ZeroStates(swerve).withTimeout(.5),
       swerveControllerCommand, 
       new InstantCommand(() -> SWERVE_SUBSYSTEM.stopModules()));
   }

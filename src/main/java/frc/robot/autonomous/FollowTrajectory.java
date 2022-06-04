@@ -4,11 +4,18 @@
 
 package frc.robot.autonomous;
 
+import java.util.List;
+
 import com.pathplanner.lib.PathPlanner;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -33,12 +40,29 @@ public class FollowTrajectory extends SequentialCommandGroup {
     this.SWERVE_SUBSYSTEM = swerve;
     
     SmartDashboard.putString("Path ID: ", path);
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+        AutoConstants.kMaxSpeedMetersPerSecond,
+        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        .setKinematics(DriveConstants.kDriveKinematics
+        );
+
+    // //Generate Trajectory
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+        new Pose2d(0, 0, new Rotation2d(0)),
+        List.of(
+          new Translation2d(1, 0),
+          new Translation2d(1, -1)
+        ),
+        new Pose2d(2, -1, Rotation2d.fromDegrees(90)),
+        trajectoryConfig
+        );
     // Load a trajectory fron the specified path and convert it to a WPILib trajectory
     Trajectory loaded_trajectory = PathPlanner.loadPath(
           path, 
           AutoConstants.kMaxSpeedMetersPerSecond, 
           AutoConstants.kMaxAccelerationMetersPerSecondSquared
     );
+
     
     // Instantiate the x and y PID controllers. They operate indepentently (Holomonic system)
     PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
@@ -55,7 +79,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
 
     // Instantiate the SwerveControllerCommand where we pass in all the stuff we defined and it will follow the trajectory
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-      loaded_trajectory,
+      trajectory,
       SWERVE_SUBSYSTEM::getPose,
       DriveConstants.kDriveKinematics,
       xController,
@@ -70,7 +94,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(() -> SWERVE_SUBSYSTEM.resetOdometry(loaded_trajectory.getInitialPose())), 
+      new InstantCommand(() -> SWERVE_SUBSYSTEM.resetOdometry(trajectory.getInitialPose())),
       swerveControllerCommand, 
       new InstantCommand(() -> SWERVE_SUBSYSTEM.stopModules()));
   }

@@ -36,6 +36,7 @@ public final class Constants {
         public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
         public static final double kTurningEncoderTicks2RadPerSec = (10 * 60 / kTicksPerRotation) * kTurningEncoderRPM2RadPerSec; // ? Similar logic to kDriveEncoderTicks2MetersPerSec, must be tested and proven
         public static final double kPTurning = .5;                                // ? Guess number, used by Zero to Autonomous so probably will be close
+        public static final double kDTurning = .01;
     }
     
     // Constants relevant to the driving of the robot. All individual module constants subject to change
@@ -113,9 +114,9 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 7;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 4;
-        public static final double kPXController = 2.5; //2.5;
-        public static final double kPYController = 2.5;
-        public static final double kPThetaController = 1;
+        public static final double kPXController = 2.5;//2.5;
+        public static final double kPYController = 2.5;//2.5;
+        public static final double kPThetaController = 30;
 
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
             new TrapezoidProfile.Constraints(kMaxAngularSpeedRadiansPerSecond, 
