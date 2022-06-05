@@ -81,6 +81,11 @@ public class SwerveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Robot Heading: ", getHeading());
     SmartDashboard.putString("Robot Location: ", getPose().getTranslation().toString());
 
+    SmartDashboard.putNumber("Front Left", frontLeft.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Front Right", frontRight.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Back Left", backLeft.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Back Right", backRight.getAbsoluteEncoderRad());
+
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
 
   }

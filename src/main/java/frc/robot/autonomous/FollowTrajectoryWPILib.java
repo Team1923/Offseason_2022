@@ -46,7 +46,7 @@ public class FollowTrajectoryWPILib extends SequentialCommandGroup {
     Trajectory loaded_trajectory = TrajectoryGenerator.generateTrajectory(
         new Pose2d(0, 0, new Rotation2d(0)),
         List.of(
-          
+
         ),
         new Pose2d(0, 0.1, new Rotation2d(Math.PI/2)),
         trajectoryConfig

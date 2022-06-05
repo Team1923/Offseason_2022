@@ -43,9 +43,9 @@ public final class Constants {
     public static final class DriveConstants {
 
         // Distance between right and left wheels
-        public static final double kTrackWidth = Units.inchesToMeters(20 + (5.0/16)); // ? Needs to be measured and the placeholder has to be replaced
+        public static final double kTrackWidth = Units.inchesToMeters(20.25); // ? Needs to be measured and the placeholder has to be replaced
         // Distance between front and back wheels
-        public static final double kWheelBase = Units.inchesToMeters(20 + (3.0/16)); // ? Needs to be measured and the placeholder has to be replaced
+        public static final double kWheelBase = Units.inchesToMeters(20.25); // ? Needs to be measured and the placeholder has to be replaced
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
                 new Translation2d(kWheelBase / 2, -kTrackWidth / 2),   // + -
                 new Translation2d(kWheelBase / 2, kTrackWidth / 2),    // + +
@@ -67,7 +67,7 @@ public final class Constants {
         public static final boolean kFrontLeftDriveReversed = true;
         public static final boolean kFrontLeftTurningReversed = false;
         public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 3.69;
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 3.72;
         public static final boolean kFrontLeftDriveAbsoluteEncoderOffsetReversed = true;
 
         // Front Right Module
@@ -76,7 +76,7 @@ public final class Constants {
         public static final boolean kFrontRightDriveReversed = true;
         public static final boolean kFrontRightTurningReversed = false;
         public static final int kFrontRightDriveAbsoluteEncoderPort = 1;
-        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 4.01;
+        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 3.93;
         public static final boolean kFrontRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Right Module
@@ -85,7 +85,7 @@ public final class Constants {
         public static final boolean kBackRightDriveReversed = true;
         public static final boolean kBackRightTurningReversed = false;
         public static final int kBackRightDriveAbsoluteEncoderPort = 2;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 2.06;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 5.54;
         public static final boolean kBackRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Left Module
@@ -94,7 +94,7 @@ public final class Constants {
         public static final boolean kBackLeftDriveReversed = true;
         public static final boolean kBackLeftTurningReversed = false;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0.75;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.62;
         public static final boolean kBackLeftDriveAbsoluteEncoderOffsetReversed = true;
 
     }
@@ -116,7 +116,7 @@ public final class Constants {
         public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 4;
         public static final double kPXController = 2.5;//2.5;
         public static final double kPYController = 2.5;//2.5;
-        public static final double kPThetaController = 30;
+        public static final double kPThetaController = 0;
 
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
             new TrapezoidProfile.Constraints(kMaxAngularSpeedRadiansPerSecond, 

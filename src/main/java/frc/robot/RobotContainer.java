@@ -9,9 +9,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.autonomous.FollowTrajectory;
-import frc.robot.autonomous.FollowTrajectoryPathPlanner;
-import frc.robot.autonomous.FollowTrajectoryWPILib;
-import frc.robot.autonomous.ZeroStates;
 import frc.robot.commands.ExtendIntakeCommand;
 import frc.robot.commands.GoalCentricCommand;
 import frc.robot.commands.SwerveDriveCommand;
@@ -73,7 +70,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     //return new FollowTrajectoryWPILib(SWERVE_SUBSYSTEM);
-    return new FollowTrajectoryPathPlanner(SWERVE_SUBSYSTEM, "1by1-180");
+    return new FollowTrajectory(SWERVE_SUBSYSTEM, "2m sdwys");
     //return new ZeroStates(SWERVE_SUBSYSTEM).withTimeout(.5);
   }
 }

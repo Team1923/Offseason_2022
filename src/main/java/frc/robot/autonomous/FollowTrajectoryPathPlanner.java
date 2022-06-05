@@ -54,16 +54,7 @@ public class FollowTrajectoryPathPlanner extends SequentialCommandGroup {
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
     // Instantiate the SwerveControllerCommand where we pass in all the stuff we defined and it will follow the trajectory
-    PPSwerveControllerCommand swerveControllerCommand = new PPSwerveControllerCommand(
-      loaded_trajectory,
-      SWERVE_SUBSYSTEM::getPose,
-      DriveConstants.kDriveKinematics,
-      xController,
-      yController,
-      thetaController,
-      SWERVE_SUBSYSTEM::setModuleStates,
-      SWERVE_SUBSYSTEM
-    );
+   // PPSwerveControllerCommand swerveControllerCommand =;
 
 
     SmartDashboard.putString("Initial Pose: ", loaded_trajectory.getInitialPose().toString());
@@ -71,7 +62,16 @@ public class FollowTrajectoryPathPlanner extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(() -> SWERVE_SUBSYSTEM.resetOdometry(loaded_trajectory.getInitialPose())), 
-      swerveControllerCommand, 
+      new PPSwerveControllerCommand(
+        loaded_trajectory,
+        SWERVE_SUBSYSTEM::getPose,
+        DriveConstants.kDriveKinematics,
+        xController,
+        yController,
+        thetaController,
+        SWERVE_SUBSYSTEM::setModuleStates,
+        SWERVE_SUBSYSTEM
+      ), 
       new InstantCommand(() -> SWERVE_SUBSYSTEM.stopModules()));
   }
 }
