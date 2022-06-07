@@ -70,7 +70,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     //return new FollowTrajectoryWPILib(SWERVE_SUBSYSTEM);
-    return new FollowTrajectory(SWERVE_SUBSYSTEM, "2m sdwys");
+    return new FollowTrajectory(SWERVE_SUBSYSTEM, "test");
     //return new ZeroStates(SWERVE_SUBSYSTEM).withTimeout(.5);
   }
 }

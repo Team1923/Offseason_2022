@@ -7,12 +7,12 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.pathplanning.MKIChassisSpeeds;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class SwerveDriveCommand extends CommandBase {
@@ -69,13 +69,13 @@ public class SwerveDriveCommand extends CommandBase {
     turningSpeed = turningLimiter.calculate(turningSpeed) * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
     // Handle field-oriented driving
-    ChassisSpeeds chassisSpeeds;
+    MKIChassisSpeeds chassisSpeeds;
     if (fieldOrientedFunction.get()) {
       // Relative to field
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, SWERVE_SUBSYSTEM.getRotation2d());
+      chassisSpeeds = MKIChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, SWERVE_SUBSYSTEM.getRotation2d());
     } else {
       // Relative to robot
-      chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+      chassisSpeeds = new MKIChassisSpeeds(xSpeed, ySpeed, turningSpeed);
     }
 
     // Convert chassis speeds to individual module states

@@ -9,12 +9,12 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.pathplanning.MKISwerveDriveOdometry;
 
 public class SwerveSubsystem extends SubsystemBase {
 
@@ -58,7 +58,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // ? Code is using a Pigeon 1 for testing, we will be upgrading to a Pigeon 2 so make sure that this gets updated to reflect that!
   private PigeonIMU gyro = new PigeonIMU(Constants.kPigeonCANID);
-  private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
+  private final MKISwerveDriveOdometry odometer = new MKISwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
 
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem() {
@@ -80,6 +80,7 @@ public class SwerveSubsystem extends SubsystemBase {
     // Prints out robot heading for debug purposes
     SmartDashboard.putNumber("Robot Heading: ", getHeading());
     SmartDashboard.putString("Robot Location: ", getPose().getTranslation().toString());
+    SmartDashboard.putString("Robot Orientation: ", getPose().getRotation().toString());
 
     SmartDashboard.putNumber("Front Left", frontLeft.getAbsoluteEncoderRad());
     SmartDashboard.putNumber("Front Right", frontRight.getAbsoluteEncoderRad());

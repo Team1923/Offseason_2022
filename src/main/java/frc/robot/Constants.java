@@ -5,9 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.robot.pathplanning.MKISwerveDriveKinematics;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -46,7 +46,7 @@ public final class Constants {
         public static final double kTrackWidth = Units.inchesToMeters(20.25); // ? Needs to be measured and the placeholder has to be replaced
         // Distance between front and back wheels
         public static final double kWheelBase = Units.inchesToMeters(20.25); // ? Needs to be measured and the placeholder has to be replaced
-        public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
+        public static final MKISwerveDriveKinematics kDriveKinematics = new MKISwerveDriveKinematics(
                 new Translation2d(kWheelBase / 2, -kTrackWidth / 2),   // + -
                 new Translation2d(kWheelBase / 2, kTrackWidth / 2),    // + +
                 new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),  // - -
@@ -114,8 +114,8 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 7;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 4;
-        public static final double kPXController = 2.5;//2.5;
-        public static final double kPYController = 2.5;//2.5;
+        public static final double kPXController = 0;//2.5;//2.5;
+        public static final double kPYController = 0;//2.5;//2.5;
         public static final double kPThetaController = 0;
 
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
