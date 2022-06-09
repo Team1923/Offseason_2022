@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
@@ -134,6 +136,54 @@ public final class Constants {
         public static final double arm_maxVel = 2000;
         public static final double arm_maxAcc = 1500;
     }
+
+    public static final class IntakeConstants{
+        public static final int leftIntakeMotorID = 0; //will need to be changed
+        public static final int rightIntakemotorID = 0; //will need to be changed
+        public static final double intakePercentOut = 0.5; //change this
+        public static final int currentLimit = 30; //still needs to be set
+        public static final int thresholdLimit = 40; //still needs to be set I just guessed
+        public static final SupplyCurrentLimitConfiguration intakeCurrentLimit =
+            new SupplyCurrentLimitConfiguration(true, currentLimit, thresholdLimit, .2);
+    }
+    
+    public static final class ConveyorConstants{
+        public static final int conveyorMotorID = 0; //will need to be changed
+        public static final double conveyorPercentOut = 0.5; //change this
+        public static final int currentLimit = 30; //still needs to be set
+        public static final int thresholdLimit = 40; //still needs to be set I just guessed
+        public static final SupplyCurrentLimitConfiguration conveyorCurrentLimit =
+            new SupplyCurrentLimitConfiguration(true, currentLimit, thresholdLimit, .2);
+    }
+
+    public static final class ShooterConstants{
+        public static final int leftShooterMotorID = 0; //change
+        public static final int rightShooterMotorID = 0; //change
+        public static final int hoodMotorID = 0; //change
+        public static final int sCurrentLimit = 30; //change
+        public static final int sThresholdLimit = 40;
+        public static final SupplyCurrentLimitConfiguration shooterCurrentLimit = 
+            new SupplyCurrentLimitConfiguration(true, sCurrentLimit, sThresholdLimit, 0.2);
+        
+        public static final int hCurrentLimit = 30;
+        public static final int hThresholdLimit = 40;
+        public static final SupplyCurrentLimitConfiguration hoodCurrentLimit = 
+            new SupplyCurrentLimitConfiguration(true, hCurrentLimit, hThresholdLimit, 0.2);
+        
+        //set these values to what they need to be 
+        public static final double shooterkP = 0;
+        public static final double shooterkI = 0;
+        public static final double shooterkD = 0;
+        public static final double shooterkFF = 0;
+
+        public static final double hoodkP = 0;
+        public static final double hoodkI = 0;
+        public static final double hoodkD = 0;
+        public static final double hoodkFF = 0;
+        
+    }
     // Pigeon 1/2 ID in Phoenix Tuner
     public static final int kPigeonCANID = 14; // ? Needs to be located. This is a number from last robot
+
+    public static final double ticksPerRev = 2048;
 }

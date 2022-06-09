@@ -39,7 +39,7 @@ public class ClimbSubsystem extends SubsystemBase {
     leftClimbPIDController = leftClimber.getPIDController();
     rightClimbPIDController = rightClimber.getPIDController();
 
-    leftClimbPIDController.setP(gain);
+    
 
     resetEncoder();
   }
