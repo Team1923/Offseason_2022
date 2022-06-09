@@ -4,9 +4,16 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import edu.wpi.first.networktables.NetworkTableType;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -14,6 +21,9 @@ public class IntakeSubsystem extends SubsystemBase {
   private Solenoid solenoid2 = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
   private Solenoid solenoid3 = new Solenoid(PneumaticsModuleType.CTREPCM, 6);
   private Solenoid solenoid4 = new Solenoid(PneumaticsModuleType.CTREPCM, 7);
+
+  private WPI_TalonFX leftIntakeMotor = new WPI_TalonFX(IntakeConstants.leftIntakeMotorID);
+  private WPI_TalonFX rightIntakeMotor = new WPI_TalonFX(IntakeConstants.rightIntakemotorID);
   
 
 
@@ -21,6 +31,40 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
     setLow();
+
+    //set factory defaults for all motors
+    leftIntakeMotor.configFactoryDefault();
+    rightIntakeMotor.configFactoryDefault();
+
+    //right motor is the master motor
+    leftIntakeMotor.follow(rightIntakeMotor);
+
+    //set left motor inverted, no invert for the right motor
+    leftIntakeMotor.setInverted(InvertType.InvertMotorOutput);
+    rightIntakeMotor.setInverted(InvertType.None);
+
+    rightIntakeMotor.setNeutralMode(NeutralMode.Brake);
+
+    //supply current limit
+    leftIntakeMotor.configSupplyCurrentLimit(IntakeConstants.intakeCurrentLimit);
+    rightIntakeMotor.configSupplyCurrentLimit(IntakeConstants.intakeCurrentLimit);
+
+
+    //configure nominal output
+    leftIntakeMotor.configNominalOutputForward(0, 30); //needs a percentOut and a timer. Just going by what's suggested. 
+    rightIntakeMotor.configNominalOutputForward(0, 30); // "   "
+    leftIntakeMotor.configNominalOutputReverse(0, 30); // "    "
+    rightIntakeMotor.configNominalOutputReverse(0, 30); // "   "
+
+    //configure peak output(forward: 1, reverse, -1)
+    leftIntakeMotor.configPeakOutputForward(1, 30);
+    rightIntakeMotor.configPeakOutputForward(1, 30);
+    leftIntakeMotor.configPeakOutputReverse(-1, 30);
+    leftIntakeMotor.configPeakOutputReverse(-1, 30);
+
+
+
+
   }
 
   @Override
@@ -42,4 +86,14 @@ public class IntakeSubsystem extends SubsystemBase {
     solenoid3.set(true);
     solenoid4.set(false);
   }
+
+  public void setIntake(double percentOut){
+    rightIntakeMotor.set(ControlMode.PercentOutput, percentOut);
+  }
+
+  public void stopIntake(){
+    rightIntakeMotor.set(ControlMode.PercentOutput, 0);
+  }
+
+  
 }

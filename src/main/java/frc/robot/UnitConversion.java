@@ -32,5 +32,27 @@ public class UnitConversion {
     //     return (radians/(2*Math.PI))*Constants.ticks_per_spin;
     // }
 
+     // velocity, FalconFX.
+  public static double nativeUnitstoRPM(double nativeUnits) {
+    return (nativeUnits * 600) / Constants.ticksPerRev;
+  }
+
+  public static double RPMtoNativeUnits(double RPM) {
+    return (RPM / 600) * Constants.ticksPerRev;
+  }
+
+  // position, FalconFX.
+  public static double positionRotsToNativeUnits(double rots) {
+    return rots * Constants.ticksPerRev;
+  }
+
+  public static double positionNativeToRots(double nativeUnits) {
+    return nativeUnits / Constants.ticksPerRev;
+  }
+
+  public static double inchesToMeters(double inches) {
+    return inches / 39.37;
+  }
+
     
 }
