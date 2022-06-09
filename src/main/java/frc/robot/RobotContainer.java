@@ -12,6 +12,7 @@ import frc.robot.autonomous.FollowTrajectory;
 import frc.robot.commands.ExtendIntakeCommand;
 import frc.robot.commands.GoalCentricCommand;
 import frc.robot.commands.SwerveDriveCommand;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -28,13 +29,15 @@ public class RobotContainer {
   private final SwerveSubsystem SWERVE_SUBSYSTEM = new SwerveSubsystem();
   private final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
   private final IntakeSubsystem INTAKE_SUBSYSTEM = new IntakeSubsystem();
-  
+  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem();
+
   // Joystick Instances
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
     // Set the default commands
     setDefaultCommands();
 
@@ -58,6 +61,7 @@ public class RobotContainer {
 
   // Define what buttons will do
   private void configureButtonBindings() {
+    
     // Creates an "instant command" that will execute the line of code past the "() ->"
     new JoystickButton(driverJoystick, 3).whileHeld(new ExtendIntakeCommand(INTAKE_SUBSYSTEM));
     new JoystickButton(driverJoystick, 2).whenPressed(() -> SWERVE_SUBSYSTEM.zeroHeading());
@@ -70,7 +74,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     //return new FollowTrajectoryWPILib(SWERVE_SUBSYSTEM);
-    return new FollowTrajectory(SWERVE_SUBSYSTEM, "test");
+    return new FollowTrajectory(SWERVE_SUBSYSTEM, "2m fwd");
     //return new ZeroStates(SWERVE_SUBSYSTEM).withTimeout(.5);
   }
 }

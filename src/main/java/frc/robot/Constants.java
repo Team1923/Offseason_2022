@@ -122,6 +122,18 @@ public final class Constants {
             new TrapezoidProfile.Constraints(kMaxAngularSpeedRadiansPerSecond, 
                                              kMaxAngularAccelerationRadiansPerSecondSquared);
     }
+
+    public static final class ClimbConstants {
+        public static final double arm_kP = .1;
+        public static final double arm_kI = 0;
+        public static final double arm_kD = 0;
+        public static final double arm_kIz = 0;
+        public static final double arm_kFF = 0;
+        public static final double arm_maxOutput = 1;
+        public static final double arm_minOutput = -1;
+        public static final double arm_maxVel = 2000;
+        public static final double arm_maxAcc = 1500;
+    }
     // Pigeon 1/2 ID in Phoenix Tuner
     public static final int kPigeonCANID = 14; // ? Needs to be located. This is a number from last robot
 }

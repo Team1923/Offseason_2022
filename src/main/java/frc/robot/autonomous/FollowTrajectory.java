@@ -4,10 +4,6 @@
 
 package frc.robot.autonomous;
 
-
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +14,6 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.pathplanning.MKIPPSwerveControllerCommand;
 import frc.robot.pathplanning.MKIPathPlanner;
 import frc.robot.pathplanning.MKIPathPlannerTrajectory;
-import frc.robot.pathplanning.MKISwerveControllerCommand;
 import frc.robot.subsystems.SwerveSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
