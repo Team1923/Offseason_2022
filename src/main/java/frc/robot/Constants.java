@@ -132,7 +132,9 @@ public final class Constants {
         public static final double arm_maxOutput = 1;
         public static final double arm_minOutput = -1;
         public static final double arm_maxVel = 2000;
+        public static final double arm_minVel = 0;
         public static final double arm_maxAcc = 1500;
+        public static final double arm_allowedErr = 100;
     }
     // Pigeon 1/2 ID in Phoenix Tuner
     public static final int kPigeonCANID = 14; // ? Needs to be located. This is a number from last robot

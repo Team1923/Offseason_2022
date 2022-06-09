@@ -4,13 +4,16 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ClimbConstants;
 
 public class ClimbSubsystem extends SubsystemBase {
 
@@ -39,7 +42,29 @@ public class ClimbSubsystem extends SubsystemBase {
     leftClimbPIDController = leftClimber.getPIDController();
     rightClimbPIDController = rightClimber.getPIDController();
 
-    leftClimbPIDController.setP(gain);
+    leftClimbPIDController.setP(ClimbConstants.arm_kP);
+    leftClimbPIDController.setI(ClimbConstants.arm_kI);
+    leftClimbPIDController.setD(ClimbConstants.arm_kD);
+    leftClimbPIDController.setIZone(ClimbConstants.arm_kIz);
+    leftClimbPIDController.setFF(ClimbConstants.arm_kFF);
+    leftClimbPIDController.setOutputRange(ClimbConstants.arm_minOutput, ClimbConstants.arm_maxOutput);
+
+    rightClimbPIDController.setP(ClimbConstants.arm_kP);
+    rightClimbPIDController.setI(ClimbConstants.arm_kI);
+    rightClimbPIDController.setD(ClimbConstants.arm_kD);
+    rightClimbPIDController.setIZone(ClimbConstants.arm_kIz);
+    rightClimbPIDController.setFF(ClimbConstants.arm_kFF);
+    rightClimbPIDController.setOutputRange(ClimbConstants.arm_minOutput, ClimbConstants.arm_maxOutput);
+
+    leftClimbPIDController.setSmartMotionMaxVelocity(ClimbConstants.arm_maxVel, 0);
+    leftClimbPIDController.setSmartMotionMinOutputVelocity(ClimbConstants.arm_minVel, 0);
+    leftClimbPIDController.setSmartMotionMaxAccel(ClimbConstants.arm_maxAcc, 0);
+    leftClimbPIDController.setSmartMotionAllowedClosedLoopError(ClimbConstants.arm_allowedErr, 0);
+
+    rightClimbPIDController.setSmartMotionMaxVelocity(ClimbConstants.arm_maxVel, 0);
+    rightClimbPIDController.setSmartMotionMinOutputVelocity(ClimbConstants.arm_minVel, 0);
+    rightClimbPIDController.setSmartMotionMaxAccel(ClimbConstants.arm_maxAcc, 0);
+    rightClimbPIDController.setSmartMotionAllowedClosedLoopError(ClimbConstants.arm_allowedErr, 0);
 
     resetEncoder();
   }
@@ -63,5 +88,19 @@ public class ClimbSubsystem extends SubsystemBase {
   public double getRightClimbEncoderPosition() {
     return rightClimbEncoder.getPosition();
   }
+
+  public void setLeftClimbPID(double setpoint) {
+    leftClimbPIDController.setReference(setpoint, ControlType.kSmartMotion);
+  }
+
+  public void setRightClimbPID(double setpoint) {
+    rightClimbPIDController.setReference(setpoint, ControlType.kSmartMotion);
+  }
+
+  public void stop() {
+    rightClimber.set(0);
+    leftClimber.set(0);
+  }
+
 
 }
