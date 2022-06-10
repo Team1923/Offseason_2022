@@ -7,12 +7,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.ConveyorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.autonomous.FollowTrajectory;
 import frc.robot.commands.ExtendIntakeCommand;
 import frc.robot.commands.GoalCentricCommand;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -30,7 +32,7 @@ public class RobotContainer {
   private final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
   private final IntakeSubsystem INTAKE_SUBSYSTEM = new IntakeSubsystem();
   private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem();
-
+  private final ConveyorSubsystem CONVEYOR_SUBSYSTEM = new ConveyorSubsystem();
   // Joystick Instances
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
 

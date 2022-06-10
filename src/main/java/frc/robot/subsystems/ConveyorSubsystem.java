@@ -4,12 +4,17 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ConveyorConstants;
 
 public class ConveyorSubsystem extends SubsystemBase {
   /** Creates a new ConveyorSubsystem. */
   private WPI_TalonFX conveyorMotor = new WPI_TalonFX(ConveyorConstants.conveyorMotorID);
+
+  private DigitalInput beamBreakOne;
+  private DigitalInput beamBreakTwo;
 
   public ConveyorSubsystem() {
     //configure factory default
@@ -22,18 +27,23 @@ public class ConveyorSubsystem extends SubsystemBase {
     conveyorMotor.configSupplyCurrentLimit(ConveyorConstants.conveyorCurrentLimit);
 
     //configure nominal output
-    conveyorMotor.configNominalOutputForward(0, 30); //will need to set these properly, constants are just a guess
-    conveyorMotor.configNominalOutputReverse(0, 30);
+    conveyorMotor.configNominalOutputForward(1, 30); //will need to set these properly, constants are just a guess
+    conveyorMotor.configNominalOutputReverse(-1, 30);
 
     //configure peak output
     conveyorMotor.configPeakOutputForward(1, 30);
     conveyorMotor.configPeakOutputReverse(-1, 30);
+
+    beamBreakOne = new DigitalInput(1);
+    beamBreakTwo = new DigitalInput(0);
 
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("BEAM BREAK ONE: ", beamBreakOne.get());
+    SmartDashboard.putBoolean("BEAM BREAK TWO: ", beamBreakTwo.get());
   }
 
   public void setConveyor(double percentOut){
