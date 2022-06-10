@@ -7,11 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.ConveyorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.autonomous.FollowTrajectory;
-import frc.robot.commands.ExtendIntakeCommand;
 import frc.robot.commands.GoalCentricCommand;
+import frc.robot.commands.RunIntakeCommand;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -65,9 +64,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     
     // Creates an "instant command" that will execute the line of code past the "() ->"
-    new JoystickButton(driverJoystick, 3).whileHeld(new ExtendIntakeCommand(INTAKE_SUBSYSTEM));
-    new JoystickButton(driverJoystick, 2).whenPressed(() -> SWERVE_SUBSYSTEM.zeroHeading());
-    new JoystickButton(driverJoystick, 1).whileHeld(new GoalCentricCommand(
+    new JoystickButton(driverJoystick, OIConstants.kOperatorXButton).whileHeld(new RunIntakeCommand(INTAKE_SUBSYSTEM, false));
+    new JoystickButton(driverJoystick, OIConstants.kOperatorBButton).whenPressed(() -> SWERVE_SUBSYSTEM.zeroHeading());
+    new JoystickButton(driverJoystick, OIConstants.kOperatorAButton).whileHeld(new GoalCentricCommand(
       SWERVE_SUBSYSTEM, 
       () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
       () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis), 

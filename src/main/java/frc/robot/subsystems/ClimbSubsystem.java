@@ -73,6 +73,9 @@ public class ClimbSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Left Climb Encoder Position: ", getLeftClimbEncoderPosition());
     SmartDashboard.putNumber("Right Climb Encoder Position: ", getRightClimbEncoderPosition());
+
+    SmartDashboard.putNumber("Left Climber Current Draw: ", getLeftClimbCurrentDraw());
+    SmartDashboard.putNumber("Right Climber Current Draw: ", getRightClimbCurrentDraw());
   }
 
   public void resetEncoder() {
@@ -96,10 +99,17 @@ public class ClimbSubsystem extends SubsystemBase {
     rightClimbPIDController.setReference(setpoint, ControlType.kSmartMotion);
   }
 
+  public double getLeftClimbCurrentDraw() {
+    return leftClimber.getOutputCurrent();
+  }
+
+  public double getRightClimbCurrentDraw() {
+    return rightClimber.getOutputCurrent();
+  }
+
   public void stop() {
     rightClimber.set(0);
     leftClimber.set(0);
   }
-
 
 }

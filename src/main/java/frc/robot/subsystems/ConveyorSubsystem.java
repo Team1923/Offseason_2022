@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ConveyorConstants;
 
 public class ConveyorSubsystem extends SubsystemBase {
@@ -27,12 +28,12 @@ public class ConveyorSubsystem extends SubsystemBase {
     conveyorMotor.configSupplyCurrentLimit(ConveyorConstants.conveyorCurrentLimit);
 
     //configure nominal output
-    conveyorMotor.configNominalOutputForward(1, 30); //will need to set these properly, constants are just a guess
-    conveyorMotor.configNominalOutputReverse(-1, 30);
+    conveyorMotor.configNominalOutputForward(1.0, Constants.timeoutMs); //will need to set these properly, constants are just a guess
+    conveyorMotor.configNominalOutputReverse(-1.0, Constants.timeoutMs);
 
     //configure peak output
-    conveyorMotor.configPeakOutputForward(1, 30);
-    conveyorMotor.configPeakOutputReverse(-1, 30);
+    conveyorMotor.configPeakOutputForward(1.0, Constants.timeoutMs);
+    conveyorMotor.configPeakOutputReverse(-1.0, Constants.timeoutMs);
 
     beamBreakOne = new DigitalInput(1);
     beamBreakTwo = new DigitalInput(0);
@@ -53,4 +54,13 @@ public class ConveyorSubsystem extends SubsystemBase {
   public void stopConveyor(){
     conveyorMotor.set(ControlMode.PercentOutput, 0);
   }
+
+  public boolean getFrontBeamBreak() {
+    return beamBreakOne.get();
+  }
+
+  public boolean getBackBeamBreak() {
+    return beamBreakOne.get();
+  }
+
 }

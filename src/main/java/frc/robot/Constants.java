@@ -43,7 +43,6 @@ public final class Constants {
     
     // Constants relevant to the driving of the robot. All individual module constants subject to change
     public static final class DriveConstants {
-
         // Distance between right and left wheels
         public static final double kTrackWidth = Units.inchesToMeters(20.25); // ? Needs to be measured and the placeholder has to be replaced
         // Distance between front and back wheels
@@ -60,8 +59,6 @@ public final class Constants {
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
-
-
 
         // Front Left Module
         public static final int kFrontLeftDriveMotorPort = 0;
@@ -109,6 +106,11 @@ public final class Constants {
         public static final int kDriverXAxis = 0; 
         public static final int kDriverRotAxis = 4; 
         public static final int kDriverFieldOrientedButtonIdx = 6; // Currently right bumper
+        public static final int kOperatorAButton = 1;
+        public static final int kOperatorBButton = 2;
+        public static final int kOperatorXButton = 3;
+        public static final int kOperatorYButton = 4;
+
     }
 
     public static final class AutoConstants {
@@ -116,8 +118,8 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 7;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 4;
-        public static final double kPXController = 0;//2.5;//2.5;
-        public static final double kPYController = 0;//2.5;//2.5;
+        public static final double kPXController = 0;//2.5;
+        public static final double kPYController = 0;
         public static final double kPThetaController = 0;
 
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
@@ -139,26 +141,26 @@ public final class Constants {
         public static final double arm_allowedErr = 100;
     }
 
-    public static final class IntakeConstants{
+    public static final class IntakeConstants {
         public static final int leftIntakeMotorID = 0; //will need to be changed
         public static final int rightIntakemotorID = 0; //will need to be changed
         public static final double intakePercentOut = 0.5; //change this
         public static final int currentLimit = 30; //still needs to be set
         public static final int thresholdLimit = 40; //still needs to be set I just guessed
         public static final SupplyCurrentLimitConfiguration intakeCurrentLimit =
-            new SupplyCurrentLimitConfiguration(true, currentLimit, thresholdLimit, .2);
+            new SupplyCurrentLimitConfiguration(true, currentLimit, thresholdLimit, 0.2);
     }
     
-    public static final class ConveyorConstants{
+    public static final class ConveyorConstants {
         public static final int conveyorMotorID = 0; //will need to be changed
         public static final double conveyorPercentOut = 0.5; //change this
         public static final int currentLimit = 30; //still needs to be set
         public static final int thresholdLimit = 40; //still needs to be set I just guessed
         public static final SupplyCurrentLimitConfiguration conveyorCurrentLimit =
-            new SupplyCurrentLimitConfiguration(true, currentLimit, thresholdLimit, .2);
+            new SupplyCurrentLimitConfiguration(true, currentLimit, thresholdLimit, 0.2);
     }
 
-    public static final class ShooterConstants{
+    public static final class ShooterConstants {
         public static final int leftShooterMotorID = 0; //change
         public static final int rightShooterMotorID = 0; //change
         public static final int hoodMotorID = 0; //change
@@ -173,19 +175,26 @@ public final class Constants {
             new SupplyCurrentLimitConfiguration(true, hCurrentLimit, hThresholdLimit, 0.2);
         
         //set these values to what they need to be 
-        public static final double shooterkP = 0;
+        public static final double shooterkP = .1;
         public static final double shooterkI = 0;
         public static final double shooterkD = 0;
         public static final double shooterkFF = 0;
 
-        public static final double hoodkP = 0;
-        public static final double hoodkI = 0;
-        public static final double hoodkD = 0;
-        public static final double hoodkFF = 0;
+        public static final double hood_shootkP = .1;
+        public static final double hood_shootkI = 0;
+        public static final double hood_shootkD = 0;
+        public static final double hood_shootkFF = 0;
+
+        public static final double hood_climbkP = .1;
+        public static final double hood_climbkI = 0;
+        public static final double hood_climbkD = 0;
+        public static final double hood_climbkFF = 0;
         
     }
     // Pigeon 1/2 ID in Phoenix Tuner
     public static final int kPigeonCANID = 14; // ? Needs to be located. This is a number from last robot
 
     public static final double ticksPerRev = 2048;
+
+    public static final int timeoutMs = 20;
 }

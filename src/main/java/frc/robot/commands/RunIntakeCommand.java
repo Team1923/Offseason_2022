@@ -5,15 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class ExtendIntakeCommand extends CommandBase {
+public class RunIntakeCommand extends CommandBase {
 
   IntakeSubsystem INTAKE_SUBSYSTEM;
+  private boolean reverse_intake;
 
   /** Creates a new ExtendIntakeCommand. */
-  public ExtendIntakeCommand(IntakeSubsystem intake) {
+  public RunIntakeCommand(IntakeSubsystem intake, boolean reverse) {
     this.INTAKE_SUBSYSTEM = intake;
+    this.reverse_intake = reverse;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(INTAKE_SUBSYSTEM);
   }
@@ -22,6 +25,7 @@ public class ExtendIntakeCommand extends CommandBase {
   @Override
   public void initialize() {
     INTAKE_SUBSYSTEM.setHigh();
+    INTAKE_SUBSYSTEM.setIntake(reverse_intake ? -Constants.IntakeConstants.intakePercentOut : Constants.IntakeConstants.intakePercentOut);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,6 +37,7 @@ public class ExtendIntakeCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     INTAKE_SUBSYSTEM.setLow();
+    INTAKE_SUBSYSTEM.stopIntake();
   }
 
   // Returns true when the command should end.
