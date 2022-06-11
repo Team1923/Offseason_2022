@@ -189,10 +189,13 @@ public final class Constants {
         public static final double hood_climbkI = 0;
         public static final double hood_climbkD = 0;
         public static final double hood_climbkFF = 0;
+
+        public static final double hoodMinPosition = 0;
+        public static final double hoodMaxPosition = 20480; // 10 rotations worth from 0, just a guess for now
         
     }
     // Pigeon 1/2 ID in Phoenix Tuner
-    public static final int kPigeonCANID = 14; // ? Needs to be located. This is a number from last robot
+    public static final int kPigeonCANID = 14;
 
     public static final double ticksPerRev = 2048;
 
