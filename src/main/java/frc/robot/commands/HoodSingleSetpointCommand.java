@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.HoodSubsystem;
 
 
 // This command is useful for single-position goals for the hood. During teleop, we normally will have a
@@ -14,7 +14,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 // and report back when it has done so. This command aims to achieve that goal.
 public class HoodSingleSetpointCommand extends CommandBase {
 
-  private ShooterSubsystem SHOOTER_SUBSYSTEM;
+  private HoodSubsystem HOOD_SUBSYSTEM;
   
   private double goal;
 
@@ -24,22 +24,22 @@ public class HoodSingleSetpointCommand extends CommandBase {
   private double tickThreshold = 100;
 
   /** Creates a new HoodSingleSetpointCommand. */
-  public HoodSingleSetpointCommand(ShooterSubsystem shooter, double position) {
-    this.SHOOTER_SUBSYSTEM = shooter;
+  public HoodSingleSetpointCommand(HoodSubsystem hood, double position) {
+    this.HOOD_SUBSYSTEM = hood;
     this.goal = position;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(SHOOTER_SUBSYSTEM);
+    addRequirements(HOOD_SUBSYSTEM);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     //configure PID for hood
-    SHOOTER_SUBSYSTEM.setClimbConstants();
+    HOOD_SUBSYSTEM.setClimbConstants();
 
     loopsInsideAllowableError = 0;
 
-    SHOOTER_SUBSYSTEM.setHoodPosition(goal);
+    HOOD_SUBSYSTEM.setHoodPosition(goal);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -49,8 +49,8 @@ public class HoodSingleSetpointCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SHOOTER_SUBSYSTEM.setShootConstants();
-    SHOOTER_SUBSYSTEM.stopHood();
+    HOOD_SUBSYSTEM.setShootConstants();
+    HOOD_SUBSYSTEM.stopHood();
   }
 
   // Returns true when the command should end.
@@ -58,7 +58,7 @@ public class HoodSingleSetpointCommand extends CommandBase {
   public boolean isFinished() {
     // This will check if the ERROR of the Motion Magic is within our acceptable error threshold (ticks). If so, add one to the counter of how many loops we have been 
     // within this threshold. Otherwise, reset the counter.
-    if(Math.abs(SHOOTER_SUBSYSTEM.getHoodPosition()-goal) < tickThreshold) {
+    if(Math.abs(HOOD_SUBSYSTEM.getPosition()-goal) < tickThreshold) {
       loopsInsideAllowableError++;
     } else {
       loopsInsideAllowableError = 0;

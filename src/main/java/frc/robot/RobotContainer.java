@@ -14,6 +14,7 @@ import frc.robot.commands.RunIntakeCommand;
 import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
+import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -32,6 +33,7 @@ public class RobotContainer {
   private final IntakeSubsystem INTAKE_SUBSYSTEM = new IntakeSubsystem();
   private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem();
   private final ConveyorSubsystem CONVEYOR_SUBSYSTEM = new ConveyorSubsystem();
+  private final HoodSubsystem HOOD_SUBSYSTEM = new HoodSubsystem();
   // Joystick Instances
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
 

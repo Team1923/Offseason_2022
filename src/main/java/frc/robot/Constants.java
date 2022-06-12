@@ -163,23 +163,29 @@ public final class Constants {
     public static final class ShooterConstants {
         public static final int leftShooterMotorID = 11; //change
         public static final int rightShooterMotorID = 12; //change
-        public static final int hoodMotorID = 13; //change
         public static final int sCurrentLimit = 30; //change
         public static final int sThresholdLimit = 40;
         public static final SupplyCurrentLimitConfiguration shooterCurrentLimit = 
             new SupplyCurrentLimitConfiguration(true, sCurrentLimit, sThresholdLimit, 0.2);
         
-        public static final int hCurrentLimit = 30;
-        public static final int hThresholdLimit = 40;
-        public static final SupplyCurrentLimitConfiguration hoodCurrentLimit = 
-            new SupplyCurrentLimitConfiguration(true, hCurrentLimit, hThresholdLimit, 0.2);
-        
+
         //set these values to what they need to be 
         public static final double shooterkP = .1;
         public static final double shooterkI = 0;
         public static final double shooterkD = 0;
         public static final double shooterkFF = 0;
 
+        
+    }
+
+    public static final class HoodConstants {
+        public static final int hoodMotorID = 13; //change
+
+        public static final int hCurrentLimit = 30;
+        public static final int hThresholdLimit = 40;
+        public static final SupplyCurrentLimitConfiguration hoodCurrentLimit = 
+            new SupplyCurrentLimitConfiguration(true, hCurrentLimit, hThresholdLimit, 0.2);
+        
         public static final double hood_shootkP = .1;
         public static final double hood_shootkI = 0;
         public static final double hood_shootkD = 0;
@@ -191,9 +197,9 @@ public final class Constants {
         public static final double hood_climbkFF = 0;
 
         public static final double hoodMinPosition = 0;
-        public static final double hoodMaxPosition = 5 * ticksPerRev; // 10 rotations worth from 0, just a guess for now
-        
+        public static final double hoodMaxPosition = 5 * ticksPerRev; // 5 rotations worth from 0, just a guess for now
     }
+    
     // Pigeon 1/2 ID in Phoenix Tuner
     public static final int kPigeonCANID = 14;
 

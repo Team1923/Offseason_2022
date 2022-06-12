@@ -1,0 +1,74 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.subsystems;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Constants.HoodConstants;
+
+public class HoodSubsystem extends SubsystemBase {
+
+  private WPI_TalonFX hoodMotor = new WPI_TalonFX(HoodConstants.hoodMotorID);
+
+  /** Creates a new HoodSubsystem. */
+  public HoodSubsystem() {
+    hoodMotor.configFactoryDefault();
+
+    hoodMotor.configSupplyCurrentLimit(HoodConstants.hoodCurrentLimit);
+    hoodMotor.configNominalOutputForward(0.0, 30);
+    hoodMotor.configNominalOutputReverse(0.0, 30);
+    hoodMotor.configPeakOutputForward(1.0, Constants.timeoutMs);
+    hoodMotor.configPeakOutputReverse(-1.0, Constants.timeoutMs);
+
+    hoodMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.timeoutMs);
+
+    //configure PID for hood
+    setShootConstants();
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Hood Encoder Position: ", getPosition());
+    SmartDashboard.putNumber("Hood Supply Current: ", hoodMotor.getSupplyCurrent());
+    SmartDashboard.putNumber("Hood Output Current: ", hoodMotor.getStatorCurrent());
+  }
+
+  public void setClimbConstants() {
+    hoodMotor.config_kP(0, HoodConstants.hood_climbkP, Constants.timeoutMs);
+    hoodMotor.config_kI(0, HoodConstants.hood_climbkI, Constants.timeoutMs);
+    hoodMotor.config_kD(0, HoodConstants.hood_climbkD, Constants.timeoutMs);
+    hoodMotor.config_kF(0, HoodConstants.hood_climbkFF, Constants.timeoutMs);
+  }
+
+  public void setShootConstants() {
+    hoodMotor.config_kP(0, HoodConstants.hood_shootkP, Constants.timeoutMs);
+    hoodMotor.config_kI(0, HoodConstants.hood_shootkI, Constants.timeoutMs);
+    hoodMotor.config_kD(0, HoodConstants.hood_shootkD, Constants.timeoutMs);
+    hoodMotor.config_kF(0, HoodConstants.hood_shootkFF, Constants.timeoutMs);
+  }
+
+  public void setHoodPosition(double setpoint) {
+    hoodMotor.set(ControlMode.MotionMagic, setpoint);
+  }
+
+  public void stopHood() {
+    hoodMotor.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void resetEncoder() {
+    hoodMotor.setSelectedSensorPosition(0);
+  }
+
+  public double getPosition() {
+    return hoodMotor.getSelectedSensorPosition();
+  }
+  
+}
