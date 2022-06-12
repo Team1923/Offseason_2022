@@ -177,6 +177,8 @@ public final class Constants {
         // Shooter target RPM threshold
         public static final double shooterRPMThreshold = 20;
         public static final double shooterTimeThreshold = .1;
+
+        public static final double avoidStallSpeed = .1;
         
     }
 
@@ -200,8 +202,16 @@ public final class Constants {
 
         public static final double hoodMinPosition = 0;
         public static final double hoodMaxPosition = 5 * ticksPerRev; // 5 rotations worth from 0, just a guess for now
+        public static final double hoodScaleFactor = 1; // used to adjust the overall movement of the hood. Adjusts the angle of
+                                                        // hood by this scale factor. Code should still never let it go above the max, though.
     }
     
+    public static final class LimelightConstants {
+        public static final double limelightMountingHeight = 30; // inches from ground to center
+        public static final double LimelightMountingAngle = 30; // angle from center of camera above horizontal plane
+        public static final double centerGoalHeight = 30; // inches from ground to center
+
+    }
     // Pigeon 1/2 ID in Phoenix Tuner
     public static final int kPigeonCANID = 14;
 

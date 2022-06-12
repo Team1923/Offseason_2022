@@ -51,5 +51,12 @@ public class LimelightSubsystem extends SubsystemBase {
     return (target_height - limelight_height) / (Math.tan(Math.toRadians(limelight_mount_angle - getY())));
   }
 
+  public double map(double a1, double a2, double b1, double b2, double input) {
+    return b1 + ((input-a1)*(b2-b1)/(a2-a1));
+  }
+
+  public double angle() {
+    return limelight_mount_angle - getY();
+  }
 
 }

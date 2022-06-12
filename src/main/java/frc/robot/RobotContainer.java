@@ -12,11 +12,13 @@ import frc.robot.autonomous.FollowTrajectory;
 import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.commands.drive.SwerveDriveCommand;
 import frc.robot.commands.scoring.RunIntakeCommand;
+import frc.robot.commands.scoring.ShooterAvoidStallCommand;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 /**
@@ -39,6 +41,7 @@ public class RobotContainer {
   private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem();
   private final ConveyorSubsystem CONVEYOR_SUBSYSTEM = new ConveyorSubsystem();
   private final HoodSubsystem HOOD_SUBSYSTEM = new HoodSubsystem();
+  private final ShooterSubsystem SHOOTER_SUBSYSTEM = new ShooterSubsystem();
 
   // Joystick Instances
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
@@ -67,6 +70,8 @@ public class RobotContainer {
         () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis), // Rotation
         () -> !driverJoystick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); // Field oriented control vs robot oriented. By default, since "!" is included, field oriented is default
 
+    // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
+    SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM));    
   }
 
   // Define what buttons will do

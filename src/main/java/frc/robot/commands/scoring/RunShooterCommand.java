@@ -56,7 +56,7 @@ public class RunShooterCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SHOOTER_SUBSYSTEM.stopShooterWheels();
+    SHOOTER_SUBSYSTEM.stop();
   }
 
   // Returns true when the command should end.

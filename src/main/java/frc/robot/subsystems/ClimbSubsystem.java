@@ -65,7 +65,7 @@ public class ClimbSubsystem extends SubsystemBase {
     rightClimbPIDController.setSmartMotionMaxAccel(ClimbConstants.arm_maxAcc, 0);
     rightClimbPIDController.setSmartMotionAllowedClosedLoopError(ClimbConstants.arm_allowedErr, 0);
 
-    resetEncoder();
+    resetEncoders();
   }
 
   @Override
@@ -78,7 +78,7 @@ public class ClimbSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Right Climber Current Draw: ", getRightClimbCurrentDraw());
   }
 
-  public void resetEncoder() {
+  public void resetEncoders() {
     leftClimbEncoder.setPosition(0);
     rightClimbEncoder.setPosition(0);
   }

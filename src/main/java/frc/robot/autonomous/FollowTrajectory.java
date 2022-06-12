@@ -77,7 +77,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
         SWERVE_SUBSYSTEM::setModuleStates,
         SWERVE_SUBSYSTEM
       ), 
-      new InstantCommand(() -> SWERVE_SUBSYSTEM.stopModules()));
+      new InstantCommand(() -> SWERVE_SUBSYSTEM.stop()));
   }
 }
 

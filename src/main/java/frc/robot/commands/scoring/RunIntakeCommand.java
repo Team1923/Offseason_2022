@@ -37,7 +37,7 @@ public class RunIntakeCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     INTAKE_SUBSYSTEM.setLow();
-    INTAKE_SUBSYSTEM.stopIntake();
+    INTAKE_SUBSYSTEM.stop();
   }
 
   // Returns true when the command should end.

@@ -117,7 +117,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   // Stop all of the modules
-  public void stopModules() {
+  public void stop() {
     frontLeft.stop();
     frontRight.stop();
     backLeft.stop();

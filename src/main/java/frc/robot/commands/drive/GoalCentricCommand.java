@@ -84,7 +84,7 @@ public class GoalCentricCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SWERVE_SUBSYSTEM.stopModules();
+    SWERVE_SUBSYSTEM.stop();
   }
 
   // Returns true when the command should end.

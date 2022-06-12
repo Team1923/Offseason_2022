@@ -31,6 +31,8 @@ public class HoodSubsystem extends SubsystemBase {
 
     //configure PID for hood
     setShootConstants();
+
+    resetEncoder();
   }
 
   @Override
@@ -59,7 +61,7 @@ public class HoodSubsystem extends SubsystemBase {
     hoodMotor.set(ControlMode.MotionMagic, setpoint);
   }
 
-  public void stopHood() {
+  public void stop() {
     hoodMotor.set(ControlMode.PercentOutput, 0);
   }
 
@@ -70,5 +72,6 @@ public class HoodSubsystem extends SubsystemBase {
   public double getPosition() {
     return hoodMotor.getSelectedSensorPosition();
   }
+
   
 }

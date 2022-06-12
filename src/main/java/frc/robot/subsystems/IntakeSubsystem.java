@@ -86,7 +86,7 @@ public class IntakeSubsystem extends SubsystemBase {
     rightIntakeMotor.set(ControlMode.PercentOutput, percentOut);
   }
 
-  public void stopIntake() {
+  public void stop() {
     rightIntakeMotor.set(ControlMode.PercentOutput, 0);
   }
 

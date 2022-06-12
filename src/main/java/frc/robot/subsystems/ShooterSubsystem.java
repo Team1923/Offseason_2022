@@ -66,6 +66,8 @@ public class ShooterSubsystem extends SubsystemBase {
     rightShooterMotor.config_kF(0, ShooterConstants.shooterkFF, Constants.timeoutMs);
 
     acceptableRPM = false;
+
+    resetEncoders();
   }
 
   @Override
@@ -82,7 +84,11 @@ public class ShooterSubsystem extends SubsystemBase {
     leftShooterMotor.set(ControlMode.Velocity, UnitConversion.RPMtoNativeUnits(vel));
   }
 
-  public void stopShooterWheels() {
+  public void set(double speed) {
+    leftShooterMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void stop() {
     leftShooterMotor.set(ControlMode.PercentOutput, 0);
   }
 
@@ -98,5 +104,5 @@ public class ShooterSubsystem extends SubsystemBase {
   public boolean getAcceptableRPMState() {
     return acceptableRPM;
   }
-  
+
 }

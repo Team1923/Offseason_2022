@@ -50,7 +50,7 @@ public class HoodSingleSetpointCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     HOOD_SUBSYSTEM.setShootConstants();
-    HOOD_SUBSYSTEM.stopHood();
+    HOOD_SUBSYSTEM.stop();
   }
 
   // Returns true when the command should end.

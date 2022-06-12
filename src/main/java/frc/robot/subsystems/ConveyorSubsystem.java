@@ -51,7 +51,7 @@ public class ConveyorSubsystem extends SubsystemBase {
     conveyorMotor.set(ControlMode.PercentOutput, percentOut);
   }
 
-  public void stopConveyor(){
+  public void stop(){
     conveyorMotor.set(ControlMode.PercentOutput, 0);
   }
 
