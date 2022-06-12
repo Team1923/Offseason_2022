@@ -2,39 +2,42 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ConveyorConstants;
-import frc.robot.subsystems.ConveyorSubsystem;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class RunConveyorCommand extends CommandBase {
+public class RunIntakeCommand extends CommandBase {
 
-  private ConveyorSubsystem CONVEYOR_SUBSYSTEM;
+  private IntakeSubsystem INTAKE_SUBSYSTEM;
   private boolean reverse_intake;
 
-  /** Creates a new RunConveyorCommand. */
-  public RunConveyorCommand(ConveyorSubsystem conveyor, boolean reverse) {
-    this.CONVEYOR_SUBSYSTEM = conveyor;
-
+  /** Creates a new ExtendIntakeCommand. */
+  public RunIntakeCommand(IntakeSubsystem intake, boolean reverse) {
+    this.INTAKE_SUBSYSTEM = intake;
+    this.reverse_intake = reverse;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(CONVEYOR_SUBSYSTEM);
+    addRequirements(INTAKE_SUBSYSTEM);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    CONVEYOR_SUBSYSTEM.setConveyor(reverse_intake ? -ConveyorConstants.conveyorPercentOut : ConveyorConstants.conveyorPercentOut);
+    INTAKE_SUBSYSTEM.setHigh();
+    INTAKE_SUBSYSTEM.setIntake(reverse_intake ? -IntakeConstants.intakePercentOut : IntakeConstants.intakePercentOut);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    CONVEYOR_SUBSYSTEM.stopConveyor();
+    INTAKE_SUBSYSTEM.setLow();
+    INTAKE_SUBSYSTEM.stopIntake();
   }
 
   // Returns true when the command should end.

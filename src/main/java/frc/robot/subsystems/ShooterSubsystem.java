@@ -19,6 +19,8 @@ public class ShooterSubsystem extends SubsystemBase {
   private WPI_TalonFX leftShooterMotor = new WPI_TalonFX(ShooterConstants.leftShooterMotorID);
   private WPI_TalonFX rightShooterMotor = new WPI_TalonFX(ShooterConstants.rightShooterMotorID);
 
+  private boolean acceptableRPM;
+
   public ShooterSubsystem() {
     leftShooterMotor.configFactoryDefault();
     rightShooterMotor.configFactoryDefault();
@@ -62,12 +64,18 @@ public class ShooterSubsystem extends SubsystemBase {
     rightShooterMotor.config_kI(0, ShooterConstants.shooterkI, Constants.timeoutMs);
     rightShooterMotor.config_kD(0, ShooterConstants.shooterkD, Constants.timeoutMs);
     rightShooterMotor.config_kF(0, ShooterConstants.shooterkFF, Constants.timeoutMs);
+
+    acceptableRPM = false;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
    
+  }
+
+  public double getShooterRPM() {
+    return UnitConversion.nativeUnitstoRPM(leftShooterMotor.getSelectedSensorVelocity());
   }
 
   public void setShooterWheelsRPM(double vel) {
@@ -83,4 +91,12 @@ public class ShooterSubsystem extends SubsystemBase {
     rightShooterMotor.setSelectedSensorPosition(0);
   }
 
+  public void setAcceptableRPMState(boolean acceptable) {
+    this.acceptableRPM = acceptable;
+  }
+
+  public boolean getAcceptableRPMState() {
+    return acceptableRPM;
+  }
+  
 }

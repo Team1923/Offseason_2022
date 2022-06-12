@@ -168,13 +168,15 @@ public final class Constants {
         public static final SupplyCurrentLimitConfiguration shooterCurrentLimit = 
             new SupplyCurrentLimitConfiguration(true, sCurrentLimit, sThresholdLimit, 0.2);
         
-
-        //set these values to what they need to be 
+        // Tune these to achieve accurate shooter wheel startup 
         public static final double shooterkP = .1;
         public static final double shooterkI = 0;
         public static final double shooterkD = 0;
         public static final double shooterkFF = 0;
 
+        // Shooter target RPM threshold
+        public static final double shooterRPMThreshold = 20;
+        public static final double shooterTimeThreshold = .1;
         
     }
 
@@ -206,4 +208,6 @@ public final class Constants {
     public static final double ticksPerRev = 2048;
 
     public static final int timeoutMs = 20;
+
+    public static final double falconMaxRPM = 6380;
 }
