@@ -49,10 +49,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     //configure nominal output
-    leftIntakeMotor.configNominalOutputForward(0, Constants.timeoutMs); //needs a percentOut and a timer. Just going by what's suggested. 
-    rightIntakeMotor.configNominalOutputForward(0, Constants.timeoutMs); // "   "
-    leftIntakeMotor.configNominalOutputReverse(0, Constants.timeoutMs); // "    "
-    rightIntakeMotor.configNominalOutputReverse(0, Constants.timeoutMs); // "   "
+    leftIntakeMotor.configNominalOutputForward(0.0, Constants.timeoutMs); //needs a percentOut and a timer. Just going by what's suggested. 
+    rightIntakeMotor.configNominalOutputForward(0.0, Constants.timeoutMs); // "   "
+    leftIntakeMotor.configNominalOutputReverse(0.0, Constants.timeoutMs); // "    "
+    rightIntakeMotor.configNominalOutputReverse(0.0, Constants.timeoutMs); // "   "
 
     //configure peak output(forward: 1, reverse, -1)
     leftIntakeMotor.configPeakOutputForward(1, Constants.timeoutMs);

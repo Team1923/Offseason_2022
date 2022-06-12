@@ -142,8 +142,8 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int leftIntakeMotorID = 0; //will need to be changed
-        public static final int rightIntakemotorID = 0; //will need to be changed
+        public static final int leftIntakeMotorID = 8; //will need to be changed
+        public static final int rightIntakemotorID = 9; //will need to be changed
         public static final double intakePercentOut = 0.5; //change this
         public static final int currentLimit = 30; //still needs to be set
         public static final int thresholdLimit = 40; //still needs to be set I just guessed
@@ -152,7 +152,7 @@ public final class Constants {
     }
     
     public static final class ConveyorConstants {
-        public static final int conveyorMotorID = 0; //will need to be changed
+        public static final int conveyorMotorID = 10; //will need to be changed
         public static final double conveyorPercentOut = 0.5; //change this
         public static final int currentLimit = 30; //still needs to be set
         public static final int thresholdLimit = 40; //still needs to be set I just guessed
@@ -161,9 +161,9 @@ public final class Constants {
     }
 
     public static final class ShooterConstants {
-        public static final int leftShooterMotorID = 0; //change
-        public static final int rightShooterMotorID = 0; //change
-        public static final int hoodMotorID = 0; //change
+        public static final int leftShooterMotorID = 11; //change
+        public static final int rightShooterMotorID = 12; //change
+        public static final int hoodMotorID = 13; //change
         public static final int sCurrentLimit = 30; //change
         public static final int sThresholdLimit = 40;
         public static final SupplyCurrentLimitConfiguration shooterCurrentLimit = 
@@ -191,7 +191,7 @@ public final class Constants {
         public static final double hood_climbkFF = 0;
 
         public static final double hoodMinPosition = 0;
-        public static final double hoodMaxPosition = 20480; // 10 rotations worth from 0, just a guess for now
+        public static final double hoodMaxPosition = 5 * ticksPerRev; // 10 rotations worth from 0, just a guess for now
         
     }
     // Pigeon 1/2 ID in Phoenix Tuner
