@@ -12,8 +12,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.StateHandler;
 import frc.robot.Constants.ClimbConstants;
 
+@SuppressWarnings("unused")
 public class ClimbSubsystem extends SubsystemBase {
 
   private CANSparkMax leftClimber;
@@ -24,7 +26,6 @@ public class ClimbSubsystem extends SubsystemBase {
 
   private SparkMaxPIDController leftClimbPIDController;
   private SparkMaxPIDController rightClimbPIDController;
-
 
   /** Creates a new ClimbSubsystem. */
   public ClimbSubsystem() {

@@ -207,9 +207,9 @@ public final class Constants {
     }
     
     public static final class LimelightConstants {
-        public static final double limelightMountingHeight = 30; // inches from ground to center
-        public static final double LimelightMountingAngle = 30; // angle from center of camera above horizontal plane
-        public static final double centerGoalHeight = 30; // inches from ground to center
+        public static final double limelightMountingHeight = 17.57; // inches from ground to center
+        public static final double LimelightMountingAngle = 45; // angle from center of camera above horizontal plane
+        public static final double centerGoalHeight = 103; // inches from ground to center
 
     }
     // Pigeon 1/2 ID in Phoenix Tuner

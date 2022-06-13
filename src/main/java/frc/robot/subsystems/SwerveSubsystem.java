@@ -13,12 +13,13 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.StateHandler;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.interfaces.SwerveModule;
 import frc.robot.pathplanning.MKISwerveDriveOdometry;
 
+@SuppressWarnings("unused")
 public class SwerveSubsystem extends SubsystemBase {
-
 
   // Instantiating four modules using the constants defined in the DriveConstants class in the constants file
   private final SwerveModule frontLeft = new SwerveModule(

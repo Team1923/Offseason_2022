@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.StateHandler;
 import frc.robot.Constants.IntakeConstants;
 
+@SuppressWarnings("unused")
 public class IntakeSubsystem extends SubsystemBase {
 
   private Solenoid solenoid1 = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
@@ -25,9 +27,11 @@ public class IntakeSubsystem extends SubsystemBase {
   private WPI_TalonFX leftIntakeMotor = new WPI_TalonFX(IntakeConstants.leftIntakeMotorID);
   private WPI_TalonFX rightIntakeMotor = new WPI_TalonFX(IntakeConstants.rightIntakemotorID);
   
+  private boolean intake_reverse;
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
+    
     setLow();
 
     //set factory defaults for all motors
@@ -60,6 +64,8 @@ public class IntakeSubsystem extends SubsystemBase {
     leftIntakeMotor.configPeakOutputReverse(-1, Constants.timeoutMs);
     leftIntakeMotor.configPeakOutputReverse(-1, Constants.timeoutMs);
 
+    intake_reverse = false;
+
   }
 
   @Override
@@ -90,5 +96,8 @@ public class IntakeSubsystem extends SubsystemBase {
     rightIntakeMotor.set(ControlMode.PercentOutput, 0);
   }
 
+  public boolean getIntakeCommandedDirection() {
+    return intake_reverse;
+  }
   
 }

@@ -11,14 +11,17 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.StateHandler;
 import frc.robot.Constants.HoodConstants;
 
+@SuppressWarnings("unused")
 public class HoodSubsystem extends SubsystemBase {
 
   private WPI_TalonFX hoodMotor = new WPI_TalonFX(HoodConstants.hoodMotorID);
 
   /** Creates a new HoodSubsystem. */
   public HoodSubsystem() {
+    
     hoodMotor.configFactoryDefault();
 
     hoodMotor.configSupplyCurrentLimit(HoodConstants.hoodCurrentLimit);

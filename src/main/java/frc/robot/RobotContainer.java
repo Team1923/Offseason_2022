@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -21,19 +22,13 @@ import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
-
 // Added in the line below because subsystems not being accessed in this class
 // does not mean that they are actually not being used. When defined, the
 // command scheduler will automatically schedule the periodic loop defined in them.
 @SuppressWarnings("unused")
 public class RobotContainer {
 
+ 
   // Subsystem Instances
   private final SwerveSubsystem SWERVE_SUBSYSTEM = new SwerveSubsystem();
   private final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
@@ -42,6 +37,10 @@ public class RobotContainer {
   private final ConveyorSubsystem CONVEYOR_SUBSYSTEM = new ConveyorSubsystem();
   private final HoodSubsystem HOOD_SUBSYSTEM = new HoodSubsystem();
   private final ShooterSubsystem SHOOTER_SUBSYSTEM = new ShooterSubsystem();
+
+  // Singleton State Handler
+  StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM);  
+
 
   // Joystick Instances
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
@@ -94,5 +93,9 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return new FollowTrajectory(SWERVE_SUBSYSTEM, "2m fwd");
+  }
+
+  public void updateBooleans() {
+
   }
 }

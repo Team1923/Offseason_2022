@@ -11,17 +11,21 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.StateHandler;
 import frc.robot.UnitConversion;
 import frc.robot.Constants.ShooterConstants;
 
+@SuppressWarnings("unused")
 public class ShooterSubsystem extends SubsystemBase {
   
   private WPI_TalonFX leftShooterMotor = new WPI_TalonFX(ShooterConstants.leftShooterMotorID);
   private WPI_TalonFX rightShooterMotor = new WPI_TalonFX(ShooterConstants.rightShooterMotorID);
 
   private boolean acceptableRPM;
+  private boolean shooting;
 
   public ShooterSubsystem() {
+    
     leftShooterMotor.configFactoryDefault();
     rightShooterMotor.configFactoryDefault();
 
@@ -66,6 +70,7 @@ public class ShooterSubsystem extends SubsystemBase {
     rightShooterMotor.config_kF(0, ShooterConstants.shooterkFF, Constants.timeoutMs);
 
     acceptableRPM = false;
+    shooting = false;
 
     resetEncoders();
   }
@@ -103,6 +108,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public boolean getAcceptableRPMState() {
     return acceptableRPM;
+  }
+
+  public boolean getCommandedShootingState() {
+    return shooting;
   }
 
 }
