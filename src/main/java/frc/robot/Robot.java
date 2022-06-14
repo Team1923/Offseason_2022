@@ -29,8 +29,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     
-    // Run the update booleans method in the state handler at an interval of every 20ms. 
-    addPeriodic(() -> m_robotContainer.stateHandler.updateBooleans(), .02);
+    // Run the update booleans method in the state handler at an interval of every 20ms, offset from the main loop by 10ms to avoid commands not fully updating. 
+    addPeriodic(() -> m_robotContainer.stateHandler.updateBooleans(), .02, .01);
   }
 
   /**

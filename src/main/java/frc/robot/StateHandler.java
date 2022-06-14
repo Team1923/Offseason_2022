@@ -118,5 +118,13 @@ public class StateHandler {
         this.shooting = SHOOTER_SUBSYSTEM.getCommandedShootingState();
     }
 
+    public States getState() {
+        return this.currentRobotState;
+    }
+
+    public boolean getEjecting() {
+        return this.intake_reverse;
+    }
+
 }
 //its tricky
