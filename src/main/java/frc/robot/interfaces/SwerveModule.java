@@ -45,7 +45,7 @@ public class SwerveModule {
 
         // Initialize both motors of the module
         driveMotor = new WPI_TalonFX(driveMotorId);
-        turningMotor = new WPI_TalonFX(turningMotorId);
+        turningMotor = new WPI_TalonFX(turningMotorId, "Default Name");
 
         // Reset all previously set settings on these motors
         driveMotor.configFactoryDefault();

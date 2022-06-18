@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -59,7 +60,7 @@ public class SwerveSubsystem extends SubsystemBase {
       DriveConstants.kBackLeftDriveAbsoluteEncoderOffsetReversed);
 
   // ? Code is using a Pigeon 1 for testing, we will be upgrading to a Pigeon 2 so make sure that this gets updated to reflect that!
-  private PigeonIMU gyro = new PigeonIMU(Constants.kPigeonCANID);
+  private Pigeon2 gyro = new Pigeon2(Constants.kPigeonCANID, "Default Name");
   private final MKISwerveDriveOdometry odometer = new MKISwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
 
   /** Creates a new SwerveSubsystem. */
@@ -95,13 +96,13 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // Zeros the heading of the gyro
   public void zeroHeading() {
-    gyro.setFusedHeading(0);
+    gyro.zeroGyroBiasNow();
     gyro.setAccumZAngle(0);
   }
 
   // Gets a gyro heading between 0 and 360 degrees
   public double getHeading() {
-    return -Math.IEEEremainder(gyro.getFusedHeading(), 360);
+    return -Math.IEEEremainder(gyro.getCompassHeading(), 360);
   }
 
   // Returns a Rotation2d object from the gyro heading, for use with swerve classes

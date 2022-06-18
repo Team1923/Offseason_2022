@@ -34,7 +34,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //set inverts
     leftShooterMotor.setInverted(InvertType.None);
-    rightShooterMotor.setInverted(InvertType.InvertMotorOutput);
+    rightShooterMotor.setInverted(InvertType.None);
 
     //current limit stuff
     leftShooterMotor.configSupplyCurrentLimit(ShooterConstants.shooterCurrentLimit);
