@@ -38,7 +38,8 @@ public class HoodChangingSetpointCommand extends CommandBase {
         90, 
         HoodConstants.hoodMinPosition, 
         HoodConstants.hoodMaxPosition, 
-        LIMELIGHT_SUBSYSTEM.angle());
+        //LIMELIGHT_SUBSYSTEM.angle());
+        45);
 
     // Adjust the generated angle by a scale factor. If the new angle is greater than the max
     // allowed angle, then cap it to the max allowed angle.

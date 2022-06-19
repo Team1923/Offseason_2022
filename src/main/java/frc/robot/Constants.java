@@ -90,10 +90,10 @@ public final class Constants {
         // Back Left Module
         public static final int kBackLeftDriveMotorPort = 6;
         public static final int kBackLeftTurningMotorPort = 7;
-        public static final boolean kBackLeftDriveReversed = true;
+        public static final boolean kBackLeftDriveReversed = false;
         public static final boolean kBackLeftTurningReversed = false;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.62;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = .59;//5.97;//3.62;
         public static final boolean kBackLeftDriveAbsoluteEncoderOffsetReversed = true;
 
     }
@@ -154,6 +154,7 @@ public final class Constants {
     public static final class ConveyorConstants {
         public static final int conveyorMotorID = 10; //will need to be changed
         public static final double conveyorPercentOut = 0.5; //change this
+        public static final double conveyorShootPercentOut = 0.96731; //change this
         public static final int currentLimit = 30; //still needs to be set
         public static final int thresholdLimit = 40; //still needs to be set I just guessed
         public static final SupplyCurrentLimitConfiguration conveyorCurrentLimit =
@@ -171,14 +172,16 @@ public final class Constants {
         // Tune these to achieve accurate shooter wheel startup 
         public static final double shooterkP = .1;
         public static final double shooterkI = 0;
-        public static final double shooterkD = 0;
-        public static final double shooterkFF = 0;
+        public static final double shooterkD = .1;
+        public static final double shooterkFF = .05;
 
         // Shooter target RPM threshold
-        public static final double shooterRPMThreshold = 20;
+        public static final double shooterRPMThreshold = 100;
         public static final double shooterTimeThreshold = .1;
 
         public static final double avoidStallSpeed = .1;
+
+        public static final double shooterPercentOut = 0.25;
         
     }
 
@@ -200,8 +203,8 @@ public final class Constants {
         public static final double hood_climbkD = 0;
         public static final double hood_climbkFF = 0;
 
-        public static final double hoodMinPosition = 0;
-        public static final double hoodMaxPosition = 5 * ticksPerRev; // 5 rotations worth from 0, just a guess for now
+        public static final double hoodMinPosition = 3000;
+        public static final double hoodMaxPosition = 30000;
         public static final double hoodScaleFactor = 1; // used to adjust the overall movement of the hood. Adjusts the angle of
                                                         // hood by this scale factor. Code should still never let it go above the max, though.
     }

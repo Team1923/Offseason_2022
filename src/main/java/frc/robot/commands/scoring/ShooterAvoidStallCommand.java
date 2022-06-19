@@ -4,6 +4,7 @@
 
 package frc.robot.commands.scoring;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -26,7 +27,8 @@ public class ShooterAvoidStallCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SHOOTER_SUBSYSTEM.set(ShooterConstants.avoidStallSpeed);
+    SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
+    SmartDashboard.putNumber("SYSTEM TIME SHOOTER: ", System.currentTimeMillis());
   }
 
   // Called once the command ends or is interrupted.

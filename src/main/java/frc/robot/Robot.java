@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
     
     // Run the update booleans method in the state handler at an interval of every 20ms, offset from the main loop by 10ms to avoid commands not fully updating. 
     addPeriodic(() -> m_robotContainer.stateHandler.updateBooleans(), .02, .01);
+    addPeriodic(() -> m_robotContainer.stateHandler.updateStates(), .02, .01);
   }
 
   /**

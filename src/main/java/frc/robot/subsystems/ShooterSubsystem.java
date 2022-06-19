@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.StateHandler;
@@ -22,7 +23,6 @@ public class ShooterSubsystem extends SubsystemBase {
   private WPI_TalonFX rightShooterMotor = new WPI_TalonFX(ShooterConstants.rightShooterMotorID);
 
   private boolean acceptableRPM;
-  private boolean shooting;
 
   public ShooterSubsystem() {
     
@@ -70,7 +70,6 @@ public class ShooterSubsystem extends SubsystemBase {
     rightShooterMotor.config_kF(0, ShooterConstants.shooterkFF, Constants.timeoutMs);
 
     acceptableRPM = false;
-    shooting = false;
 
     resetEncoders();
   }
@@ -78,7 +77,7 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-   
+    SmartDashboard.putNumber("Shooter RPM: ", getShooterRPM());
   }
 
   public double getShooterRPM() {
@@ -108,10 +107,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public boolean getAcceptableRPMState() {
     return acceptableRPM;
-  }
-
-  public boolean getCommandedShootingState() {
-    return shooting;
   }
 
 }

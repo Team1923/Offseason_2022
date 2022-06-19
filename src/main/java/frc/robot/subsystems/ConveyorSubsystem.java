@@ -38,8 +38,8 @@ public class ConveyorSubsystem extends SubsystemBase {
     conveyorMotor.configPeakOutputForward(1.0, Constants.timeoutMs);
     conveyorMotor.configPeakOutputReverse(-1.0, Constants.timeoutMs);
 
-    beamBreakOne = new DigitalInput(1);
-    beamBreakTwo = new DigitalInput(0);
+    beamBreakOne = new DigitalInput(0);
+    beamBreakTwo = new DigitalInput(1);
 
   }
 
@@ -48,6 +48,7 @@ public class ConveyorSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("BEAM BREAK ONE: ", getFrontBeamBreak());
     SmartDashboard.putBoolean("BEAM BREAK TWO: ", getBackBeamBreak());
+    SmartDashboard.putNumber("System Time", System.currentTimeMillis());
   }
 
   public void setConveyor(double percentOut){
@@ -59,11 +60,11 @@ public class ConveyorSubsystem extends SubsystemBase {
   }
 
   public boolean getFrontBeamBreak() {
-    return beamBreakOne.get();
+    return !beamBreakOne.get();
   }
 
   public boolean getBackBeamBreak() {
-    return beamBreakOne.get();
+    return !beamBreakTwo.get();
   }
 
 }

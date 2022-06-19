@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -16,7 +17,7 @@ public class StateHandler {
     public boolean frontBeamBreak;
     public boolean backBeamBreak;
     public boolean ballPastBreak;
-    public boolean shooting;
+    public boolean acceptableRPM;
     public boolean intake_reverse;
 
     // List of all possible states
@@ -41,8 +42,8 @@ public class StateHandler {
         this.INTAKE_SUBSYSTEM = intake;
         this.CONVEYOR_SUBSYSTEM = conveyor;
 
-        shooting = false;
-        intake_reverse = false;
+        this.acceptableRPM = false;
+        this.intake_reverse = false;
     }
 
     // Run the logic we determine to figure out the current state of the robot. 
@@ -80,7 +81,7 @@ public class StateHandler {
                 }
                 break;
             case ONE_BALL_FAR_BROKEN:
-                if(!this.backBeamBreak && this.shooting) {
+                if(!this.backBeamBreak && this.acceptableRPM) {
                     this.currentRobotState = States.NO_BALLS;
                 }
 
@@ -89,11 +90,11 @@ public class StateHandler {
                 }
                 break;
             case TWO_BALLS_BOTH_BROKEN:
-                if(!this.frontBeamBreak && this.backBeamBreak && this.shooting) {
+                if(!this.frontBeamBreak && this.backBeamBreak && this.acceptableRPM) {
                     this.currentRobotState = States.ONE_BALL_FAR_BROKEN;
                 }
 
-                if(!this.frontBeamBreak && !this.backBeamBreak && this.shooting) {
+                if(!this.frontBeamBreak && !this.backBeamBreak && this.acceptableRPM) {
                     this.currentRobotState = States.ONE_BALL_NONE_BROKEN;
                 }
 
@@ -109,13 +110,15 @@ public class StateHandler {
             currentRobotState = States.TWO_BALLS_BOTH_BROKEN;
         }
 
+        SmartDashboard.putString("Current Robot State: ", currentRobotState.toString());
+
     }
 
     public void updateBooleans() {
         this.frontBeamBreak = CONVEYOR_SUBSYSTEM.getFrontBeamBreak();
         this.backBeamBreak = CONVEYOR_SUBSYSTEM.getBackBeamBreak();
         this.intake_reverse = INTAKE_SUBSYSTEM.getIntakeCommandedDirection();
-        this.shooting = SHOOTER_SUBSYSTEM.getCommandedShootingState();
+        this.acceptableRPM = SHOOTER_SUBSYSTEM.getAcceptableRPMState();
     }
 
     public States getState() {
@@ -124,6 +127,10 @@ public class StateHandler {
 
     public boolean getEjecting() {
         return this.intake_reverse;
+    }
+
+    public void resetState(){
+        currentRobotState = States.NO_BALLS;
     }
 
 }

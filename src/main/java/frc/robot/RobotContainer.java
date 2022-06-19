@@ -12,8 +12,12 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.autonomous.FollowTrajectory;
 import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.commands.drive.SwerveDriveCommand;
+import frc.robot.commands.scoring.HoodSingleSetpointCommand;
+import frc.robot.commands.scoring.RunShooterCommand;
 import frc.robot.commands.scoring.ShooterAvoidStallCommand;
+import frc.robot.commands.scoring.StateManagedConveyorCommand;
 import frc.robot.commands.scoring.independent.RunIntakeCommand;
+import frc.robot.commands.scoring.independent.RunShooterPercentCommand;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
@@ -37,6 +41,8 @@ public class RobotContainer {
   private final ConveyorSubsystem CONVEYOR_SUBSYSTEM = new ConveyorSubsystem();
   private final HoodSubsystem HOOD_SUBSYSTEM = new HoodSubsystem();
   private final ShooterSubsystem SHOOTER_SUBSYSTEM = new ShooterSubsystem();
+
+  
 
   // Singleton State Handler
   StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM);  
@@ -70,17 +76,24 @@ public class RobotContainer {
         () -> !driverJoystick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); // Field oriented control vs robot oriented. By default, since "!" is included, field oriented is default
 
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
-    SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM));    
+    SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM));
+    CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, stateHandler));
+    //HOOD_SUBSYSTEM.setDefaultCommand(new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 20000));    
   }
 
   // Define what buttons will do
   private void configureButtonBindings() {
 
     // Run intake command
-    new JoystickButton(driverJoystick, OIConstants.kOperatorXButton).whileHeld(new RunIntakeCommand(INTAKE_SUBSYSTEM, false));
+    new JoystickButton(driverJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new RunIntakeCommand(INTAKE_SUBSYSTEM, false));
     
     // Creates an "instant command" that will execute the line of code past the "() ->", zeros the heading
     new JoystickButton(driverJoystick, OIConstants.kOperatorBButton).whenPressed(() -> SWERVE_SUBSYSTEM.zeroHeading());
+
+    //reset heading button
+    new JoystickButton(driverJoystick, OIConstants.kOperatorYButton).whenPressed(() -> stateHandler.resetState());
+
+    new JoystickButton(driverJoystick, 5).whileHeld(new RunShooterCommand(SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, 3000));
 
     // Hub-centric driving command
     new JoystickButton(driverJoystick, OIConstants.kOperatorAButton).whileHeld(new GoalCentricCommand(

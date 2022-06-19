@@ -39,7 +39,7 @@ public class IntakeSubsystem extends SubsystemBase {
     rightIntakeMotor.configFactoryDefault();
 
     //right motor is the master motor
-    leftIntakeMotor.follow(rightIntakeMotor);
+    rightIntakeMotor.follow(leftIntakeMotor);
 
     //set left motor inverted, no invert for the right motor
     leftIntakeMotor.setInverted(InvertType.InvertMotorOutput);
@@ -75,25 +75,25 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
   public void setHigh() {
-    solenoid1.set(true);
-    solenoid2.set(false);
-    solenoid3.set(false);
-    solenoid4.set(true);
-  }
-
-  public void setLow() {
     solenoid1.set(false);
     solenoid2.set(true);
     solenoid3.set(true);
     solenoid4.set(false);
   }
 
+  public void setLow() {
+    solenoid1.set(true); 
+    solenoid2.set(false);  
+    solenoid3.set(false);  
+    solenoid4.set(true);  
+  }
+
   public void setIntake(double percentOut) {
-    rightIntakeMotor.set(ControlMode.PercentOutput, percentOut);
+    leftIntakeMotor.set(ControlMode.PercentOutput, -percentOut);
   }
 
   public void stop() {
-    rightIntakeMotor.set(ControlMode.PercentOutput, 0);
+    leftIntakeMotor.set(ControlMode.PercentOutput, 0);
   }
 
   public boolean getIntakeCommandedDirection() {

@@ -15,8 +15,6 @@ public class StateManagedConveyorCommand extends CommandBase {
   private ConveyorSubsystem CONVEYOR_SUBSYSTEM;
   private StateHandler stateHandler;
   private States currentRobotState;
-  private boolean isRobotIntaking;
-
   /** 
    *  Defines a new 
    * 
@@ -24,10 +22,9 @@ public class StateManagedConveyorCommand extends CommandBase {
    * @param handler The singleton state handler.
    * @param intaking A boolean defining whether the robot is currently intaking vs shooting.
    */
-  public StateManagedConveyorCommand(ConveyorSubsystem conveyor, StateHandler handler, boolean intaking) {
+  public StateManagedConveyorCommand(ConveyorSubsystem conveyor, StateHandler handler) {
     this.CONVEYOR_SUBSYSTEM = conveyor;
     this.stateHandler = handler;
-    this.isRobotIntaking = intaking;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(CONVEYOR_SUBSYSTEM);
   }
@@ -46,11 +43,9 @@ public class StateManagedConveyorCommand extends CommandBase {
     currentRobotState = stateHandler.getState();
 
     double conveyorPercentOut = stateHandler.getEjecting() ?  -ConveyorConstants.conveyorPercentOut : ConveyorConstants.conveyorPercentOut;
-
-    if(isRobotIntaking) {
       switch(currentRobotState) {
         case NO_BALLS:
-          CONVEYOR_SUBSYSTEM.setConveyor(conveyorPercentOut);
+          CONVEYOR_SUBSYSTEM.stop();
           break;
         case ONE_BALL_CLOSE_BROKEN:
           CONVEYOR_SUBSYSTEM.setConveyor(conveyorPercentOut);
@@ -59,7 +54,7 @@ public class StateManagedConveyorCommand extends CommandBase {
           CONVEYOR_SUBSYSTEM.stop();
           break;
         case ONE_BALL_NONE_BROKEN:
-          CONVEYOR_SUBSYSTEM.setConveyor(conveyorPercentOut);
+          CONVEYOR_SUBSYSTEM.stop();
           break;
         case TWO_BALLS_BOTH_BROKEN:
           CONVEYOR_SUBSYSTEM.stop();
@@ -67,9 +62,6 @@ public class StateManagedConveyorCommand extends CommandBase {
         default:
           CONVEYOR_SUBSYSTEM.stop();
           break;
-      }
-    } else {
-
     }
 
   }

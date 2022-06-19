@@ -44,7 +44,7 @@ public class SwerveModule {
         absoluteEncoder = new AnalogInput(absoluteEncoderId);
 
         // Initialize both motors of the module
-        driveMotor = new WPI_TalonFX(driveMotorId);
+        driveMotor = new WPI_TalonFX(driveMotorId, "Default Name");
         turningMotor = new WPI_TalonFX(turningMotorId, "Default Name");
 
         // Reset all previously set settings on these motors

@@ -96,13 +96,12 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // Zeros the heading of the gyro
   public void zeroHeading() {
-    gyro.zeroGyroBiasNow();
-    gyro.setAccumZAngle(0);
+    gyro.setYaw(0);
   }
 
   // Gets a gyro heading between 0 and 360 degrees
   public double getHeading() {
-    return -Math.IEEEremainder(gyro.getCompassHeading(), 360);
+    return -Math.IEEEremainder(gyro.getYaw(), 360);
   }
 
   // Returns a Rotation2d object from the gyro heading, for use with swerve classes
