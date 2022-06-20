@@ -7,12 +7,20 @@ package frc.robot.interfaces;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.LimelightConstants;
 
 /**
  * This class allows for interaction with the Limelight
  * via a NetworkTable
  */
 public class LimelightInterface extends SubsystemBase {
+
+  // height in inches of camera from ground
+  private double limelight_height = LimelightConstants.limelightMountingHeight;
+  // height in inches of center of target from ground
+  private double target_height = LimelightConstants.centerGoalHeight;
+  // limelight mounting angle above positive x axis in degrees
+  private double limelight_mount_angle = LimelightConstants.LimelightMountingAngle;
 
   private static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   
@@ -152,6 +160,11 @@ public class LimelightInterface extends SubsystemBase {
   
   private static double getEntry(String key) {
     return table.getEntry(key).getDouble(0);
+  }
+
+  public double distanceToTarget() {
+    // Returns distance to target assuming 
+    return (target_height - limelight_height) / (Math.tan(Math.toRadians(limelight_mount_angle - getVerticalOffset())));
   }
 
 }

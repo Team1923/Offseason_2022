@@ -12,8 +12,8 @@ import frc.robot.interfaces.LimelightInterface;
 @SuppressWarnings("unused")
 public class LimelightSubsystem extends SubsystemBase {
   /** Creates a new LimelightSubsystem. */
-
-  private final LimelightInterface Limelight = new LimelightInterface();
+  private LimelightInterface Limelight;
+  
 
   // height in inches of camera from ground
   private double limelight_height = 20;
@@ -22,8 +22,8 @@ public class LimelightSubsystem extends SubsystemBase {
   // limelight mounting angle above positive x axis in degrees
   private double limelight_mount_angle = 30;
 
-  public LimelightSubsystem() {    
-    //Limelight.setLEDMode(ledMode.OFF);
+  public LimelightSubsystem(LimelightInterface limelight) {    
+    Limelight = limelight;
   }
 
   @Override
@@ -32,7 +32,6 @@ public class LimelightSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("x angle: ", getX());
     SmartDashboard.putNumber("y angle:", getY());
     SmartDashboard.putNumber("area: ", getArea());
-    SmartDashboard.putNumber("distance to target: ", distanceToTarget());
 
   }
 
@@ -48,10 +47,7 @@ public class LimelightSubsystem extends SubsystemBase {
     return Limelight.getArea();
   }
 
-  public double distanceToTarget() {
-    // Returns distance to target assuming 
-    return (target_height - limelight_height) / (Math.tan(Math.toRadians(limelight_mount_angle - getY())));
-  }
+  
 
   public double map(double a1, double a2, double b1, double b2, double input) {
     return b1 + ((input-a1)*(b2-b1)/(a2-a1));

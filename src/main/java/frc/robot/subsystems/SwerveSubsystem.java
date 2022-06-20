@@ -9,6 +9,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,11 +17,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.StateHandler;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.MKILib.MKIPoseEstimatorLimelight;
+import frc.robot.interfaces.LimelightInterface;
 import frc.robot.interfaces.SwerveModule;
 import frc.robot.pathplanning.MKISwerveDriveOdometry;
 
 @SuppressWarnings("unused")
 public class SwerveSubsystem extends SubsystemBase {
+
+  private LimelightInterface limelightInterface;
 
   // Instantiating four modules using the constants defined in the DriveConstants class in the constants file
   private final SwerveModule frontLeft = new SwerveModule(
@@ -63,8 +68,12 @@ public class SwerveSubsystem extends SubsystemBase {
   private Pigeon2 gyro = new Pigeon2(Constants.kPigeonCANID, "Default Name");
   private final MKISwerveDriveOdometry odometer = new MKISwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
 
+  private final MKIPoseEstimatorLimelight betterOdometer = new MKIPoseEstimatorLimelight(frontLeft::getState, frontRight::getState, backLeft::getState, backRight::getState, new Translation2d(0, 0), limelightInterface);
+
   /** Creates a new SwerveSubsystem. */
-  public SwerveSubsystem() {
+  public SwerveSubsystem(LimelightInterface lInterface) {
+    limelightInterface = lInterface;
+
 
     // Gyro is going to be calibrating for first part of boot, so delay wipe of settings and zeroing of heading by a second each on a seperate thread
     new Thread(() -> {
@@ -91,6 +100,10 @@ public class SwerveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Back Right", backRight.getAbsoluteEncoderRad());
 
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
+
+    betterOdometer.updatePosition();
+    betterOdometer.fixPoseThing();
+    SmartDashboard.putString("Better Odometer Position", betterOdometer.getPosition().toString());
 
   }
 

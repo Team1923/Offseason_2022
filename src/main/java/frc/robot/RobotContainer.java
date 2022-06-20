@@ -18,6 +18,7 @@ import frc.robot.commands.scoring.ShooterAvoidStallCommand;
 import frc.robot.commands.scoring.StateManagedConveyorCommand;
 import frc.robot.commands.scoring.independent.RunIntakeCommand;
 import frc.robot.commands.scoring.independent.RunShooterPercentCommand;
+import frc.robot.interfaces.LimelightInterface;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
@@ -32,15 +33,18 @@ import frc.robot.subsystems.SwerveSubsystem;
 @SuppressWarnings("unused")
 public class RobotContainer {
 
+  private final LimelightInterface Limelight = new LimelightInterface();
  
   // Subsystem Instances
-  private final SwerveSubsystem SWERVE_SUBSYSTEM = new SwerveSubsystem();
-  private final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
+  private final SwerveSubsystem SWERVE_SUBSYSTEM = new SwerveSubsystem(Limelight);
+  private final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem(Limelight);
   private final IntakeSubsystem INTAKE_SUBSYSTEM = new IntakeSubsystem();
   private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem();
   private final ConveyorSubsystem CONVEYOR_SUBSYSTEM = new ConveyorSubsystem();
   private final HoodSubsystem HOOD_SUBSYSTEM = new HoodSubsystem();
   private final ShooterSubsystem SHOOTER_SUBSYSTEM = new ShooterSubsystem();
+
+  
 
   
 
