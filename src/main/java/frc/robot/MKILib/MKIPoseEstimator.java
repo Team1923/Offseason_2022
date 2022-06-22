@@ -72,8 +72,9 @@ public class MKIPoseEstimator {
         // Magnitude of the chassis velocity as measured by the gyro
         double gyroMagnitude = MKIMath.magnitude(gyroSupplier.get());
 
-        // This will signify how different the measured values are.
-        double magnitudeDifference = encoderMagnitude / gyroMagnitude;
+        // This will signify how different the measured values are. Subtracting one to define an equivlent measurement from the gyro and 
+        // encoders to mean we do NOT use the gyro in our calculation.
+        double magnitudeDifference = (encoderMagnitude / gyroMagnitude) - 1;
         
         // Calculate how much weight we should assign to the gyro data, versus the encoder data.
         double gyroBias = Math.tanh(biasModifier * magnitudeDifference);
