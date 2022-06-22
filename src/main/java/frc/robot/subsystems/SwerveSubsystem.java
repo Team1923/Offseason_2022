@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
@@ -17,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.StateHandler;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.MKILib.MKIMath;
 import frc.robot.MKILib.MKIPoseEstimatorLimelight;
 import frc.robot.interfaces.LimelightInterface;
 import frc.robot.interfaces.SwerveModule;
@@ -26,6 +30,8 @@ import frc.robot.pathplanning.MKISwerveDriveOdometry;
 public class SwerveSubsystem extends SubsystemBase {
 
   private LimelightInterface limelightInterface;
+
+  private double[] gyroArray;
 
   // Instantiating four modules using the constants defined in the DriveConstants class in the constants file
   private final SwerveModule frontLeft = new SwerveModule(
@@ -68,7 +74,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private Pigeon2 gyro = new Pigeon2(Constants.kPigeonCANID, "Default Name");
   private final MKISwerveDriveOdometry odometer = new MKISwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
 
-  private final MKIPoseEstimatorLimelight betterOdometer = new MKIPoseEstimatorLimelight(frontLeft::getState, frontRight::getState, backLeft::getState, backRight::getState, new Translation2d(0, 0), limelightInterface);
+  private final MKIPoseEstimatorLimelight betterOdometer;
 
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem(LimelightInterface lInterface) {
@@ -85,6 +91,16 @@ public class SwerveSubsystem extends SubsystemBase {
       } catch (Exception e) {}
     }).start();
 
+
+    betterOdometer = new MKIPoseEstimatorLimelight(
+      frontLeft::getState, 
+      frontRight::getState, 
+      backLeft::getState, 
+      backRight::getState, 
+      new Translation2d(0, 0), 
+      limelightInterface,
+      () -> getVelocityMagnitude());
+
   }
 
   @Override
@@ -99,10 +115,14 @@ public class SwerveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Back Left", backLeft.getAbsoluteEncoderRad());
     SmartDashboard.putNumber("Back Right", backRight.getAbsoluteEncoderRad());
 
+    SmartDashboard.putNumber("Gyro Velocity Value: ", MKIMath.magnitude(getVelocityMagnitude()));
+
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
 
     betterOdometer.updatePosition();
-    betterOdometer.fixPoseThing();
+    betterOdometer.fixPoseLimelight();
+
+
     SmartDashboard.putString("Better Odometer Position", betterOdometer.getPosition().toString());
 
   }
@@ -156,6 +176,12 @@ public class SwerveSubsystem extends SubsystemBase {
     frontRight.resetState();
     backRight.resetState();
     backLeft.resetState();
+  }
+
+  public List<Double> getVelocityMagnitude() {
+    gyro.getAccumGyro(gyroArray);
+
+    return Arrays.asList(gyroArray[0] * Constants.gyroToMPS, gyroArray[1] * Constants.gyroToMPS);
   }
 
 }

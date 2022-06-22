@@ -8,7 +8,6 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 
 import org.opencv.core.Point;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
@@ -226,6 +225,8 @@ public final class Constants {
     public static final int timeoutMs = 20;
 
     public static final double falconMaxRPM = 6380;
+
+    public static final double gyroToMPS = 1;
 
     public static final Point hubPosition = new Point(8.3, -4.2); //will need to update
 

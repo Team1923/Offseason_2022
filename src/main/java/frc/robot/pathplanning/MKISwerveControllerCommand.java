@@ -147,9 +147,11 @@ public class MKISwerveControllerCommand extends CommandBase {
   @Override
   @SuppressWarnings("LocalVariableName")
   public void execute() {
+
     double curTime = m_timer.get();
     var desiredState = m_trajectory.sample(curTime);
-    
+  
+
     var targetChassisSpeeds =
         m_controller.calculate(m_pose.get(), 
         desiredState, m_desiredRotation.get());
