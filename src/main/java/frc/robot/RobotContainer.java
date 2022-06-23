@@ -16,6 +16,7 @@ import frc.robot.commands.scoring.HoodSingleSetpointCommand;
 import frc.robot.commands.scoring.RunShooterCommand;
 import frc.robot.commands.scoring.ShooterAvoidStallCommand;
 import frc.robot.commands.scoring.StateManagedConveyorCommand;
+import frc.robot.commands.scoring.StateManagedIntakeCommand;
 import frc.robot.commands.scoring.independent.RunIntakeCommand;
 import frc.robot.commands.scoring.independent.RunShooterPercentCommand;
 import frc.robot.interfaces.LimelightInterface;
@@ -89,7 +90,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Run intake command
-    new JoystickButton(driverJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new RunIntakeCommand(INTAKE_SUBSYSTEM, false));
+    new JoystickButton(driverJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler));
     
     // Creates an "instant command" that will execute the line of code past the "() ->", zeros the heading
     new JoystickButton(driverJoystick, OIConstants.kOperatorBButton).whenPressed(() -> SWERVE_SUBSYSTEM.zeroHeading());

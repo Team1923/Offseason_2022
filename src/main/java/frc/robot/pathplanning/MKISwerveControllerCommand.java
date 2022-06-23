@@ -147,18 +147,25 @@ public class MKISwerveControllerCommand extends CommandBase {
   @Override
   @SuppressWarnings("LocalVariableName")
   public void execute() {
-
     double curTime = m_timer.get();
-    var desiredState = m_trajectory.sample(curTime);
-  
+    double totalTrajectoryTime = m_trajectory.getTotalTimeSeconds();
 
+    double percentage = curTime / totalTrajectoryTime;
+
+    double initialAngle = m_trajectory.getInitialPose().getRotation().getDegrees();
+    double finalAngle = m_trajectory.getStates().get(m_trajectory.getStates().size() - 1).poseMeters.getRotation().getDegrees();
+    double partialAngle = percentage * (finalAngle - initialAngle);
+
+    Rotation2d newRotation = new Rotation2d(partialAngle);
+
+    var desiredState = m_trajectory.sample(curTime);
+    
     var targetChassisSpeeds =
         m_controller.calculate(m_pose.get(), 
-        desiredState, m_desiredRotation.get());
+        desiredState, newRotation);
     var targetModuleStates = m_kinematics.toSwerveModuleStates(targetChassisSpeeds);
 
-    // CUSTOM DEBUG CODE
-    //System.out.println(targetModuleStates[0].toString());
+    
 
     m_outputModuleStates.accept(targetModuleStates);
   }
