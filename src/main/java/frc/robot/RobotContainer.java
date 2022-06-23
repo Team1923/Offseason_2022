@@ -12,6 +12,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.autonomous.FollowTrajectory;
 import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.commands.drive.SwerveDriveCommand;
+import frc.robot.commands.scoring.HoodChangingSetpointCommand;
 import frc.robot.commands.scoring.HoodSingleSetpointCommand;
 import frc.robot.commands.scoring.RunShooterCommand;
 import frc.robot.commands.scoring.ShooterAvoidStallCommand;
@@ -55,6 +56,7 @@ public class RobotContainer {
 
   // Joystick Instances
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
+  private final Joystick operatorJoystick = new Joystick(OIConstants.kOperatorControllerPort);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -83,25 +85,26 @@ public class RobotContainer {
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
     SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM));
     CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, stateHandler));
-    //HOOD_SUBSYSTEM.setDefaultCommand(new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 20000));    
+    HOOD_SUBSYSTEM.setDefaultCommand(new HoodChangingSetpointCommand(HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM));    
   }
 
   // Define what buttons will do
   private void configureButtonBindings() {
 
     // Run intake command
-    new JoystickButton(driverJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, false));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorSquareButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, true));
     
     // Creates an "instant command" that will execute the line of code past the "() ->", zeros the heading
-    new JoystickButton(driverJoystick, OIConstants.kOperatorBButton).whenPressed(() -> SWERVE_SUBSYSTEM.zeroHeading());
+    new JoystickButton(driverJoystick, OIConstants.kDriverBButton).whenPressed(() -> SWERVE_SUBSYSTEM.zeroHeading());
 
     //reset heading button
-    new JoystickButton(driverJoystick, OIConstants.kOperatorYButton).whenPressed(() -> stateHandler.resetState());
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorCircleButton).whenPressed(() -> stateHandler.resetState());
 
-    new JoystickButton(driverJoystick, 5).whileHeld(new RunShooterCommand(SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, 3000));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorTriangleButton).whileHeld(new RunShooterCommand(SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, 3000));
 
     // Hub-centric driving command
-    new JoystickButton(driverJoystick, OIConstants.kOperatorAButton).whileHeld(new GoalCentricCommand(
+    new JoystickButton(driverJoystick, OIConstants.kDriverAButton).whileHeld(new GoalCentricCommand(
       SWERVE_SUBSYSTEM, 
       () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
       () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis), 

@@ -4,7 +4,9 @@
 
 package frc.robot.commands.scoring;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.StateHandler;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.StateHandler.States;
@@ -14,10 +16,13 @@ public class StateManagedIntakeCommand extends CommandBase {
   private IntakeSubsystem intake;
   private StateHandler stateHandler;
   private States currentRobotState;
+  private boolean intakeReversed;
 
-  public StateManagedIntakeCommand(IntakeSubsystem intake, StateHandler stateHandler) {
+  public StateManagedIntakeCommand(IntakeSubsystem intake, StateHandler stateHandler, boolean reversed) {
     this.intake = intake;
     this.stateHandler = stateHandler;
+
+    intakeReversed = reversed;
     addRequirements(intake);
   }
 
@@ -30,36 +35,59 @@ public class StateManagedIntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double intakePercentOut = stateHandler.getEjecting() ? -IntakeConstants.intakePercentOut : IntakeConstants.intakePercentOut;
+    double intakePercentOut;
+    if(intakeReversed){
+      intakePercentOut = -IntakeConstants.intakePercentOut;
+    }
+    else{
+      intakePercentOut = IntakeConstants.intakePercentOut;
+    }
 
-      if(!stateHandler.getEjecting()){ //if the intake in in reverse
-        switch(currentRobotState){
+      if(stateHandler.getEjecting()){ 
+        switch(stateHandler.getState()){
           case NO_BALLS:
             intake.stop();
+            break;
           case ONE_BALL_CLOSE_BROKEN:
             intake.setIntake(intakePercentOut);
+            break;
           case ONE_BALL_NONE_BROKEN:
             intake.setIntake(intakePercentOut);
+            break;
           case ONE_BALL_FAR_BROKEN:
             intake.setIntake(intakePercentOut);
+            break;
           case TWO_BALLS_BOTH_BROKEN:
             intake.setIntake(intakePercentOut);
+            break;
+          default:
+            intake.stop();
+            break;
         }
-      }
 
-      if(stateHandler.getEjecting()){
-        switch(currentRobotState){
+      } else {
+
+        switch(stateHandler.getState()){
           case NO_BALLS:
             intake.setIntake(intakePercentOut);
+            break;
           case ONE_BALL_CLOSE_BROKEN:
             intake.setIntake(intakePercentOut);
+            break;
           case ONE_BALL_NONE_BROKEN:
             intake.setIntake(intakePercentOut);
+            break;
           case ONE_BALL_FAR_BROKEN:
             intake.setIntake(intakePercentOut);
+            break;
           case TWO_BALLS_BOTH_BROKEN:
             intake.stop();
+            break;
+          default:
+            intake.stop();
+            break;
         }
+
       }
     
   }

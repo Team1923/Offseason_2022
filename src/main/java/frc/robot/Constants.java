@@ -39,8 +39,8 @@ public final class Constants {
                                                                                                                                    // RPM to meters per second to get MPS.
         public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
         public static final double kTurningEncoderTicks2RadPerSec = (10 * 60 / kTicksPerRotation) * kTurningEncoderRPM2RadPerSec; // ? Similar logic to kDriveEncoderTicks2MetersPerSec, must be tested and proven
-        public static final double kPTurning = .5;                                // ? Guess number, used by Zero to Autonomous so probably will be close
-        public static final double kDTurning = .01;
+        public static final double kPTurning = 0.5;                                // ? Guess number, used by Zero to Autonomous so probably will be close
+        public static final double kDTurning = 0.0;
     }
     
     // Constants relevant to the driving of the robot. All individual module constants subject to change
@@ -95,7 +95,7 @@ public final class Constants {
         public static final boolean kBackLeftDriveReversed = false;
         public static final boolean kBackLeftTurningReversed = false;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = .59;//5.97;//3.62;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 5.98;//5.97;//3.62;
         public static final boolean kBackLeftDriveAbsoluteEncoderOffsetReversed = true;
 
     }
@@ -108,10 +108,24 @@ public final class Constants {
         public static final int kDriverXAxis = 0; 
         public static final int kDriverRotAxis = 4; 
         public static final int kDriverFieldOrientedButtonIdx = 6; // Currently right bumper
-        public static final int kOperatorAButton = 1;
-        public static final int kOperatorBButton = 2;
-        public static final int kOperatorXButton = 3;
-        public static final int kOperatorYButton = 4;
+        public static final int kDriverAButton = 1;
+        public static final int kDriverBButton = 2;
+        public static final int kDriverXButton = 3;
+        public static final int kDriverYButton = 4;
+
+        public static final int kOperatorControllerPort = 1;
+        public static final int kOperatorLeftYAxis = 1;
+        public static final int kOperatorLeftXAxis = 0;
+        public static final int kOperatorRightYAxis = 5;
+        public static final int kOperatorRightXAxis = 4;
+        public static final int kOperatorXButton = 1;
+        public static final int kOperatorCircleButton = 2;
+        public static final int kOperatorSquareButton = 3;
+        public static final int kOperatorTriangleButton = 4;
+        public static final int kOperatorLeftBumper = 5;
+        public static final int kOperatorRightBumper = 6;
+        
+        
 
     }
 
@@ -195,7 +209,7 @@ public final class Constants {
         public static final SupplyCurrentLimitConfiguration hoodCurrentLimit = 
             new SupplyCurrentLimitConfiguration(true, hCurrentLimit, hThresholdLimit, 0.2);
         
-        public static final double hood_shootkP = .1;
+        public static final double hood_shootkP = 1;
         public static final double hood_shootkI = 0;
         public static final double hood_shootkD = 0;
         public static final double hood_shootkFF = 0;

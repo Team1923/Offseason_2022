@@ -4,6 +4,7 @@
 
 package frc.robot.commands.scoring;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.subsystems.HoodSubsystem;
@@ -33,13 +34,14 @@ public class HoodChangingSetpointCommand extends CommandBase {
   public void execute() {
     // Map the angle between the camera and the goal (range of [0,90]) onto the range of
     // motion of the hood (range [minPosition, maxPosition]). 
+
     double tickGoal = LIMELIGHT_SUBSYSTEM.map(
         0, 
         90, 
         HoodConstants.hoodMinPosition, 
         HoodConstants.hoodMaxPosition, 
-        //LIMELIGHT_SUBSYSTEM.angle());
-        45);
+        LIMELIGHT_SUBSYSTEM.angle());
+        
 
     // Adjust the generated angle by a scale factor. If the new angle is greater than the max
     // allowed angle, then cap it to the max allowed angle.
@@ -48,6 +50,8 @@ public class HoodChangingSetpointCommand extends CommandBase {
     } else {
       tickGoal *= HoodConstants.hoodScaleFactor;
     }
+
+    SmartDashboard.putNumber("TICK GOAL: ", tickGoal);
 
     HOOD_SUBSYSTEM.setHoodPosition(tickGoal);
   }

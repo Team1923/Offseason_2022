@@ -70,7 +70,7 @@ public class SwerveModule {
         
         // Instantiating PID controller for the steering motor, I think that a kP value will be 
         // enough to get the wheel to it's heading (pending testing)
-        turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
+        turningPidController = new PIDController(ModuleConstants.kPTurning, 0, ModuleConstants.kDTurning);
 
         // Set the PID controller to be "continious" between -PI and PI radians
         turningPidController.enableContinuousInput(-Math.PI, Math.PI);

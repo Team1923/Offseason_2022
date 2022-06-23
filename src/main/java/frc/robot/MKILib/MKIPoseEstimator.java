@@ -74,10 +74,16 @@ public class MKIPoseEstimator {
 
         // This will signify how different the measured values are. Subtracting one to define an equivlent measurement from the gyro and 
         // encoders to mean we do NOT use the gyro in our calculation.
-        double magnitudeDifference = (encoderMagnitude / gyroMagnitude) - 1;
+        double gyroBias;
+        if(gyroMagnitude < encoderMagnitude){
+            double magnitudeDifference = (encoderMagnitude / gyroMagnitude) - 1;
+            // Calculate how much weight we should assign to the gyro data, versus the encoder data.
+            gyroBias = Math.tanh(biasModifier * magnitudeDifference);
+        }
+        else{
+            gyroBias = 0;
+        }
         
-        // Calculate how much weight we should assign to the gyro data, versus the encoder data.
-        double gyroBias = Math.tanh(biasModifier * magnitudeDifference);
 
         // Get the filtered chassis x-velocity vector magnitude
         double finalXVector = (gyroBias * gyroSupplier.get().get(0)) + ((1-gyroBias) * xSum);

@@ -125,6 +125,11 @@ public class SwerveSubsystem extends SubsystemBase {
 
     SmartDashboard.putString("Better Odometer Position", betterOdometer.getPosition().toString());
 
+    SmartDashboard.putNumber("Front Right Position", frontRight.getTurningPositionRads());
+    SmartDashboard.putNumber("Front Left Position", frontLeft.getTurningPositionRads());
+    SmartDashboard.putNumber("Back Right Position", backRight.getTurningPositionRads());
+    SmartDashboard.putNumber("Back Left Position", backLeft.getTurningPositionRads());
+
   }
 
   // Zeros the heading of the gyro
@@ -179,9 +184,12 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public List<Double> getVelocityMagnitude() {
-    gyro.getAccumGyro(gyroArray);
+   // gyro.getAccumGyro(gyroArray);
+    //System.out.println(gyroArray);
 
-    return Arrays.asList(gyroArray[0] * Constants.gyroToMPS, gyroArray[1] * Constants.gyroToMPS);
+    // return Arrays.asList(gyroArray[0] * Constants.gyroToMPS, gyroArray[1] * Constants.gyroToMPS);
+
+    return Arrays.asList(1.0,1.0);
   }
 
 }
