@@ -195,7 +195,7 @@ public final class Constants {
         public static final double shooterkFF = .06;
 
         // Shooter target RPM threshold
-        public static final double shooterRPMThreshold = 100;
+        public static final double shooterRPMThreshold = 200;
         public static final double shooterTimeThreshold = .1;
 
         public static final double avoidStallSpeed = .1;
