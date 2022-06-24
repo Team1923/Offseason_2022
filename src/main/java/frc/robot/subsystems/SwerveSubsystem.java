@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -72,7 +73,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // ? Code is using a Pigeon 1 for testing, we will be upgrading to a Pigeon 2 so make sure that this gets updated to reflect that!
   private Pigeon2 gyro = new Pigeon2(Constants.kPigeonCANID, "Default Name");
-  private final MKISwerveDriveOdometry odometer = new MKISwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
+  private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
 
   private final MKIPoseEstimatorLimelight betterOdometer;
 
@@ -106,16 +107,16 @@ public class SwerveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Prints out robot heading for debug purposes
-    SmartDashboard.putNumber("Robot Heading: ", getHeading());
-    SmartDashboard.putString("Robot Location: ", getPose().getTranslation().toString());
-    SmartDashboard.putString("Robot Orientation: ", getPose().getRotation().toString());
+    //SmartDashboard.putNumber("Robot Heading: ", getHeading());
+    //SmartDashboard.putString("Robot Location: ", getPose().getTranslation().toString());
+    //SmartDashboard.putString("Robot Orientation: ", getPose().getRotation().toString());
 
-    SmartDashboard.putNumber("Front Left", frontLeft.getAbsoluteEncoderRad());
-    SmartDashboard.putNumber("Front Right", frontRight.getAbsoluteEncoderRad());
-    SmartDashboard.putNumber("Back Left", backLeft.getAbsoluteEncoderRad());
-    SmartDashboard.putNumber("Back Right", backRight.getAbsoluteEncoderRad());
+    //SmartDashboard.putNumber("Front Left", frontLeft.getAbsoluteEncoderRad());
+   // SmartDashboard.putNumber("Front Right", frontRight.getAbsoluteEncoderRad());
+    //SmartDashboard.putNumber("Back Left", backLeft.getAbsoluteEncoderRad());
+   // SmartDashboard.putNumber("Back Right", backRight.getAbsoluteEncoderRad());
 
-    SmartDashboard.putNumber("Gyro Velocity Value: ", MKIMath.magnitude(getVelocityMagnitude()));
+   // SmartDashboard.putNumber("Gyro Velocity Value: ", MKIMath.magnitude(getVelocityMagnitude()));
 
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
 
@@ -123,12 +124,12 @@ public class SwerveSubsystem extends SubsystemBase {
     betterOdometer.fixPoseLimelight();
 
 
-    SmartDashboard.putString("Better Odometer Position", betterOdometer.getPosition().toString());
+    //SmartDashboard.putString("Better Odometer Position", betterOdometer.getPosition().toString());
 
-    SmartDashboard.putNumber("Front Right Position", frontRight.getTurningPositionRads());
-    SmartDashboard.putNumber("Front Left Position", frontLeft.getTurningPositionRads());
-    SmartDashboard.putNumber("Back Right Position", backRight.getTurningPositionRads());
-    SmartDashboard.putNumber("Back Left Position", backLeft.getTurningPositionRads());
+    //SmartDashboard.putNumber("Front Right Position", frontRight.getTurningPositionRads());
+    //SmartDashboard.putNumber("Front Left Position", frontLeft.getTurningPositionRads());
+    //SmartDashboard.putNumber("Back Right Position", backRight.getTurningPositionRads());
+    //SmartDashboard.putNumber("Back Left Position", backLeft.getTurningPositionRads());
 
   }
 

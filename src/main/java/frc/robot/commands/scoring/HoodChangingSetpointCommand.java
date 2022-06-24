@@ -4,6 +4,8 @@
 
 package frc.robot.commands.scoring;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.HoodConstants;
@@ -20,7 +22,7 @@ public class HoodChangingSetpointCommand extends CommandBase {
     this.HOOD_SUBSYSTEM = hood;
     this.LIMELIGHT_SUBSYSTEM = limelight;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(HOOD_SUBSYSTEM);
+    addRequirements(HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM);
   }
 
   // Called when the command is initially scheduled.

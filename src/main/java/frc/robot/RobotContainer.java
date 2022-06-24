@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.autonomous.FollowTrajectory;
+import frc.robot.commands.ShootCommandGroup;
 import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.commands.drive.SwerveDriveCommand;
 import frc.robot.commands.scoring.HoodChangingSetpointCommand;
@@ -85,15 +86,15 @@ public class RobotContainer {
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
     SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM));
     CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, stateHandler));
-    HOOD_SUBSYSTEM.setDefaultCommand(new HoodChangingSetpointCommand(HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM));    
+    //HOOD_SUBSYSTEM.setDefaultCommand(new HoodChangingSetpointCommand(HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM));    
   }
 
   // Define what buttons will do
   private void configureButtonBindings() {
 
     // Run intake command
-    new JoystickButton(operatorJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, false));
-    new JoystickButton(operatorJoystick, OIConstants.kOperatorSquareButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, true));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, false));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorSquareButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, true));
     
     // Creates an "instant command" that will execute the line of code past the "() ->", zeros the heading
     new JoystickButton(driverJoystick, OIConstants.kDriverBButton).whenPressed(() -> SWERVE_SUBSYSTEM.zeroHeading());
@@ -101,14 +102,20 @@ public class RobotContainer {
     //reset heading button
     new JoystickButton(operatorJoystick, OIConstants.kOperatorCircleButton).whenPressed(() -> stateHandler.resetState());
 
-    new JoystickButton(operatorJoystick, OIConstants.kOperatorTriangleButton).whileHeld(new RunShooterCommand(SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, 3000));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorTriangleButton).whileHeld(new RunShooterCommand(SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, 5000));
 
     // Hub-centric driving command
-    new JoystickButton(driverJoystick, OIConstants.kDriverAButton).whileHeld(new GoalCentricCommand(
-      SWERVE_SUBSYSTEM, 
-      () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
-      () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis), 
-      LIMELIGHT_SUBSYSTEM));
+    // new JoystickButton(driverJoystick, OIConstants.kDriverAButton).whileHeld(new GoalCentricCommand(
+    //   SWERVE_SUBSYSTEM, 
+    //   () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
+    //   () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis), 
+    //   LIMELIGHT_SUBSYSTEM));
+
+      new JoystickButton(driverJoystick, OIConstants.kDriverAButton).whileHeld(new ShootCommandGroup(
+        SWERVE_SUBSYSTEM, 
+        () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
+        () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis), 
+        LIMELIGHT_SUBSYSTEM, HOOD_SUBSYSTEM));
 
   }
 

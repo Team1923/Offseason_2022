@@ -24,13 +24,20 @@ public class HoodSubsystem extends SubsystemBase {
     
     hoodMotor.configFactoryDefault();
 
-    // hoodMotor.configSupplyCurrentLimit(HoodConstants.hoodCurrentLimit);
-    // hoodMotor.configNominalOutputForward(0.0, Constants.timeoutMs);
-    // hoodMotor.configNominalOutputReverse(0.0, Constants.timeoutMs);
-    // hoodMotor.configPeakOutputForward(1.0, Constants.timeoutMs);
-    // hoodMotor.configPeakOutputReverse(-1.0, Constants.timeoutMs);
-
     hoodMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.timeoutMs);
+    
+    hoodMotor.configSupplyCurrentLimit(HoodConstants.hoodCurrentLimit);
+    hoodMotor.configNominalOutputForward(0.0, Constants.timeoutMs);
+    hoodMotor.configNominalOutputReverse(0.0, Constants.timeoutMs);
+    hoodMotor.configPeakOutputForward(1.0, Constants.timeoutMs);
+    hoodMotor.configPeakOutputReverse(-1.0, Constants.timeoutMs);
+
+    hoodMotor.configAllowableClosedloopError(0, 1);
+
+    hoodMotor.configMotionCruiseVelocity(7500);
+    hoodMotor.configMotionAcceleration(15000);
+
+
 
     //configure PID for hood
     setShootConstants();
@@ -61,7 +68,7 @@ public class HoodSubsystem extends SubsystemBase {
   }
 
   public void setHoodPosition(double setpoint) {
-    System.out.println(setpoint);
+    System.out.println(hoodMotor.getClosedLoopTarget());
     hoodMotor.set(ControlMode.MotionMagic, setpoint);
   }
 

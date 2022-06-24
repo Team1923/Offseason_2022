@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import org.opencv.core.Point;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.robot.pathplanning.MKISwerveDriveKinematics;
@@ -49,7 +50,7 @@ public final class Constants {
         public static final double kTrackWidth = Units.inchesToMeters(20.25); // ? Needs to be measured and the placeholder has to be replaced
         // Distance between front and back wheels
         public static final double kWheelBase = Units.inchesToMeters(20.25); // ? Needs to be measured and the placeholder has to be replaced
-        public static final MKISwerveDriveKinematics kDriveKinematics = new MKISwerveDriveKinematics(
+        public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
                 new Translation2d(kWheelBase / 2, -kTrackWidth / 2),   // + -
                 new Translation2d(kWheelBase / 2, kTrackWidth / 2),    // + +
                 new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),  // - -
@@ -92,10 +93,10 @@ public final class Constants {
         // Back Left Module
         public static final int kBackLeftDriveMotorPort = 6;
         public static final int kBackLeftTurningMotorPort = 7;
-        public static final boolean kBackLeftDriveReversed = false;
+        public static final boolean kBackLeftDriveReversed = true;
         public static final boolean kBackLeftTurningReversed = false;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 5.98;//5.97;//3.62;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.64;//5.97;//3.62;
         public static final boolean kBackLeftDriveAbsoluteEncoderOffsetReversed = true;
 
     }
@@ -186,10 +187,10 @@ public final class Constants {
             new SupplyCurrentLimitConfiguration(true, sCurrentLimit, sThresholdLimit, 0.2);
         
         // Tune these to achieve accurate shooter wheel startup 
-        public static final double shooterkP = .1;
+        public static final double shooterkP = .25;
         public static final double shooterkI = 0;
         public static final double shooterkD = .1;
-        public static final double shooterkFF = .05;
+        public static final double shooterkFF = .06;
 
         // Shooter target RPM threshold
         public static final double shooterRPMThreshold = 100;

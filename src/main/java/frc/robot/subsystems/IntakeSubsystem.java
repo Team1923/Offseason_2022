@@ -27,7 +27,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private WPI_TalonFX leftIntakeMotor = new WPI_TalonFX(IntakeConstants.leftIntakeMotorID);
   private WPI_TalonFX rightIntakeMotor = new WPI_TalonFX(IntakeConstants.rightIntakemotorID);
   
-  private boolean intake_reverse;
+  public boolean intake_reverse;
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
