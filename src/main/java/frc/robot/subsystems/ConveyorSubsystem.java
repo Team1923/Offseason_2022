@@ -46,9 +46,9 @@ public class ConveyorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("BEAM BREAK ONE: ", getFrontBeamBreak());
-    SmartDashboard.putBoolean("BEAM BREAK TWO: ", getBackBeamBreak());
-    SmartDashboard.putNumber("System Time", System.currentTimeMillis());
+    //SmartDashboard.putBoolean("BEAM BREAK ONE: ", getFrontBeamBreak());
+    //SmartDashboard.putBoolean("BEAM BREAK TWO: ", getBackBeamBreak());
+    //SmartDashboard.putNumber("System Time", System.currentTimeMillis());
   }
 
   public void setConveyor(double percentOut){

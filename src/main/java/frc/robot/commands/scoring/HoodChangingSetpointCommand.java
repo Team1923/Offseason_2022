@@ -53,7 +53,7 @@ public class HoodChangingSetpointCommand extends CommandBase {
       tickGoal *= HoodConstants.hoodScaleFactor;
     }
 
-    SmartDashboard.putNumber("TICK GOAL: ", tickGoal);
+    //SmartDashboard.putNumber("TICK GOAL: ", tickGoal);
 
     HOOD_SUBSYSTEM.setHoodPosition(tickGoal);
   }

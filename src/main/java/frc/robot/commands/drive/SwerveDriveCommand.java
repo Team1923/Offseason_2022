@@ -64,9 +64,9 @@ public class SwerveDriveCommand extends CommandBase {
 
     // Make the driving smoother and make the max value the physical max speed of the robot
     xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-    SmartDashboard.putNumber("xSpeed: ", xSpeed);
+    //SmartDashboard.putNumber("xSpeed: ", xSpeed);
     ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-    SmartDashboard.putNumber("ySpeed: ", ySpeed);
+    //SmartDashboard.putNumber("ySpeed: ", ySpeed);
     turningSpeed = turningLimiter.calculate(turningSpeed) * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
     // Handle field-oriented driving

@@ -28,7 +28,7 @@ public class ShooterAvoidStallCommand extends CommandBase {
   @Override
   public void execute() {
     SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
-    SmartDashboard.putNumber("SYSTEM TIME SHOOTER: ", System.currentTimeMillis());
+    //SmartDashboard.putNumber("SYSTEM TIME SHOOTER: ", System.currentTimeMillis());
   }
 
   // Called once the command ends or is interrupted.

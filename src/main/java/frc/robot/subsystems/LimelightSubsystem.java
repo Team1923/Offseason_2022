@@ -29,9 +29,9 @@ public class LimelightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("x angle: ", getX());
-    SmartDashboard.putNumber("y angle:", getY());
-    SmartDashboard.putNumber("area: ", getArea());
+    //SmartDashboard.putNumber("x angle: ", getX());
+    //SmartDashboard.putNumber("y angle:", getY());
+    //SmartDashboard.putNumber("area: ", getArea());
 
   }
 

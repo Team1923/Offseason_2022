@@ -110,7 +110,7 @@ public class StateHandler {
             currentRobotState = States.TWO_BALLS_BOTH_BROKEN;
         }
 
-        SmartDashboard.putString("Current Robot State: ", currentRobotState.toString());
+        //SmartDashboard.putString("Current Robot State: ", currentRobotState.toString());
 
     }
 

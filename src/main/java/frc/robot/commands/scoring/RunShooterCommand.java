@@ -59,11 +59,11 @@ public class RunShooterCommand extends CommandBase {
 
     // If the timer is above a certain value, we deem that the shooter is in an acceptable range.
     canFire = threshold_timer.get() > ShooterConstants.shooterTimeThreshold;
-    SmartDashboard.putNumber("THRESHOLD TIMER: ",threshold_timer.get());
+    //SmartDashboard.putNumber("THRESHOLD TIMER: ",threshold_timer.get());
 
 
     SHOOTER_SUBSYSTEM.setAcceptableRPMState(canFire);
-    SmartDashboard.putBoolean("Can Fire?", canFire);
+    //SmartDashboard.putBoolean("Can Fire?", canFire);
     if(canFire) {
       CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
     } else {

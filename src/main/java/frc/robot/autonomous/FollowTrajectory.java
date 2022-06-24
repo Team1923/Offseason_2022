@@ -32,7 +32,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
     //this.SWERVE_SUBSYSTEM = swerve;
     this.SWERVE_SUBSYSTEM = swerve;
     
-    SmartDashboard.putString("Path ID: ", path);
+    //SmartDashboard.putString("Path ID: ", path);
 
     // Load a trajectory fron the specified path and convert it to a WPILib trajectory
     MKIPathPlannerTrajectory loaded_trajectory = MKIPathPlanner.loadPath(
@@ -60,7 +60,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
 
     //System.out.println(loaded_trajectory.toString());
 
-    SmartDashboard.putString("Initial Pose: ", loaded_trajectory.getInitialPose().toString());
+    //SmartDashboard.putString("Initial Pose: ", loaded_trajectory.getInitialPose().toString());
 
     System.out.println(loaded_trajectory);
 

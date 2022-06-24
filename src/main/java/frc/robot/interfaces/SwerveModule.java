@@ -159,7 +159,7 @@ public class SwerveModule {
         turningMotor.set(ControlMode.PercentOutput, turningPidController.calculate(getTurningPositionRads(), state.angle.getRadians()));
 
         // Recommended debug printout for swerve state
-        SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "]", state.toString());
+        //SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "]", state.toString());
     }
 
     // Stop function 
