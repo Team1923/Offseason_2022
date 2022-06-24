@@ -40,7 +40,7 @@ public final class Constants {
                                                                                                                                    // RPM to meters per second to get MPS.
         public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
         public static final double kTurningEncoderTicks2RadPerSec = (10 * 60 / kTicksPerRotation) * kTurningEncoderRPM2RadPerSec; // ? Similar logic to kDriveEncoderTicks2MetersPerSec, must be tested and proven
-        public static final double kPTurning = 0.5;                                // ? Guess number, used by Zero to Autonomous so probably will be close
+        public static final double kPTurning = 0.35;                                // ? Guess number, used by Zero to Autonomous so probably will be close
         public static final double kDTurning = 0.0;
     }
     
@@ -69,7 +69,7 @@ public final class Constants {
         public static final boolean kFrontLeftDriveReversed = true;
         public static final boolean kFrontLeftTurningReversed = false;
         public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 3.72;
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 3.71;
         public static final boolean kFrontLeftDriveAbsoluteEncoderOffsetReversed = true;
 
         // Front Right Module
@@ -78,16 +78,16 @@ public final class Constants {
         public static final boolean kFrontRightDriveReversed = true;
         public static final boolean kFrontRightTurningReversed = false;
         public static final int kFrontRightDriveAbsoluteEncoderPort = 1;
-        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 3.93;
+        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 3.90;
         public static final boolean kFrontRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Right Module
         public static final int kBackRightDriveMotorPort = 4;
         public static final int kBackRightTurningMotorPort = 5;
-        public static final boolean kBackRightDriveReversed = true;
+        public static final boolean kBackRightDriveReversed = false;
         public static final boolean kBackRightTurningReversed = false;
         public static final int kBackRightDriveAbsoluteEncoderPort = 2;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 5.54;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 2.44;
         public static final boolean kBackRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Left Module
@@ -96,7 +96,7 @@ public final class Constants {
         public static final boolean kBackLeftDriveReversed = true;
         public static final boolean kBackLeftTurningReversed = false;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.64;//5.97;//3.62;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.62;//5.97;//3.62;
         public static final boolean kBackLeftDriveAbsoluteEncoderOffsetReversed = true;
 
     }
@@ -162,6 +162,7 @@ public final class Constants {
         public static final int leftIntakeMotorID = 8; //will need to be changed
         public static final int rightIntakemotorID = 9; //will need to be changed
         public static final double intakePercentOut = 0.5; //change this
+        public static final double intakeOutPercentOut = -0.9;
         public static final int currentLimit = 30; //still needs to be set
         public static final int thresholdLimit = 40; //still needs to be set I just guessed
         public static final SupplyCurrentLimitConfiguration intakeCurrentLimit =
@@ -171,6 +172,7 @@ public final class Constants {
     public static final class ConveyorConstants {
         public static final int conveyorMotorID = 10; //will need to be changed
         public static final double conveyorPercentOut = 0.5; //change this
+        public static final double conveyorOutPercentOut = -0.9;
         public static final double conveyorShootPercentOut = 0.96731; //change this
         public static final int currentLimit = 30; //still needs to be set
         public static final int thresholdLimit = 40; //still needs to be set I just guessed

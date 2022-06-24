@@ -41,7 +41,7 @@ public class StateManagedIntakeCommand extends CommandBase {
   public void execute() {
     double intakePercentOut;
     if(intakeReversed){
-      intakePercentOut = -IntakeConstants.intakePercentOut;
+      intakePercentOut = IntakeConstants.intakeOutPercentOut;
     }
     else{
       intakePercentOut = IntakeConstants.intakePercentOut;
@@ -54,19 +54,19 @@ public class StateManagedIntakeCommand extends CommandBase {
             break;
           case ONE_BALL_CLOSE_BROKEN:
             intake.setIntake(intakePercentOut);
-            conveyor.setConveyor(-ConveyorConstants.conveyorPercentOut);
+            conveyor.setConveyor(ConveyorConstants.conveyorOutPercentOut);
             break;
           case ONE_BALL_NONE_BROKEN:
             intake.setIntake(intakePercentOut);
-            conveyor.setConveyor(-ConveyorConstants.conveyorPercentOut);
+            conveyor.setConveyor(ConveyorConstants.conveyorOutPercentOut);
             break;
           case ONE_BALL_FAR_BROKEN:
             intake.setIntake(intakePercentOut);
-            conveyor.setConveyor(-ConveyorConstants.conveyorPercentOut);
+            conveyor.setConveyor(ConveyorConstants.conveyorOutPercentOut);
             break;
           case TWO_BALLS_BOTH_BROKEN:
             intake.setIntake(intakePercentOut);
-            conveyor.setConveyor(-ConveyorConstants.conveyorPercentOut);
+            conveyor.setConveyor(ConveyorConstants.conveyorOutPercentOut);
             break;
           default:
             intake.stop();
