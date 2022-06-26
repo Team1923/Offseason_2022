@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.ShooterData;
 import frc.robot.StateHandler;
 import frc.robot.UnitConversion;
 import frc.robot.Constants.ShooterConstants;
@@ -72,6 +73,8 @@ public class ShooterSubsystem extends SubsystemBase {
     acceptableRPM = false;
 
     resetEncoders();
+
+  
   }
 
   @Override

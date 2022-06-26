@@ -4,7 +4,14 @@
 
 package frc.robot;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import edu.wpi.first.math.trajectory.Trajectory.State;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -37,6 +44,8 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class RobotContainer {
 
   private final LimelightInterface Limelight = new LimelightInterface();
+
+  ShooterData shooterData = new ShooterData();
  
   // Subsystem Instances
   private final SwerveSubsystem SWERVE_SUBSYSTEM = new SwerveSubsystem(Limelight);
@@ -53,6 +62,7 @@ public class RobotContainer {
 
   // Singleton State Handler
   StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM);  
+
 
 
   // Joystick Instances
@@ -102,7 +112,7 @@ public class RobotContainer {
     //reset heading button
     new JoystickButton(operatorJoystick, OIConstants.kOperatorCircleButton).whenPressed(() -> stateHandler.resetState());
 
-    new JoystickButton(operatorJoystick, OIConstants.kOperatorTriangleButton).whileHeld(new RunShooterCommand(SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, 5000));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorTriangleButton).whileHeld(new RunShooterCommand(SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, shooterData, LIMELIGHT_SUBSYSTEM));
 
     // Hub-centric driving command
     // new JoystickButton(driverJoystick, OIConstants.kDriverAButton).whileHeld(new GoalCentricCommand(
@@ -115,7 +125,7 @@ public class RobotContainer {
         SWERVE_SUBSYSTEM, 
         () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
         () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis), 
-        LIMELIGHT_SUBSYSTEM, HOOD_SUBSYSTEM));
+        LIMELIGHT_SUBSYSTEM, HOOD_SUBSYSTEM, shooterData));
 
   }
 
@@ -123,7 +133,5 @@ public class RobotContainer {
     return new FollowTrajectory(SWERVE_SUBSYSTEM, "2m fwd");
   }
 
-  public void updateBooleans() {
 
-  }
 }
