@@ -6,31 +6,26 @@ package frc.robot.commands.scoring;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.ShooterData;
 import frc.robot.Constants.ConveyorConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ConveyorSubsystem;
-import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class RunShooterCommand extends CommandBase {
+public class AutoShooterCommand extends CommandBase {
 
   private ShooterSubsystem SHOOTER_SUBSYSTEM;
   private ConveyorSubsystem CONVEYOR_SUBSYSTEM;
+  private double goal_rpm;
   private Timer threshold_timer;
   private boolean canFire;
-  private ShooterData shooterData;
-  private LimelightSubsystem limelight;
 
   /** Creates a new RunShooterRPM. */
-  public RunShooterCommand(ShooterSubsystem shooter, ConveyorSubsystem conveyor, ShooterData shooterData, LimelightSubsystem limelight) {
+  public AutoShooterCommand(ShooterSubsystem shooter, ConveyorSubsystem conveyor, double rpm) {
     this.SHOOTER_SUBSYSTEM = shooter;
     this.CONVEYOR_SUBSYSTEM = conveyor;
-    this.limelight = limelight;
+    this.goal_rpm = rpm;
 
     threshold_timer = new Timer();
-
-    this.shooterData = shooterData;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM);
@@ -50,9 +45,7 @@ public class RunShooterCommand extends CommandBase {
   @Override
   public void execute() {
 
-    double goal_rpm = -shooterData.getData(limelight.getDistance())[1];
-
-    SHOOTER_SUBSYSTEM.setShooterWheelsRPM(goal_rpm);
+    SHOOTER_SUBSYSTEM.setShooterWheelsRPM(-goal_rpm);
 
     // If we are within a certain bound of RPM from the RPM goal, start at timer. Otherwise, reset and stop the timer.
     if (Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(goal_rpm)) < ShooterConstants.shooterRPMThreshold) {

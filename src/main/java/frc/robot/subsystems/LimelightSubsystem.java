@@ -57,4 +57,8 @@ public class LimelightSubsystem extends SubsystemBase {
     return limelight_mount_angle - getY();
   }
 
+  public double getDistance(){
+    return Limelight.distanceToTarget();
+  }
+
 }

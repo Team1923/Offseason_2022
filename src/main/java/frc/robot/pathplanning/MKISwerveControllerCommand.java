@@ -40,8 +40,6 @@ public class MKISwerveControllerCommand extends CommandBase {
   private final MKISwerveDriveKinematics m_kinematics;
   private final MKIHolonomicDriveController m_controller;
   private final Consumer<SwerveModuleState[]> m_outputModuleStates;
-  private final Supplier<Rotation2d> m_desiredRotation;
-
   /**
    * Constructs a new SwerveControllerCommand that when executed will follow the provided
    * trajectory. This command will not return output voltages but rather raw module states from the
@@ -86,8 +84,7 @@ public class MKISwerveControllerCommand extends CommandBase {
     m_outputModuleStates =
         requireNonNullParam(outputModuleStates, "outputModuleStates", "SwerveControllerCommand");
 
-    m_desiredRotation =
-        requireNonNullParam(desiredRotation, "desiredRotation", "SwerveControllerCommand");
+    requireNonNullParam(desiredRotation, "desiredRotation", "SwerveControllerCommand");
 
     addRequirements(requirements);
   }

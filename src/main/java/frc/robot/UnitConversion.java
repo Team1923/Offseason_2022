@@ -54,5 +54,10 @@ public class UnitConversion {
     return inches / 39.37;
   }
 
+  public static double angleToTicks(double angle){
+    //actually do the math later for hood angle to ticks
+    return 1.0*angle;
+  }
+
     
 }

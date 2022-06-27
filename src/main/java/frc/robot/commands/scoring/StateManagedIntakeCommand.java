@@ -4,13 +4,10 @@
 
 package frc.robot.commands.scoring;
 
-import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ConveyorConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.StateHandler.States;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
