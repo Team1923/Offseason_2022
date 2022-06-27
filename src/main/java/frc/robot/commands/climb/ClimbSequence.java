@@ -46,7 +46,26 @@ public class ClimbSequence extends SequentialCommandGroup {
           new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
           new HoodApplyVoltage(HOOD_SUBSYSTEM, 0.1)
         )
-      )
+      ),
+      new ParallelRaceGroup(
+        new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
+        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
+      new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
+      new ParallelRaceGroup(
+        new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 50)
+      ),
+      new ParallelRaceGroup(
+        new ArmsToPosition(CLIMB_SUBSYSTEM, -80),
+        new SequentialCommandGroup(
+          new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
+          new HoodApplyVoltage(HOOD_SUBSYSTEM, 0.1)
+        )
+      ),
+      new ParallelRaceGroup(
+        new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
+        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
+      new ArmsToPosition(CLIMB_SUBSYSTEM, 30)
       // new ArmsToPosition(CLIMB_SUBSYSTEM, -20),
       // new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 25000),
       // new ArmsToPosition(CLIMB_SUBSYSTEM, -60)
