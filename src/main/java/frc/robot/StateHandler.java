@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -32,6 +33,8 @@ public class StateHandler {
     private ShooterSubsystem SHOOTER_SUBSYSTEM;
     private IntakeSubsystem INTAKE_SUBSYSTEM;
     private ConveyorSubsystem CONVEYOR_SUBSYSTEM;
+
+    
 
     // Define all of the variables required to track the state of the robot.
     public StateHandler(ShooterSubsystem shooter, IntakeSubsystem intake, ConveyorSubsystem conveyor) {
@@ -109,7 +112,7 @@ public class StateHandler {
             currentRobotState = States.TWO_BALLS_BOTH_BROKEN;
         }
 
-        //SmartDashboard.putString("Current Robot State: ", currentRobotState.toString());
+        SmartDashboard.putString("Current Robot State: ", currentRobotState.toString());
 
     }
 

@@ -164,7 +164,7 @@ public class LimelightInterface extends SubsystemBase {
 
   public double distanceToTarget() {
     // Returns distance to target assuming 
-    return (target_height - limelight_height) / (Math.tan(Math.toRadians(limelight_mount_angle - getVerticalOffset())));
+    return (target_height - limelight_height) / (Math.tan(Math.toRadians(limelight_mount_angle + getVerticalOffset())));
   }
 
 }

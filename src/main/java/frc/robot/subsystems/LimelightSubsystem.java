@@ -33,6 +33,8 @@ public class LimelightSubsystem extends SubsystemBase {
     //SmartDashboard.putNumber("y angle:", getY());
     //SmartDashboard.putNumber("area: ", getArea());
 
+    SmartDashboard.putNumber("Distance", getDistance());
+
   }
 
   public double getX() {

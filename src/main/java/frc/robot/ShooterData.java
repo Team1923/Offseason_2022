@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterData {
@@ -19,7 +20,7 @@ public class ShooterData {
     LinkedList<Double[]> shooterData = new LinkedList<Double[]>();
 
     public void loadShooterData(){
-        String path = "shooter.csv";
+        String path = Filesystem.getDeployDirectory().toString() + "/shooter.csv";
         String line = "";
         try {
           try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -34,6 +35,8 @@ public class ShooterData {
                   for(int i = 0; i < newNewValues.length; i++){
                     newNewValues[i] = Double.parseDouble(newValues[i]);
                   }
+                  
+                  
    
                   shooterData.add(newNewValues);
    
@@ -49,13 +52,16 @@ public class ShooterData {
           DriverStation.reportError("IO Exception", true);
           e.printStackTrace();
         }
+     
         
       }
 
+
+
       int lowerBound(double distance){
             for(int i = 0; i < shooterData.get(0).length; i++){
-                if(distance >= shooterData.get(0)[i]){
-                    return i;
+                if(distance <= shooterData.get(0)[i]){
+                    return i-1;
                 }
             }
 
@@ -66,6 +72,7 @@ public class ShooterData {
 
         public double[] getData(double distance){
         int lBound = lowerBound(distance);
+        SmartDashboard.putNumber("LBOUND", lBound);
         if(lBound == shooterData.get(0).length-1){
             double[] temp = {shooterData.get(1)[shooterData.get(0).length-1], shooterData.get(2)[shooterData.get(0).length-1]};
             return temp;

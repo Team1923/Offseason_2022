@@ -155,6 +155,7 @@ public final class Constants {
         public static final double arm_allowedErr = 0;
     }
 
+    
     public static final class IntakeConstants {
         public static final int leftIntakeMotorID = 8; //will need to be changed
         public static final int rightIntakemotorID = 9; //will need to be changed
@@ -186,10 +187,10 @@ public final class Constants {
             new SupplyCurrentLimitConfiguration(true, sCurrentLimit, sThresholdLimit, 0.2);
         
         // Tune these to achieve accurate shooter wheel startup 
-        public static final double shooterkP = .25;
+        public static final double shooterkP = .5;
         public static final double shooterkI = 0;
-        public static final double shooterkD = .1;
-        public static final double shooterkFF = .06;
+        public static final double shooterkD = 0.1;
+        public static final double shooterkFF = 0.05;
 
         // Shooter target RPM threshold
         public static final double shooterRPMThreshold = 200;
@@ -219,8 +220,8 @@ public final class Constants {
         public static final double hood_climbkD = 0;
         public static final double hood_climbkFF = 0;
 
-        public static final double hoodMinPosition = 3000;
-        public static final double hoodMaxPosition = 30000;
+        public static final double hoodMinPosition = 0;
+        public static final double hoodMaxPosition = 39835;
         public static final double hoodScaleFactor = 1; // used to adjust the overall movement of the hood. Adjusts the angle of
                                                         // hood by this scale factor. Code should still never let it go above the max, though.
     }

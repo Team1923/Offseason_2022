@@ -4,6 +4,7 @@
 
 package frc.robot.commands.scoring;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ShooterData;
 import frc.robot.UnitConversion;
@@ -19,9 +20,10 @@ public class HoodChangingSetpointCommand extends CommandBase {
   private ShooterData shooterData;
 
   /** Creates a new HoodChangingSetpointCommand. */
-  public HoodChangingSetpointCommand(HoodSubsystem hood, LimelightSubsystem limelight, ShooterData shooterData) {
+  public HoodChangingSetpointCommand(HoodSubsystem hood, LimelightSubsystem limelight, ShooterData sData) {
     this.HOOD_SUBSYSTEM = hood;
     this.LIMELIGHT_SUBSYSTEM = limelight;
+    this.shooterData = sData;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM);
   }
@@ -38,7 +40,11 @@ public class HoodChangingSetpointCommand extends CommandBase {
     // Map the angle between the camera and the goal (range of [0,90]) onto the range of
     // motion of the hood (range [minPosition, maxPosition]). 
 
-    double tickGoal = UnitConversion.angleToTicks(shooterData.getData(LIMELIGHT_SUBSYSTEM.getDistance())[0]);
+    double[] arr = shooterData.getData(LIMELIGHT_SUBSYSTEM.getDistance());
+
+    double tickGoal = UnitConversion.angleToTicks(arr[0]-13);
+
+    SmartDashboard.putNumber("ANGLE", arr[0]-13);
 
     // Adjust the generated angle by a scale factor. If the new angle is greater than the max
     // allowed angle, then cap it to the max allowed angle.
@@ -51,7 +57,7 @@ public class HoodChangingSetpointCommand extends CommandBase {
     //SmartDashboard.putNumber("TICK GOAL: ", tickGoal);
 
     //HOOD_SUBSYSTEM.setHoodPosition(tickGoal);
-    HOOD_SUBSYSTEM.setHoodPosition(29000);
+    HOOD_SUBSYSTEM.setHoodPosition(tickGoal);
   }
 
   // Called once the command ends or is interrupted.

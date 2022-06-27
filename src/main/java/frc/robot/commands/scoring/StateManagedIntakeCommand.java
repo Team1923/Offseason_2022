@@ -48,6 +48,7 @@ public class StateManagedIntakeCommand extends CommandBase {
         switch(stateHandler.getState()){
           case NO_BALLS:
             intake.setIntake(intakePercentOut);
+            conveyor.setConveyor(ConveyorConstants.conveyorOutPercentOut);
             break;
           case ONE_BALL_CLOSE_BROKEN:
             intake.setIntake(intakePercentOut);

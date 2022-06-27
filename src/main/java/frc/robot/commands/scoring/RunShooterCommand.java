@@ -5,6 +5,7 @@
 package frc.robot.commands.scoring;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ShooterData;
 import frc.robot.Constants.ConveyorConstants;
@@ -51,6 +52,8 @@ public class RunShooterCommand extends CommandBase {
   public void execute() {
 
     double goal_rpm = -shooterData.getData(limelight.getDistance())[1];
+
+    SmartDashboard.putNumber("GOAL RPM", goal_rpm);
 
     SHOOTER_SUBSYSTEM.setShooterWheelsRPM(goal_rpm);
 

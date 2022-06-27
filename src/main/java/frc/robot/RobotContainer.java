@@ -19,6 +19,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.autonomous.FollowTrajectory;
 import frc.robot.commands.scoring.ShootCommandGroup;
 import frc.robot.commands.climb.ClimbSequence;
+import frc.robot.commands.climb.HoodHoldPosition;
 import frc.robot.commands.climb.HoodSingleSetpointCommand;
 import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.drive.GoalCentricCommand;
@@ -98,7 +99,7 @@ public class RobotContainer {
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
     SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM));
     CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, stateHandler));
-    //HOOD_SUBSYSTEM.setDefaultCommand(new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 10000));    
+    HOOD_SUBSYSTEM.setDefaultCommand(new HoodHoldPosition(HOOD_SUBSYSTEM, 0));    
   }
 
   // Define what buttons will do

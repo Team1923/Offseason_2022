@@ -55,8 +55,7 @@ public class UnitConversion {
   }
 
   public static double angleToTicks(double angle){
-    //actually do the math later for hood angle to ticks
-    return 1.0*angle;
+    return angle * (39835.0 / 83.5);
   }
 
     

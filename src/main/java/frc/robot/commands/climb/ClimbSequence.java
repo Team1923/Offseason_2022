@@ -6,8 +6,10 @@ package frc.robot.commands.climb;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
 
@@ -34,8 +36,17 @@ public class ClimbSequence extends SequentialCommandGroup {
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
       new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
-      new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 0),
-      new ArmsToPosition(CLIMB_SUBSYSTEM, 50)
+      new ParallelRaceGroup(
+        new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 50)
+      ),
+      new ParallelRaceGroup(
+        new ArmsToPosition(CLIMB_SUBSYSTEM, -80),
+        new SequentialCommandGroup(
+          new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
+          new HoodApplyVoltage(HOOD_SUBSYSTEM, 0.1)
+        )
+      )
       // new ArmsToPosition(CLIMB_SUBSYSTEM, -20),
       // new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 25000),
       // new ArmsToPosition(CLIMB_SUBSYSTEM, -60)
