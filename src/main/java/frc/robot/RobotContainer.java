@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.autonomous.FollowTrajectory;
-import frc.robot.commands.ShootCommandGroup;
+import frc.robot.commands.scoring.ShootCommandGroup;
 import frc.robot.commands.climb.ClimbSequence;
 import frc.robot.commands.climb.HoodSingleSetpointCommand;
 import frc.robot.commands.climb.ResetArms;

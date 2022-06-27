@@ -6,8 +6,6 @@ package frc.robot.commands.climb;
 
 import java.util.function.Supplier;
 
-import com.revrobotics.CIEColor;
-
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -25,20 +23,22 @@ public class ClimbSequence extends SequentialCommandGroup {
       new DeployArms(CLIMB_SUBSYSTEM).withTimeout(.5),
       new ArmsToPosition(CLIMB_SUBSYSTEM, 80),
       new WaitForButton(commit),
-      new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
       new ParallelRaceGroup(
-        new HoodApplyVoltage(HOOD_SUBSYSTEM, .1),
+        new SequentialCommandGroup(
+          new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
+          new HoodApplyVoltage(HOOD_SUBSYSTEM, .1)
+        ),
         new ArmsToPosition(CLIMB_SUBSYSTEM, -80)
       ),
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
       new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
-      new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 17000),
-      new ArmsToPosition(CLIMB_SUBSYSTEM, 50),
-      new ArmsToPosition(CLIMB_SUBSYSTEM, -20),
-      new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 25000),
-      new ArmsToPosition(CLIMB_SUBSYSTEM, -60)
+      new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 0),
+      new ArmsToPosition(CLIMB_SUBSYSTEM, 50)
+      // new ArmsToPosition(CLIMB_SUBSYSTEM, -20),
+      // new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 25000),
+      // new ArmsToPosition(CLIMB_SUBSYSTEM, -60)
     );
   }
 }
