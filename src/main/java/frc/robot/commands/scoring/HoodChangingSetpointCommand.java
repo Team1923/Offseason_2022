@@ -55,7 +55,8 @@ public class HoodChangingSetpointCommand extends CommandBase {
 
     //SmartDashboard.putNumber("TICK GOAL: ", tickGoal);
 
-    HOOD_SUBSYSTEM.setHoodPosition(tickGoal);
+    //HOOD_SUBSYSTEM.setHoodPosition(tickGoal);
+    HOOD_SUBSYSTEM.setHoodPosition(29000);
   }
 
   // Called once the command ends or is interrupted.

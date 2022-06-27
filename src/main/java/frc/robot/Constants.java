@@ -125,8 +125,6 @@ public final class Constants {
         public static final int kOperatorTriangleButton = 4;
         public static final int kOperatorLeftBumper = 5;
         public static final int kOperatorRightBumper = 6;
-        
-        
 
     }
 
@@ -145,17 +143,17 @@ public final class Constants {
     }
 
     public static final class ClimbConstants {
-        public static final double arm_kP = .1;
+        public static final double arm_kP = .001;
         public static final double arm_kI = 0;
-        public static final double arm_kD = 0;
+        public static final double arm_kD = .001;
         public static final double arm_kIz = 0;
-        public static final double arm_kFF = 0;
+        public static final double arm_kFF = .001;
         public static final double arm_maxOutput = 1;
         public static final double arm_minOutput = -1;
-        public static final double arm_maxVel = 2000;
+        public static final double arm_maxVel = 3000;
         public static final double arm_minVel = 0;
         public static final double arm_maxAcc = 1500;
-        public static final double arm_allowedErr = 100;
+        public static final double arm_allowedErr = 0;
     }
 
     public static final class IntakeConstants {
@@ -217,7 +215,7 @@ public final class Constants {
         public static final double hood_shootkD = 0;
         public static final double hood_shootkFF = 0;
 
-        public static final double hood_climbkP = .1;
+        public static final double hood_climbkP = .3;
         public static final double hood_climbkI = 0;
         public static final double hood_climbkD = 0;
         public static final double hood_climbkFF = 0;

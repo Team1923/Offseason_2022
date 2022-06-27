@@ -11,10 +11,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.autonomous.FollowTrajectory;
 import frc.robot.commands.ShootCommandGroup;
+import frc.robot.commands.climb.ClimbSequence;
+import frc.robot.commands.climb.HoodSingleSetpointCommand;
+import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.commands.drive.SwerveDriveCommand;
 import frc.robot.commands.scoring.HoodChangingSetpointCommand;
-import frc.robot.commands.scoring.HoodSingleSetpointCommand;
 import frc.robot.commands.scoring.RunShooterCommand;
 import frc.robot.commands.scoring.ShooterAvoidStallCommand;
 import frc.robot.commands.scoring.StateManagedConveyorCommand;
@@ -86,11 +88,14 @@ public class RobotContainer {
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
     SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM));
     CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, stateHandler));
-    //HOOD_SUBSYSTEM.setDefaultCommand(new HoodChangingSetpointCommand(HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM));    
+    //HOOD_SUBSYSTEM.setDefaultCommand(new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 10000));    
   }
 
   // Define what buttons will do
   private void configureButtonBindings() {
+
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new ClimbSequence(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5)));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
 
     // Run intake command
     new JoystickButton(operatorJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, false));

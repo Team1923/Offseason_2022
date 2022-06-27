@@ -48,12 +48,16 @@ public class HoodSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //SmartDashboard.putNumber("Hood Encoder Position: ", getPosition());
+    SmartDashboard.putNumber("Hood Encoder Position: ", getPosition());
     //SmartDashboard.putNumber("Hood Supply Current: ", hoodMotor.getSupplyCurrent());
-    //SmartDashboard.putNumber("Hood Output Current: ", hoodMotor.getStatorCurrent());
+    SmartDashboard.putNumber("Hood Output Current: ", hoodMotor.getStatorCurrent());
   }
 
   public void setClimbConstants() {
+    
+    hoodMotor.configMotionCruiseVelocity(13000);
+    hoodMotor.configMotionAcceleration(22000);
+
     hoodMotor.config_kP(0, HoodConstants.hood_climbkP, Constants.timeoutMs);
     hoodMotor.config_kI(0, HoodConstants.hood_climbkI, Constants.timeoutMs);
     hoodMotor.config_kD(0, HoodConstants.hood_climbkD, Constants.timeoutMs);
@@ -61,6 +65,10 @@ public class HoodSubsystem extends SubsystemBase {
   }
 
   public void setShootConstants() {
+    
+    hoodMotor.configMotionCruiseVelocity(7500);
+    hoodMotor.configMotionAcceleration(15000);
+
     hoodMotor.config_kP(0, HoodConstants.hood_shootkP, Constants.timeoutMs);
     hoodMotor.config_kI(0, HoodConstants.hood_shootkI, Constants.timeoutMs);
     hoodMotor.config_kD(0, HoodConstants.hood_shootkD, Constants.timeoutMs);
@@ -68,8 +76,11 @@ public class HoodSubsystem extends SubsystemBase {
   }
 
   public void setHoodPosition(double setpoint) {
-    System.out.println(hoodMotor.getClosedLoopTarget());
     hoodMotor.set(ControlMode.MotionMagic, setpoint);
+  }
+
+  public void set(double output) {
+    hoodMotor.set(ControlMode.PercentOutput, output);
   }
 
   public void stop() {
@@ -84,5 +95,8 @@ public class HoodSubsystem extends SubsystemBase {
     return hoodMotor.getSelectedSensorPosition();
   }
 
+  public void playMusic() {
+
+  }
   
 }

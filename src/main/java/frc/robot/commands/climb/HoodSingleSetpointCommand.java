@@ -2,8 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.scoring;
+package frc.robot.commands.climb;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.HoodSubsystem;
 
@@ -21,7 +22,7 @@ public class HoodSingleSetpointCommand extends CommandBase {
   private double loopsInsideAllowableError;
   private double loopsThreshold = 5;
 
-  private double tickThreshold = 100;
+  private double tickThreshold = 200;
 
   /** Creates a new HoodSingleSetpointCommand. */
   public HoodSingleSetpointCommand(HoodSubsystem hood, double position) {
@@ -51,14 +52,17 @@ public class HoodSingleSetpointCommand extends CommandBase {
   public void end(boolean interrupted) {
     HOOD_SUBSYSTEM.setShootConstants();
     HOOD_SUBSYSTEM.stop();
+    System.out.println("EXIT!!");
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // This will check if the ERROR of the Motion Magic is within our acceptable error threshold (ticks). If so, add one to the counter of how many loops we have been 
+    // This will check if the ERROR of the Motion Magic is within our acceptable error threshold (ticks).;If so, add one to the counter of how many loops we have been 
     // within this threshold. Otherwise, reset the counter.
     if(Math.abs(HOOD_SUBSYSTEM.getPosition()-goal) < tickThreshold) {
+      System.out.println("INSIDE GOAL!!");
       loopsInsideAllowableError++;
     } else {
       loopsInsideAllowableError = 0;
