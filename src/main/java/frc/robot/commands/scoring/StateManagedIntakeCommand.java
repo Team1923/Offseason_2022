@@ -4,10 +4,17 @@
 
 package frc.robot.commands.scoring;
 
+import java.sql.Driver;
+
+import javax.lang.model.util.ElementScanner6;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ConveyorConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -16,12 +23,13 @@ public class StateManagedIntakeCommand extends CommandBase {
   private StateHandler stateHandler;
   private boolean intakeReversed;
   private ConveyorSubsystem conveyor;
+  private MKIPicoColorSensor colorSensor;
 
-  public StateManagedIntakeCommand(IntakeSubsystem intake, StateHandler stateHandler, ConveyorSubsystem conveyor, boolean reversed) {
+  public StateManagedIntakeCommand(IntakeSubsystem intake, StateHandler stateHandler, ConveyorSubsystem conveyor, boolean reversed, MKIPicoColorSensor colorSensor) {
     this.intake = intake;
     this.stateHandler = stateHandler;
     this.conveyor = conveyor;
-
+    this.colorSensor = colorSensor;
     intakeReversed = reversed;
     addRequirements(intake);
   }
@@ -97,6 +105,7 @@ public class StateManagedIntakeCommand extends CommandBase {
       }
     
   }
+
 
   // Called once the command ends or is interrupted.
   @Override

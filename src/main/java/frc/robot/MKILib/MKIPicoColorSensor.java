@@ -10,6 +10,7 @@ import edu.wpi.first.hal.SerialPortJNI;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class MKIPicoColorSensor implements AutoCloseable {
   public static class RawColor {
@@ -189,10 +190,13 @@ public class MKIPicoColorSensor implements AutoCloseable {
     SerialPortJNI.serialClose(port);
   }
 
+  private Alliance alliance;
+
   public MKIPicoColorSensor() {
     readThread = new Thread(this::threadMain);
     readThread.setName("PicoColorSensorThread");
     readThread.start();
+    this.alliance = DriverStation.getAlliance();
   }
 
   public boolean isSensor0Connected() {
@@ -288,13 +292,13 @@ public class MKIPicoColorSensor implements AutoCloseable {
 
   public boolean isRed(int sensorID){
     if(sensorID == 0){
-        if(sensor0.red > sensor0.blue && sensor0.red > sensor0.green){ //just a random value, we can figure this out later
+        if(sensor0.red > sensor0.blue && sensor0.red > sensor0.green){ 
             return true;
         }
         return false;
     }
     else{
-        if(sensor1.red > sensor1.blue && sensor1.red > sensor1.green){ //just a random value, we can figure this out later
+        if(sensor1.red > sensor1.blue && sensor1.red > sensor1.green){ 
             return true;
         }
         return false;
@@ -303,13 +307,13 @@ public class MKIPicoColorSensor implements AutoCloseable {
 
   public boolean isGreen(int sensorID){
     if(sensorID == 0){
-        if(sensor0.green > sensor0.red && sensor0.green > sensor0.blue){ //just a random value, we can figure this out later
+        if(sensor0.green > sensor0.red && sensor0.green > sensor0.blue){ 
             return true;
         }
         return false;
     }
     else{
-        if(sensor1.green > sensor1.red && sensor1.green > sensor1.blue){ //just a random value, we can figure this out later
+        if(sensor1.green > sensor1.red && sensor1.green > sensor1.blue){ 
             return true;
         }
         return false;
@@ -329,6 +333,22 @@ public class MKIPicoColorSensor implements AutoCloseable {
         }
         return false;
     }
+  }
+
+  public boolean isRedAndRed(){
+    if(alliance.toString().equalsIgnoreCase("RED") && (isRed(0) || isRed(1))){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  public boolean isBlueAndBlue(){
+    if(alliance.toString().equalsIgnoreCase("BLUE") && (isBlue(0) || isBlue(1))){
+      return true;
+    }
+    return false;
   }
 
   

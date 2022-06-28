@@ -4,8 +4,13 @@
 
 package frc.robot.commands.climb;
 
+import javax.swing.colorchooser.ColorSelectionModel;
+
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.StateHandler;
+import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.subsystems.HoodSubsystem;
 
 
@@ -19,11 +24,16 @@ public class HoodHoldPosition extends CommandBase {
   
   private double goal;
 
+  private StateHandler stateHandler;
+  private MKIPicoColorSensor colorSensor;
+
 
   /** Creates a new HoodSingleSetpointCommand. */
-  public HoodHoldPosition(HoodSubsystem hood, double position) {
+  public HoodHoldPosition(HoodSubsystem hood, double position, StateHandler state, MKIPicoColorSensor color) {
     this.HOOD_SUBSYSTEM = hood;
     this.goal = position;
+    this.stateHandler = state;
+    this.colorSensor = color;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(HOOD_SUBSYSTEM);
   }
@@ -39,7 +49,28 @@ public class HoodHoldPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    HOOD_SUBSYSTEM.setHoodPosition(goal);
+    switch(stateHandler.getState()){
+      case NO_BALLS:
+        HOOD_SUBSYSTEM.setHoodPosition(goal);
+        break;
+      case ONE_BALL_CLOSE_BROKEN:
+        HOOD_SUBSYSTEM.setHoodPosition(goal);
+        break;
+      case ONE_BALL_NONE_BROKEN:
+        HOOD_SUBSYSTEM.setHoodPosition(goal);
+        break;
+      case ONE_BALL_FAR_BROKEN:
+        if((colorSensor.isRed(1) && !colorSensor.isRedAndRed()) || (colorSensor.isBlue(1) && !colorSensor.isBlueAndBlue()))
+          HOOD_SUBSYSTEM.setHoodPosition(40000);
+        break;
+      case TWO_BALLS_BOTH_BROKEN:
+        HOOD_SUBSYSTEM.setHoodPosition(goal);
+        break;
+      default:
+        HOOD_SUBSYSTEM.setHoodPosition(goal);
+        break;
+    }
+    
   }
 
   // Called once the command ends or is interrupted.

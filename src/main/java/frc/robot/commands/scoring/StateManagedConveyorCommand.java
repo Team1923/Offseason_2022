@@ -4,17 +4,23 @@
 
 package frc.robot.commands.scoring;
 
+import org.ejml.ops.ConvertMatrixData;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ConveyorConstants;
+import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.StateHandler.States;
 import frc.robot.subsystems.ConveyorSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class StateManagedConveyorCommand extends CommandBase {
 
   private ConveyorSubsystem CONVEYOR_SUBSYSTEM;
   private StateHandler stateHandler;
   private States currentRobotState;
+  private MKIPicoColorSensor colorSensor;
+  private ShooterSubsystem shooterSubsystem;
   /** 
    *  Defines a new 
    * 
@@ -22,9 +28,11 @@ public class StateManagedConveyorCommand extends CommandBase {
    * @param handler The singleton state handler.
    * @param intaking A boolean defining whether the robot is currently intaking vs shooting.
    */
-  public StateManagedConveyorCommand(ConveyorSubsystem conveyor, StateHandler handler) {
+  public StateManagedConveyorCommand(ConveyorSubsystem conveyor, ShooterSubsystem shooter, StateHandler handler, MKIPicoColorSensor color) {
     this.CONVEYOR_SUBSYSTEM = conveyor;
     this.stateHandler = handler;
+    this.colorSensor = color;
+    this.shooterSubsystem = shooter;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(CONVEYOR_SUBSYSTEM);
   }
@@ -51,13 +59,27 @@ public class StateManagedConveyorCommand extends CommandBase {
           CONVEYOR_SUBSYSTEM.setConveyor(conveyorPercentOut);
           break;
         case ONE_BALL_FAR_BROKEN:
-          CONVEYOR_SUBSYSTEM.stop();
+          if((colorSensor.isRed(1) && !colorSensor.isRedAndRed()) || (colorSensor.isBlue(1) && !colorSensor.isBlueAndBlue())){
+            if(shooterSubsystem.getAcceptableRPMState()){
+              CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
+            }
+
+          }
+          else{
+            CONVEYOR_SUBSYSTEM.stop();
+          }
+          
           break;
         case ONE_BALL_NONE_BROKEN:
           CONVEYOR_SUBSYSTEM.stop();
           break;
         case TWO_BALLS_BOTH_BROKEN:
-          CONVEYOR_SUBSYSTEM.stop();
+          if((colorSensor.isRed(1) && !colorSensor.isRedAndRed()) || (colorSensor.isBlue(1) && !colorSensor.isBlueAndBlue())){
+            CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorOutPercentOut);
+          }
+          else{
+            CONVEYOR_SUBSYSTEM.stop();
+          }
           break;
         default:
           CONVEYOR_SUBSYSTEM.stop();

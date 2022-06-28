@@ -4,7 +4,11 @@
 
 package frc.robot;
 
+import java.time.ZoneId;
+import java.time.chrono.ThaiBuddhistChronology;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -33,11 +37,12 @@ public class StateHandler {
     private ShooterSubsystem SHOOTER_SUBSYSTEM;
     private IntakeSubsystem INTAKE_SUBSYSTEM;
     private ConveyorSubsystem CONVEYOR_SUBSYSTEM;
+    private MKIPicoColorSensor colorSensor;
 
     
 
     // Define all of the variables required to track the state of the robot.
-    public StateHandler(ShooterSubsystem shooter, IntakeSubsystem intake, ConveyorSubsystem conveyor) {
+    public StateHandler(ShooterSubsystem shooter, IntakeSubsystem intake, ConveyorSubsystem conveyor, MKIPicoColorSensor colorSensor) {
         this.currentRobotState = States.NO_BALLS;
 
         this.SHOOTER_SUBSYSTEM = shooter;
@@ -46,6 +51,8 @@ public class StateHandler {
 
         this.acceptableRPM = false;
         this.intake_reverse = false;
+
+        ThaiBuddhistChronology.INSTANCE.dateNow(ZoneId.of("Bangkok"));
     }
 
     // Run the logic we determine to figure out the current state of the robot. 

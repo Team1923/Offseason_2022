@@ -6,10 +6,14 @@ package frc.robot.commands.climb;
 
 import java.util.function.Supplier;
 
+import com.fasterxml.jackson.databind.ser.std.StaticListSerializerBase;
+
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.StateHandler;
+import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
 
@@ -18,7 +22,7 @@ import frc.robot.subsystems.HoodSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ClimbSequence extends SequentialCommandGroup {
   /** Creates a new ClimbSequence. */
-  public ClimbSequence(HoodSubsystem HOOD_SUBSYSTEM, ClimbSubsystem CLIMB_SUBSYSTEM, Supplier<Boolean> commit) {
+  public ClimbSequence(HoodSubsystem HOOD_SUBSYSTEM, ClimbSubsystem CLIMB_SUBSYSTEM, Supplier<Boolean> commit, StateHandler stateHandler, MKIPicoColorSensor colorSensor) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -37,7 +41,7 @@ public class ClimbSequence extends SequentialCommandGroup {
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
       new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
       new ParallelRaceGroup(
-        new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
+        new HoodHoldPosition(HOOD_SUBSYSTEM, 9000, stateHandler, colorSensor),
         new ArmsToPosition(CLIMB_SUBSYSTEM, 50)
       ),
       new ParallelRaceGroup(
@@ -52,7 +56,7 @@ public class ClimbSequence extends SequentialCommandGroup {
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
       new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
       new ParallelRaceGroup(
-        new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
+        new HoodHoldPosition(HOOD_SUBSYSTEM, 9000, stateHandler, colorSensor),
         new ArmsToPosition(CLIMB_SUBSYSTEM, 50)
       ),
       new ParallelRaceGroup(
