@@ -27,7 +27,7 @@ public class ResetArms extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    CLIMB_SUBSYSTEM.set(-.2);
+    CLIMB_SUBSYSTEM.set(.2);
     System.out.println("IN!!!!");
   }
 

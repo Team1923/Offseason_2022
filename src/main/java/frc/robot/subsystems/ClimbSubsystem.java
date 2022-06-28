@@ -4,10 +4,12 @@
 
 package frc.robot.subsystems;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,7 +31,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
   /** Creates a new ClimbSubsystem. */
   public ClimbSubsystem() {
-
+    
     leftClimber = new CANSparkMax(17, MotorType.kBrushless);
     rightClimber = new CANSparkMax(18, MotorType.kBrushless);
 
@@ -67,6 +69,9 @@ public class ClimbSubsystem extends SubsystemBase {
     rightClimbPIDController.setSmartMotionMinOutputVelocity(ClimbConstants.arm_minVel, 0);
     rightClimbPIDController.setSmartMotionMaxAccel(ClimbConstants.arm_maxAcc, 0);
     rightClimbPIDController.setSmartMotionAllowedClosedLoopError(ClimbConstants.arm_allowedErr, 0);
+
+    leftClimber.setIdleMode(IdleMode.kBrake);
+    rightClimber.setIdleMode(IdleMode.kBrake);
 
     resetEncoders();
   }
@@ -113,7 +118,6 @@ public class ClimbSubsystem extends SubsystemBase {
 
   public void set(double output) {
     leftClimber.set(output);
-    rightClimber.set(-output);
   }
 
 }

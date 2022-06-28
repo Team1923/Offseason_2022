@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 
 import com.fasterxml.jackson.databind.ser.std.StaticListSerializerBase;
 
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -69,7 +70,11 @@ public class ClimbSequence extends SequentialCommandGroup {
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
-      new ArmsToPosition(CLIMB_SUBSYSTEM, 30)
+      new ParallelCommandGroup(
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
+        new HoodHoldPosition(HOOD_SUBSYSTEM, 36000, stateHandler, colorSensor)
+      )
+      
       // new ArmsToPosition(CLIMB_SUBSYSTEM, -20),
       // new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 25000),
       // new ArmsToPosition(CLIMB_SUBSYSTEM, -60)

@@ -6,10 +6,14 @@ package frc.robot.commands.drive;
 
 import java.util.function.Supplier;
 
+import org.opencv.core.Point;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.LimelightSubsystem;
@@ -85,6 +89,21 @@ public class GoalCentricCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     SWERVE_SUBSYSTEM.stop();
+  }
+
+  public double getHeadingTowardHub(){
+    Point hub = Constants.hubPosition;
+    double xHub = hub.x;
+    double yHub = hub.y;
+    double xCurrentRobot = SWERVE_SUBSYSTEM.getPose().getX();
+    double yCurrentRobot = SWERVE_SUBSYSTEM.getPose().getY();
+    double currentAngle = SWERVE_SUBSYSTEM.getPose().getRotation().getDegrees();
+    if(xHub > xCurrentRobot){
+      return (180 + currentAngle) - Math.toDegrees(Math.atan((xCurrentRobot - xHub) / (yCurrentRobot - yHub)));
+    }
+    else{
+      return Math.toDegrees(Math.atan((xCurrentRobot - xHub) / (yCurrentRobot - yHub)));
+    }
   }
 
   // Returns true when the command should end.
