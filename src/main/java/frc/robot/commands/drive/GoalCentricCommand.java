@@ -6,6 +6,8 @@ package frc.robot.commands.drive;
 
 import java.util.function.Supplier;
 
+import javax.sound.sampled.LineEvent;
+
 import org.opencv.core.Point;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -62,7 +64,13 @@ public class GoalCentricCommand extends CommandBase {
 
     // Instead of turning based off an axis value, lets use the horizontal angle to the 
     // target measured by the limelight times some value to make it fit within the scope of robot control
-    double turningSpeed = LIMELIGHT_SUBSYSTEM.getX() * kP;
+    double turningSpeed;
+    if(LIMELIGHT_SUBSYSTEM.hasTarget()){
+      turningSpeed = LIMELIGHT_SUBSYSTEM.getX() * kP;
+    }
+    else{
+      turningSpeed = getHeadingTowardHub() * kP;
+    }
 
     // Apply a deadband
     xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;

@@ -63,4 +63,8 @@ public class LimelightSubsystem extends SubsystemBase {
     return Limelight.distanceToTarget();
   }
 
+  public boolean hasTarget(){
+    return Limelight.validTargets();
+  }
+
 }

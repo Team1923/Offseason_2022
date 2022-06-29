@@ -17,9 +17,9 @@ import frc.robot.subsystems.HoodSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ClimbSequence extends SequentialCommandGroup {
+public class FullTraversalClimbSequence extends SequentialCommandGroup {
   /** Creates a new ClimbSequence. */
-  public ClimbSequence(HoodSubsystem HOOD_SUBSYSTEM, ClimbSubsystem CLIMB_SUBSYSTEM, Supplier<Boolean> commit, StateHandler stateHandler, MKIPicoColorSensor colorSensor) {
+  public FullTraversalClimbSequence(HoodSubsystem HOOD_SUBSYSTEM, ClimbSubsystem CLIMB_SUBSYSTEM, Supplier<Boolean> commit, StateHandler stateHandler, MKIPicoColorSensor colorSensor) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

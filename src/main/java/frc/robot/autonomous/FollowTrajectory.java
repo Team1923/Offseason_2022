@@ -7,8 +7,11 @@ package frc.robot.autonomous;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.LoadTrajectory;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.pathplanning.MKISwerveControllerCommand;
@@ -22,12 +25,16 @@ public class FollowTrajectory extends SequentialCommandGroup {
   // Declare swerve subsystem
   SwerveSubsystem SWERVE_SUBSYSTEM;
 
+  LoadTrajectory trajectoryLoader;
+
   /** Creates a new FollowTrajectory. */
   public FollowTrajectory(SwerveSubsystem swerve, String path) {
 
     // Set our local swerve subsystem to be equal to the one that was passed in, so we can access all of the same motors
     //this.SWERVE_SUBSYSTEM = swerve;
     this.SWERVE_SUBSYSTEM = swerve;
+
+    this.trajectoryLoader = new LoadTrajectory(path);
     
     //SmartDashboard.putString("Path ID: ", path);
 
@@ -65,7 +72,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
       ), 
       new InstantCommand(() -> SWERVE_SUBSYSTEM.stop()));
   }
-}
+
 
 
 
@@ -75,20 +82,19 @@ public class FollowTrajectory extends SequentialCommandGroup {
 // This is the manual way to make trajectories in WPILib. Trajectory config is used
 // to define the rotational constraints
 
-    // Create trajectory settings
-    // TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-    //     AutoConstants.kMaxSpeedMetersPerSecond,
-    //     AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-    //     .setKinematics(DriveConstants.kDriveKinematics
-    //     );
+    //Create trajectory settings
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+        AutoConstants.kMaxSpeedMetersPerSecond,
+        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        .setKinematics(DriveConstants.kDriveKinematics
+        );
 
-    // Generate Trajectory
-    // Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-    //     new Pose2d(0, 0, new Rotation2d(0)),
-    //     List.of(
-    //       new Translation2d(1, 0),
-    //       new Translation2d(1, -1)
-    //     ),
-    //     new Pose2d(2, -1, Rotation2d.fromDegrees(90)),
-    //     trajectoryConfig
-    //     );
+    //Generate Trajectory
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+        trajectoryLoader.getInitialPose(),
+        trajectoryLoader.getTranslations(),
+        trajectoryLoader.getFinalPose(),
+        trajectoryConfig
+        );
+
+}

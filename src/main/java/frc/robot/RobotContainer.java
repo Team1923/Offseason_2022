@@ -8,21 +8,27 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Driver;
 import java.util.ArrayList;
 
 import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
+import frc.robot.DesiredClimb.Climbs;
 import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.autonomous.FollowTrajectory;
 import frc.robot.commands.scoring.ShootCommandGroup;
-import frc.robot.commands.climb.ClimbSequence;
+import frc.robot.commands.climb.FullTraversalClimbSequence;
 import frc.robot.commands.climb.HoodHoldPosition;
 import frc.robot.commands.climb.HoodSingleSetpointCommand;
+import frc.robot.commands.climb.LevelThreeClimb;
+import frc.robot.commands.climb.LevelTwoClimb;
 import frc.robot.commands.climb.ResetArms;
+import frc.robot.commands.climb.TraversalArmsExtended;
 import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.commands.drive.SwerveDriveCommand;
 import frc.robot.commands.scoring.HoodChangingSetpointCommand;
@@ -60,6 +66,8 @@ public class RobotContainer {
   private final HoodSubsystem HOOD_SUBSYSTEM = new HoodSubsystem();
   private final ShooterSubsystem SHOOTER_SUBSYSTEM = new ShooterSubsystem();
 
+  private Climbs climbSequence;
+
   
 
   //color sensor
@@ -67,6 +75,7 @@ public class RobotContainer {
 
   // Singleton State Handler
   StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM);  
+  DesiredClimb climb = new DesiredClimb();
 
 
 
@@ -102,12 +111,32 @@ public class RobotContainer {
     SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, stateHandler, colorSensor));
     CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, SHOOTER_SUBSYSTEM, stateHandler, colorSensor));
     HOOD_SUBSYSTEM.setDefaultCommand(new HoodHoldPosition(HOOD_SUBSYSTEM, 0, stateHandler, colorSensor));    
+
+    climbSequence = climb.updateCurrentClimb(driverJoystick);
+    SmartDashboard.putString("CURRENT CLIMB SEQUENCE", climbSequence.toString());
   }
 
   // Define what buttons will do
   private void configureButtonBindings() {
-
-    new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new ClimbSequence(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+    switch(climbSequence){
+      case LEVEL_TWO:
+        new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new LevelTwoClimb(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+        break;
+      case LEVEL_THREE:
+        new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new LevelThreeClimb(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+        break;
+      case TRAVERSAL_ARMS_EXTENDED:
+      new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new TraversalArmsExtended(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+        break;
+      case FULL_TRAVERSAL:
+        new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new FullTraversalClimbSequence(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+        break;
+      default:
+        new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new FullTraversalClimbSequence(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+        break;
+    }
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new FullTraversalClimbSequence(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+    
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
 
     // Run intake command
