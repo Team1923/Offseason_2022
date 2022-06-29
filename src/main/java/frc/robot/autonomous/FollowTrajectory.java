@@ -6,13 +6,12 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.pathplanning.MKIPathPlanner;
-import frc.robot.pathplanning.MKIPathPlannerTrajectory;
+import frc.robot.pathplanning.MKISwerveControllerCommand;
 import frc.robot.subsystems.SwerveSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -33,12 +32,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
     //SmartDashboard.putString("Path ID: ", path);
 
     // Load a trajectory fron the specified path and convert it to a WPILib trajectory
-    MKIPathPlannerTrajectory loaded_trajectory = MKIPathPlanner.loadPath(
-          path, 
-          AutoConstants.kMaxSpeedMetersPerSecond, 
-          AutoConstants.kMaxAccelerationMetersPerSecondSquared
-    );
-
+    Trajectory loaded_trajectory = new Trajectory();
     
     // Instantiate the x and y PID controllers. They operate indepentently (Holomonic system)
     PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
@@ -53,20 +47,13 @@ public class FollowTrajectory extends SequentialCommandGroup {
     // Allow the robot to realize the wheels can spin in a full circle, allowing for jumps from max and min bounds
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-    // Instantiate the SwerveControllerCommand where we pass in all the stuff we defined and it will follow the trajectory
-    //SwerveControllerCommand swerveControllerCommand =;
-
-    //System.out.println(loaded_trajectory.toString());
-
-    //SmartDashboard.putString("Initial Pose: ", loaded_trajectory.getInitialPose().toString());
-
     System.out.println(loaded_trajectory);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(() -> SWERVE_SUBSYSTEM.resetOdometry(loaded_trajectory.getInitialPose())),
-      new SwerveControllerCommand(
+      new MKISwerveControllerCommand(
         loaded_trajectory,
         SWERVE_SUBSYSTEM::getPose,
         DriveConstants.kDriveKinematics,

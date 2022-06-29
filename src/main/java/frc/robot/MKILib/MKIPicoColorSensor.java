@@ -1,7 +1,6 @@
 package frc.robot.MKILib;
 
 import java.nio.charset.StandardCharsets;
-import java.sql.Driver;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 

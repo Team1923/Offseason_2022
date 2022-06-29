@@ -1,4 +1,4 @@
-package frc.robot.pathplanning;
+package frc.robot.pathplanning.dependencies;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;

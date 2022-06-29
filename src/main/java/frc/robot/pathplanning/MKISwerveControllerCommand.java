@@ -6,10 +6,12 @@ package frc.robot.pathplanning;
 
 import static edu.wpi.first.wpilibj.util.ErrorMessages.requireNonNullParam;
 
+import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Timer;
@@ -37,8 +39,8 @@ public class MKISwerveControllerCommand extends CommandBase {
   private final Timer m_timer = new Timer();
   private final Trajectory m_trajectory;
   private final Supplier<Pose2d> m_pose;
-  private final MKISwerveDriveKinematics m_kinematics;
-  private final MKIHolonomicDriveController m_controller;
+  private final SwerveDriveKinematics m_kinematics;
+  private final HolonomicDriveController m_controller;
   private final Consumer<SwerveModuleState[]> m_outputModuleStates;
   /**
    * Constructs a new SwerveControllerCommand that when executed will follow the provided
@@ -64,7 +66,7 @@ public class MKISwerveControllerCommand extends CommandBase {
   public MKISwerveControllerCommand(
       Trajectory trajectory,
       Supplier<Pose2d> pose,
-      MKISwerveDriveKinematics kinematics,
+      SwerveDriveKinematics kinematics,
       PIDController xController,
       PIDController yController,
       ProfiledPIDController thetaController,
@@ -76,7 +78,7 @@ public class MKISwerveControllerCommand extends CommandBase {
     m_kinematics = requireNonNullParam(kinematics, "kinematics", "SwerveControllerCommand");
 
     m_controller =
-        new MKIHolonomicDriveController(
+        new HolonomicDriveController(
             requireNonNullParam(xController, "xController", "SwerveControllerCommand"),
             requireNonNullParam(yController, "yController", "SwerveControllerCommand"),
             requireNonNullParam(thetaController, "thetaController", "SwerveControllerCommand"));
@@ -116,7 +118,7 @@ public class MKISwerveControllerCommand extends CommandBase {
   public MKISwerveControllerCommand(
       Trajectory trajectory,
       Supplier<Pose2d> pose,
-      MKISwerveDriveKinematics kinematics,
+      SwerveDriveKinematics kinematics,
       PIDController xController,
       PIDController yController,
       ProfiledPIDController thetaController,
@@ -151,6 +153,7 @@ public class MKISwerveControllerCommand extends CommandBase {
 
     double initialAngle = m_trajectory.getInitialPose().getRotation().getDegrees();
     double finalAngle = m_trajectory.getStates().get(m_trajectory.getStates().size() - 1).poseMeters.getRotation().getDegrees();
+
     double partialAngle = percentage * (finalAngle - initialAngle);
 
     Rotation2d newRotation = new Rotation2d(partialAngle);

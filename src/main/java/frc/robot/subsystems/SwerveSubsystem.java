@@ -25,7 +25,7 @@ import frc.robot.MKILib.MKIMath;
 import frc.robot.MKILib.MKIPoseEstimatorLimelight;
 import frc.robot.interfaces.LimelightInterface;
 import frc.robot.interfaces.SwerveModule;
-import frc.robot.pathplanning.MKISwerveDriveOdometry;
+import frc.robot.pathplanning.dependencies.MKISwerveDriveOdometry;
 
 @SuppressWarnings("unused")
 public class SwerveSubsystem extends SubsystemBase {

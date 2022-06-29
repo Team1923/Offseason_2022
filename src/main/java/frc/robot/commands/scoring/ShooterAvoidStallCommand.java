@@ -6,11 +6,9 @@ package frc.robot.commands.scoring;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.MKILib.MKIPicoColorSensor;
-import frc.robot.StateHandler.States;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterAvoidStallCommand extends CommandBase {
