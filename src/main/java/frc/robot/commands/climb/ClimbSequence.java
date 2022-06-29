@@ -6,13 +6,9 @@ package frc.robot.commands.climb;
 
 import java.util.function.Supplier;
 
-import com.fasterxml.jackson.databind.ser.std.StaticListSerializerBase;
-
-import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.StateHandler;
 import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.subsystems.ClimbSubsystem;

@@ -4,10 +4,6 @@
 
 package frc.robot.commands.climb;
 
-import javax.swing.colorchooser.ColorSelectionModel;
-
-import edu.wpi.first.math.trajectory.Trajectory.State;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.StateHandler;
 import frc.robot.MKILib.MKIPicoColorSensor;

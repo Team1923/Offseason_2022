@@ -4,8 +4,6 @@
 
 package frc.robot.commands.scoring;
 
-import org.ejml.ops.ConvertMatrixData;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ConveyorConstants;
@@ -63,7 +61,6 @@ public class StateManagedConveyorCommand extends CommandBase {
             if(shooterSubsystem.getAcceptableRPMState()){
               CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
             }
-
           }
           else{
             CONVEYOR_SUBSYSTEM.stop();
@@ -75,7 +72,9 @@ public class StateManagedConveyorCommand extends CommandBase {
           break;
         case TWO_BALLS_BOTH_BROKEN:
           if((colorSensor.isRed(1) && !colorSensor.isRedAndRed()) || (colorSensor.isBlue(1) && !colorSensor.isBlueAndBlue())){
-            CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorOutPercentOut);
+            if(shooterSubsystem.getAcceptableRPMState()){
+              CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
+            }
           }
           else{
             CONVEYOR_SUBSYSTEM.stop();

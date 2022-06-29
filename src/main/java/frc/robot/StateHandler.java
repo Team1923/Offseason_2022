@@ -4,11 +4,7 @@
 
 package frc.robot;
 
-import java.time.ZoneId;
-import java.time.chrono.ThaiBuddhistChronology;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
