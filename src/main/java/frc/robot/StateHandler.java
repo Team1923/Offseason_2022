@@ -51,6 +51,7 @@ public class StateHandler {
         // ThaiBuddhistChronology.INSTANCE.dateNow(ZoneId.of("Bangkok"));
 
 
+
     }
 
     // Run the logic we determine to figure out the current state of the robot. 
@@ -94,6 +95,9 @@ public class StateHandler {
 
                 if(!this.backBeamBreak && this.intake_reverse) {
                     this.currentRobotState = States.ONE_BALL_NONE_BROKEN;
+                }
+                if(!this.backBeamBreak && !this.intake_reverse){
+                    this.currentRobotState = States.NO_BALLS;
                 }
                 break;
             case TWO_BALLS_BOTH_BROKEN:

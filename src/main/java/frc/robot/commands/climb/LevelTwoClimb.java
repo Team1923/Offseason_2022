@@ -33,7 +33,11 @@ public class LevelTwoClimb extends SequentialCommandGroup {
         ),
         new ArmsToPosition(CLIMB_SUBSYSTEM, -80)
       ),
-        new HoodHoldPosition(HOOD_SUBSYSTEM, 40100, stateHandler, colorSensor)
+        new ParallelCommandGroup(
+            new ArmsToPosition(CLIMB_SUBSYSTEM, 10),
+            new HoodHoldPosition(HOOD_SUBSYSTEM, 40100, stateHandler, colorSensor)
+        )
+        
       
       
       // new ArmsToPosition(CLIMB_SUBSYSTEM, -20),

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.scoring;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ConveyorConstants;
@@ -19,6 +20,7 @@ public class StateManagedConveyorCommand extends CommandBase {
   private States currentRobotState;
   private MKIPicoColorSensor colorSensor;
   private ShooterSubsystem shooterSubsystem;
+  private Timer shittyTimer;
   /** 
    *  Defines a new 
    * 
@@ -31,6 +33,7 @@ public class StateManagedConveyorCommand extends CommandBase {
     this.stateHandler = handler;
     this.colorSensor = color;
     this.shooterSubsystem = shooter;
+    shittyTimer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(CONVEYOR_SUBSYSTEM);
   }
@@ -48,7 +51,7 @@ public class StateManagedConveyorCommand extends CommandBase {
     // Update the robot state in this command with the actual current robot state from the state handler.
     currentRobotState = stateHandler.getState();
 
-    double conveyorPercentOut = stateHandler.getEjecting() ?  -ConveyorConstants.conveyorPercentOut : ConveyorConstants.conveyorPercentOut;
+    double conveyorPercentOut = stateHandler.getEjecting() ?  ConveyorConstants.conveyorOutPercentOut : ConveyorConstants.conveyorPercentOut;
       switch(currentRobotState) {
         case NO_BALLS:
           CONVEYOR_SUBSYSTEM.stop();
@@ -57,25 +60,28 @@ public class StateManagedConveyorCommand extends CommandBase {
           CONVEYOR_SUBSYSTEM.setConveyor(conveyorPercentOut);
           break;
         case ONE_BALL_FAR_BROKEN:
-          if((colorSensor.isRed(1) && !colorSensor.isRedAndRed()) || (colorSensor.isBlue(1) && !colorSensor.isBlueAndBlue())){
+          //if((colorSensor.isRed(1) && !colorSensor.isRedAndRed()) || (colorSensor.isBlue(1) && !colorSensor.isBlueAndBlue())){
             if(shooterSubsystem.getAcceptableRPMState()){
               CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
+              System.out.println("SUCK");
             }
-          }
+          //}
           else{
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             CONVEYOR_SUBSYSTEM.stop();
           }
           
           break;
         case ONE_BALL_NONE_BROKEN:
+          
           CONVEYOR_SUBSYSTEM.stop();
           break;
         case TWO_BALLS_BOTH_BROKEN:
-          if((colorSensor.isRed(1) && !colorSensor.isRedAndRed()) || (colorSensor.isBlue(1) && !colorSensor.isBlueAndBlue())){
+          // if((colorSensor.isRed(1) && !colorSensor.isRedAndRed()) || (colorSensor.isBlue(1) && !colorSensor.isBlueAndBlue())){
             if(shooterSubsystem.getAcceptableRPMState()){
               CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
             }
-          }
+          //}
           else{
             CONVEYOR_SUBSYSTEM.stop();
           }
@@ -91,6 +97,7 @@ public class StateManagedConveyorCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     CONVEYOR_SUBSYSTEM.stop();
+    
   }
 
   // Returns true when the command should end.

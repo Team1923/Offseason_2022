@@ -13,6 +13,7 @@ import frc.robot.interfaces.LimelightInterface;
 public class LimelightSubsystem extends SubsystemBase {
   /** Creates a new LimelightSubsystem. */
   private LimelightInterface Limelight;
+  public boolean isGoalCentric;
   
 
   // height in inches of camera from ground
@@ -24,6 +25,7 @@ public class LimelightSubsystem extends SubsystemBase {
 
   public LimelightSubsystem(LimelightInterface limelight) {    
     Limelight = limelight;
+    isGoalCentric = false;
   }
 
   @Override
@@ -65,6 +67,14 @@ public class LimelightSubsystem extends SubsystemBase {
 
   public boolean hasTarget(){
     return Limelight.validTargets();
+  }
+
+  public void setIsGoalCentric(boolean bool){
+    isGoalCentric = bool;
+  }
+
+  public boolean getIsGoalCentric(){
+    return isGoalCentric;
   }
 
 }

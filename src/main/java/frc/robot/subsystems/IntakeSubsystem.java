@@ -71,7 +71,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("SOLENOID 1", solenoid1.get());
+    SmartDashboard.putBoolean("SOLENOID 2", solenoid2.get());
+    SmartDashboard.putBoolean("SOLENOID 3", solenoid3.get());
+    SmartDashboard.putBoolean("SOLENOID 4", solenoid4.get());
     
   }
 

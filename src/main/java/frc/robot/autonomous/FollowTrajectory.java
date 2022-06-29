@@ -15,6 +15,7 @@ import frc.robot.LoadTrajectory;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.pathplanning.MKISwerveControllerCommand;
+import frc.robot.pathplanning.MKITrajectoryGenerator;
 import frc.robot.subsystems.SwerveSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -39,7 +40,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
     //SmartDashboard.putString("Path ID: ", path);
 
     // Load a trajectory fron the specified path and convert it to a WPILib trajectory
-    Trajectory loaded_trajectory = new Trajectory();
+    Trajectory loaded_trajectory = MKITrajectoryGenerator.generateTrajectory(trajectoryLoader.getInitialPose(), trajectoryLoader.getTranslations(), trajectoryLoader.getFinalPose(), trajectoryLoader.getInitialVelocity(), trajectoryLoader.getFinalVelocity());
     
     // Instantiate the x and y PID controllers. They operate indepentently (Holomonic system)
     PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
@@ -82,19 +83,19 @@ public class FollowTrajectory extends SequentialCommandGroup {
 // This is the manual way to make trajectories in WPILib. Trajectory config is used
 // to define the rotational constraints
 
-    //Create trajectory settings
-    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-        AutoConstants.kMaxSpeedMetersPerSecond,
-        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-        .setKinematics(DriveConstants.kDriveKinematics
-        );
+    // //Create trajectory settings
+    // TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+    //     AutoConstants.kMaxSpeedMetersPerSecond,
+    //     AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+    //     .setKinematics(DriveConstants.kDriveKinematics
+    //     );
 
-    //Generate Trajectory
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        trajectoryLoader.getInitialPose(),
-        trajectoryLoader.getTranslations(),
-        trajectoryLoader.getFinalPose(),
-        trajectoryConfig
-        );
+    // //Generate Trajectory
+    // Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+    //     trajectoryLoader.getInitialPose(),
+    //     trajectoryLoader.getTranslations(),
+    //     trajectoryLoader.getFinalPose(),
+    //     trajectoryConfig
+    //     );
 
 }

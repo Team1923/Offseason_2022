@@ -58,6 +58,8 @@ public class GoalCentricCommand extends CommandBase {
   @Override
   public void execute() {
 
+    LIMELIGHT_SUBSYSTEM.isGoalCentric = true;
+
     // Get real-time joystick values
     double xSpeed = xSpdFunction.get();
     double ySpeed = ySpdFunction.get();
@@ -96,6 +98,7 @@ public class GoalCentricCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     SWERVE_SUBSYSTEM.stop();
+    LIMELIGHT_SUBSYSTEM.isGoalCentric = false;
   }
 
   public double getHeadingTowardHub(){
@@ -111,6 +114,8 @@ public class GoalCentricCommand extends CommandBase {
     else{
       return Math.toDegrees(Math.atan((xCurrentRobot - xHub) / (yCurrentRobot - yHub)));
     }
+
+    
   }
 
   // Returns true when the command should end.

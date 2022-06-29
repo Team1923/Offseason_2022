@@ -187,13 +187,13 @@ public final class Constants {
             new SupplyCurrentLimitConfiguration(true, sCurrentLimit, sThresholdLimit, 0.2);
         
         // Tune these to achieve accurate shooter wheel startup 
-        public static final double shooterkP = .5;
+        public static final double shooterkP = .2;
         public static final double shooterkI = 0;
-        public static final double shooterkD = 0.1;
+        public static final double shooterkD = 0.4;
         public static final double shooterkFF = 0.05;
 
         // Shooter target RPM threshold
-        public static final double shooterRPMThreshold = 200;
+        public static final double shooterRPMThreshold = 100;
         public static final double shooterTimeThreshold = .1;
 
         public static final double avoidStallSpeed = .1;

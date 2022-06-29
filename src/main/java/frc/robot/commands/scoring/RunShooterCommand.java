@@ -51,7 +51,15 @@ public class RunShooterCommand extends CommandBase {
   @Override
   public void execute() {
 
-    double goal_rpm = -shooterData.getData(limelight.getDistance())[1];
+    double goal_rpm;
+
+    if(limelight.getIsGoalCentric()){
+      goal_rpm = -shooterData.getData(limelight.getDistance())[1];
+    }
+    else{
+      goal_rpm = -3000;
+    }
+    
 
     SmartDashboard.putNumber("GOAL RPM", goal_rpm);
 
@@ -87,7 +95,9 @@ public class RunShooterCommand extends CommandBase {
   public void end(boolean interrupted) {
     SHOOTER_SUBSYSTEM.stop();
     CONVEYOR_SUBSYSTEM.stop();
+    SHOOTER_SUBSYSTEM.setAcceptableRPMState(false);
   }
+
 
   // Returns true when the command should end.
   @Override

@@ -54,14 +54,19 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class RobotContainer {
 
   private final LimelightInterface Limelight = new LimelightInterface();
+  private DesiredClimb desiredClimb = new DesiredClimb();
 
   ShooterData shooterData = new ShooterData();
+
+  // Joystick Instances
+  private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
+  private final Joystick operatorJoystick = new Joystick(OIConstants.kOperatorControllerPort);
  
   // Subsystem Instances
   private final SwerveSubsystem SWERVE_SUBSYSTEM = new SwerveSubsystem(Limelight);
   private final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem(Limelight);
   private final IntakeSubsystem INTAKE_SUBSYSTEM = new IntakeSubsystem();
-  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem();
+
   private final ConveyorSubsystem CONVEYOR_SUBSYSTEM = new ConveyorSubsystem();
   private final HoodSubsystem HOOD_SUBSYSTEM = new HoodSubsystem();
   private final ShooterSubsystem SHOOTER_SUBSYSTEM = new ShooterSubsystem();
@@ -77,11 +82,11 @@ public class RobotContainer {
   StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM);  
   DesiredClimb climb = new DesiredClimb();
 
+  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, desiredClimb, HOOD_SUBSYSTEM, driverJoystick, stateHandler, colorSensor);
 
 
-  // Joystick Instances
-  private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
-  private final Joystick operatorJoystick = new Joystick(OIConstants.kOperatorControllerPort);
+
+
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -112,30 +117,12 @@ public class RobotContainer {
     CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, SHOOTER_SUBSYSTEM, stateHandler, colorSensor));
     HOOD_SUBSYSTEM.setDefaultCommand(new HoodHoldPosition(HOOD_SUBSYSTEM, 0, stateHandler, colorSensor));    
 
-    climbSequence = climb.updateCurrentClimb(driverJoystick);
-    SmartDashboard.putString("CURRENT CLIMB SEQUENCE", climbSequence.toString());
+    
   }
 
   // Define what buttons will do
   private void configureButtonBindings() {
-    switch(climbSequence){
-      case LEVEL_TWO:
-        new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new LevelTwoClimb(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
-        break;
-      case LEVEL_THREE:
-        new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new LevelThreeClimb(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
-        break;
-      case TRAVERSAL_ARMS_EXTENDED:
-      new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new TraversalArmsExtended(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
-        break;
-      case FULL_TRAVERSAL:
-        new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new FullTraversalClimbSequence(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
-        break;
-      default:
-        new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new FullTraversalClimbSequence(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
-        break;
-    }
-    new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new FullTraversalClimbSequence(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+
     
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
 

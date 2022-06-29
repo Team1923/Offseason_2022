@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DesiredClimb {
 
@@ -11,24 +12,30 @@ public class DesiredClimb {
         FULL_TRAVERSAL
     }
 
-    public Climbs climb;
+    private Climbs climb = Climbs.FULL_TRAVERSAL;
 
     //idk these IDs we need to fix them
-    public Climbs updateCurrentClimb(Joystick joystick){
+    public void updateCurrentClimb(Joystick joystick){
+
+        SmartDashboard.putNumber("Operator DPAD Value: ", joystick.getPOV());
+
         //full traversal
-        if(joystick.getRawButton(8)){
-            return Climbs.FULL_TRAVERSAL;
+        if(joystick.getPOV() == 0){
+            climb = Climbs.FULL_TRAVERSAL;
         }
-        else if(joystick.getRawButton(8)){
-            return Climbs.TRAVERSAL_ARMS_EXTENDED;
+        else if(joystick.getPOV() == 90){
+            climb = Climbs.TRAVERSAL_ARMS_EXTENDED;
         }
-        else if(joystick.getRawButton(8)){
-            return Climbs.LEVEL_THREE;
+        else if(joystick.getPOV() == 270){
+            climb = Climbs.LEVEL_THREE;
         }
-        else if(joystick.getRawButton(8)){
-            return Climbs.LEVEL_TWO;
+        else if(joystick.getPOV() == 180){
+            climb = Climbs.LEVEL_TWO;
         }
-        return Climbs.FULL_TRAVERSAL;
+    }
+
+    public Climbs getCurrentClimb(){
+        return climb;
     }
 
 }

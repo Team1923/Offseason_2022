@@ -12,10 +12,20 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.DesiredClimb;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ClimbConstants;
+import frc.robot.Constants.OIConstants;
+import frc.robot.DesiredClimb.Climbs;
+import frc.robot.MKILib.MKIPicoColorSensor;
+import frc.robot.commands.climb.FullTraversalClimbSequence;
+import frc.robot.commands.climb.LevelThreeClimb;
+import frc.robot.commands.climb.LevelTwoClimb;
+import frc.robot.commands.climb.TraversalArmsExtended;
 
 @SuppressWarnings("unused")
 public class ClimbSubsystem extends SubsystemBase {
@@ -29,8 +39,15 @@ public class ClimbSubsystem extends SubsystemBase {
   private SparkMaxPIDController leftClimbPIDController;
   private SparkMaxPIDController rightClimbPIDController;
 
+  private DesiredClimb desiredClimb;
+  private Joystick operatorJoystick;
+  private HoodSubsystem HOOD_SUBSYSTEM;
+  private Joystick driverJoystick;
+  private StateHandler stateHandler;
+  private MKIPicoColorSensor colorSensor;
+
   /** Creates a new ClimbSubsystem. */
-  public ClimbSubsystem() {
+  public ClimbSubsystem(Joystick oJoystick, DesiredClimb d, HoodSubsystem hood, Joystick driver, StateHandler state, MKIPicoColorSensor color) {
     
     leftClimber = new CANSparkMax(17, MotorType.kBrushless);
     rightClimber = new CANSparkMax(18, MotorType.kBrushless);
@@ -73,6 +90,13 @@ public class ClimbSubsystem extends SubsystemBase {
     leftClimber.setIdleMode(IdleMode.kBrake);
     rightClimber.setIdleMode(IdleMode.kBrake);
 
+    this.operatorJoystick = oJoystick;
+    this.desiredClimb = d;
+    this.HOOD_SUBSYSTEM = hood;
+    this.driverJoystick = driver;
+    this.stateHandler = state;
+    this.colorSensor = color;
+
     resetEncoders();
   }
 
@@ -84,6 +108,27 @@ public class ClimbSubsystem extends SubsystemBase {
 
     //SmartDashboard.putNumber("Left Climber Current Draw: ", getLeftClimbCurrentDraw());
     //SmartDashboard.putNumber("Right Climber Current Draw: ", getRightClimbCurrentDraw());
+
+    desiredClimb.updateCurrentClimb(operatorJoystick);
+    SmartDashboard.putString("CURRENT CLIMB SEQUENCE", desiredClimb.getCurrentClimb().toString());
+
+    // switch(desiredClimb.getCurrentClimb()){
+    //   case FULL_TRAVERSAL:
+    //     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new FullTraversalClimbSequence(HOOD_SUBSYSTEM, this, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+    //     break;
+    //   case TRAVERSAL_ARMS_EXTENDED:
+    //     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new TraversalArmsExtended(HOOD_SUBSYSTEM, this, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+    //     break;
+    //   case LEVEL_THREE:
+    //     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new LevelThreeClimb(HOOD_SUBSYSTEM, this, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+    //     break;
+    //   case LEVEL_TWO:
+    //     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new LevelTwoClimb(HOOD_SUBSYSTEM, this, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
+    //     break;
+    //   default:
+    //     break;
+    // }
+    
   }
 
   public void resetEncoders() {

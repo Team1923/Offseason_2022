@@ -72,7 +72,7 @@ public class StateManagedIntakeCommand extends CommandBase {
         }
 
       } else {
-
+        
         switch(stateHandler.getState()){
           case NO_BALLS:
             intake.setIntake(intakePercentOut);
@@ -105,6 +105,7 @@ public class StateManagedIntakeCommand extends CommandBase {
     intake.stop();
     intake.setLow();
     conveyor.stop();
+    intake.intake_reverse = false;
   }
 
   // Returns true when the command should end.
