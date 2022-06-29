@@ -57,7 +57,7 @@ public class RunShooterCommand extends CommandBase {
       goal_rpm = -shooterData.getData(limelight.getDistance())[1];
     }
     else{
-      goal_rpm = -3000;
+      goal_rpm = -2750;
     }
     
 
