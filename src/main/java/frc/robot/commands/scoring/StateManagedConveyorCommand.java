@@ -4,11 +4,9 @@
 
 package frc.robot.commands.scoring;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ConveyorConstants;
-import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.StateHandler.States;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -18,9 +16,7 @@ public class StateManagedConveyorCommand extends CommandBase {
   private ConveyorSubsystem CONVEYOR_SUBSYSTEM;
   private StateHandler stateHandler;
   private States currentRobotState;
-  private MKIPicoColorSensor colorSensor;
   private ShooterSubsystem shooterSubsystem;
-  private Timer shittyTimer;
   /** 
    *  Defines a new 
    * 
@@ -28,12 +24,10 @@ public class StateManagedConveyorCommand extends CommandBase {
    * @param handler The singleton state handler.
    * @param intaking A boolean defining whether the robot is currently intaking vs shooting.
    */
-  public StateManagedConveyorCommand(ConveyorSubsystem conveyor, ShooterSubsystem shooter, StateHandler handler, MKIPicoColorSensor color) {
+  public StateManagedConveyorCommand(ConveyorSubsystem conveyor, ShooterSubsystem shooter, StateHandler handler) {
     this.CONVEYOR_SUBSYSTEM = conveyor;
     this.stateHandler = handler;
-    this.colorSensor = color;
     this.shooterSubsystem = shooter;
-    shittyTimer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(CONVEYOR_SUBSYSTEM);
   }

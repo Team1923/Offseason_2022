@@ -28,6 +28,7 @@ import frc.robot.commands.climb.HoodSingleSetpointCommand;
 import frc.robot.commands.climb.LevelThreeClimb;
 import frc.robot.commands.climb.LevelTwoClimb;
 import frc.robot.commands.climb.ResetArms;
+import frc.robot.commands.climb.ScheduleClimb;
 import frc.robot.commands.climb.TraversalArmsExtended;
 import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.commands.drive.SwerveDriveCommand;
@@ -82,7 +83,7 @@ public class RobotContainer {
   StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM);  
   DesiredClimb climb = new DesiredClimb();
 
-  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, desiredClimb, HOOD_SUBSYSTEM, driverJoystick, stateHandler, colorSensor);
+  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, climb, HOOD_SUBSYSTEM, driverJoystick, stateHandler, colorSensor);
 
 
 
@@ -114,7 +115,7 @@ public class RobotContainer {
 
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
     SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, stateHandler, colorSensor));
-    CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, SHOOTER_SUBSYSTEM, stateHandler, colorSensor));
+    CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, SHOOTER_SUBSYSTEM, stateHandler));
     HOOD_SUBSYSTEM.setDefaultCommand(new HoodHoldPosition(HOOD_SUBSYSTEM, 0, stateHandler, colorSensor));    
 
     
@@ -123,6 +124,7 @@ public class RobotContainer {
   // Define what buttons will do
   private void configureButtonBindings() {
 
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whenPressed(new ScheduleClimb(climb, HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, colorSensor, stateHandler, () -> driverJoystick.getRawButton(5)));
     
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
 

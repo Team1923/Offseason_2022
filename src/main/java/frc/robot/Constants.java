@@ -193,7 +193,7 @@ public final class Constants {
         public static final double shooterkFF = 0.05;
 
         // Shooter target RPM threshold
-        public static final double shooterRPMThreshold = 100;
+        public static final double shooterRPMThreshold = 150;
         public static final double shooterTimeThreshold = .1;
 
         public static final double avoidStallSpeed = .1;
@@ -204,6 +204,8 @@ public final class Constants {
 
     public static final class HoodConstants {
         public static final int hoodMotorID = 13; //change
+
+        public static final double zeroPosition = 40000;
 
         public static final int hCurrentLimit = 30;
         public static final int hThresholdLimit = 40;

@@ -90,7 +90,7 @@ public class HoodSubsystem extends SubsystemBase {
   }
 
   public void resetEncoder() {
-    hoodMotor.setSelectedSensorPosition(0);
+    hoodMotor.setSelectedSensorPosition(HoodConstants.zeroPosition);
   }
 
   public double getPosition() {
