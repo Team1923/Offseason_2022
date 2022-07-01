@@ -21,6 +21,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.DesiredClimb.Climbs;
 import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.autonomous.FollowTrajectory;
+import frc.robot.autonomous.ShittyAutoCommand;
 import frc.robot.commands.scoring.ShootCommandGroup;
 import frc.robot.commands.climb.FullTraversalClimbSequence;
 import frc.robot.commands.climb.HoodHoldPosition;
@@ -155,6 +156,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
+    //return new ShittyAutoCommand(SWERVE_SUBSYSTEM);
     return new FollowTrajectory(SWERVE_SUBSYSTEM, "testPath.csv");
   }
 
