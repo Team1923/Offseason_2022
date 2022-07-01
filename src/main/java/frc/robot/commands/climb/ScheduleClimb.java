@@ -11,7 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.DesiredClimb;
 import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public class ScheduleClimb extends CommandBase {
 
@@ -19,14 +23,22 @@ public class ScheduleClimb extends CommandBase {
   HoodSubsystem HOOD_SUBSYSTEM;
   ClimbSubsystem CLIMB_SUBSYSTEM;
   Supplier<Boolean> commit;
+  ConveyorSubsystem conveyor;
+  IntakeSubsystem intake;
+  ShooterSubsystem shooter;
+  SwerveSubsystem swerve;
 
   /** Creates a new ScheduleClimb. */
-  public ScheduleClimb(DesiredClimb dc, HoodSubsystem hood, ClimbSubsystem climb, Supplier<Boolean> supplier) {
+  public ScheduleClimb(DesiredClimb dc, HoodSubsystem hood, ClimbSubsystem climb, Supplier<Boolean> supplier, ConveyorSubsystem conveyor, IntakeSubsystem intake, ShooterSubsystem shooter, SwerveSubsystem swerve) {
     // Use addRequirements() here to declare subsystem dependencie
     this.desiredClimb = dc;
     this.HOOD_SUBSYSTEM = hood;
     this.CLIMB_SUBSYSTEM = climb;
     this.commit = supplier;
+    this.conveyor = conveyor;
+    this.intake = intake;
+    this.shooter = shooter;
+    this.swerve = swerve;
   }
 
   // Called when the command is initially scheduled.
@@ -37,7 +49,7 @@ public class ScheduleClimb extends CommandBase {
     switch(desiredClimb.getCurrentClimb()) {
       case FULL_TRAVERSAL:
         SmartDashboard.putNumber("CLIMB VALUE: ", 1);
-        CommandScheduler.getInstance().schedule(new FullTraversalClimbSequence(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, commit));
+        CommandScheduler.getInstance().schedule(new FullTraversalClimbSequence(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, commit, conveyor, shooter, swerve, intake));
         break;
       case LEVEL_THREE:
       SmartDashboard.putNumber("CLIMB VALUE: ", 2);

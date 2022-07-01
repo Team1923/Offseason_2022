@@ -7,6 +7,8 @@ package frc.robot.commands.climb;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.swing.plaf.basic.BasicComboPopup.InvocationKeyHandler;
+
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.music.Orchestra;
@@ -18,42 +20,62 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.ConveyorSubsystem;
+import frc.robot.subsystems.HoodSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public class PlayMusic extends CommandBase {
   private Orchestra orchestra;
-    private WPI_TalonFX [] motors = {
-        new WPI_TalonFX(DriveConstants.kFrontLeftDriveMotorPort),
-        new WPI_TalonFX(DriveConstants.kFrontLeftTurningMotorPort),
-        new WPI_TalonFX(DriveConstants.kFrontRightDriveMotorPort),
-        new WPI_TalonFX(DriveConstants.kFrontRightTurningMotorPort),
-        new WPI_TalonFX(DriveConstants.kBackLeftDriveMotorPort),
-        new WPI_TalonFX(DriveConstants.kBackLeftTurningMotorPort),
-        new WPI_TalonFX(DriveConstants.kBackRightDriveMotorPort),
-        new WPI_TalonFX(DriveConstants.kBackRightTurningMotorPort),
-        new WPI_TalonFX(IntakeConstants.leftIntakeMotorID),
-        new WPI_TalonFX(IntakeConstants.rightIntakemotorID),
-        new WPI_TalonFX(ConveyorConstants.conveyorMotorID),
-        new WPI_TalonFX(ShooterConstants.leftShooterMotorID),
-        new WPI_TalonFX(ShooterConstants.rightShooterMotorID),
-        new WPI_TalonFX(HoodConstants.hoodMotorID)
-    };    
+  private ConveyorSubsystem conveyor;
+  private HoodSubsystem hood;
+  private IntakeSubsystem intake;
+  private ShooterSubsystem shooter;
+  private SwerveSubsystem swerve;
+
+  private Collection<TalonFX> talons = new ArrayList<TalonFX>();
+  
+
+  public PlayMusic(int selection, ConveyorSubsystem conveyor, HoodSubsystem hood, IntakeSubsystem intake, ShooterSubsystem shooter, SwerveSubsystem swerve){
+    songSelection = selection;
+    this.conveyor = conveyor;
+    this.hood  = hood;
+    this.intake = intake;
+    this.shooter = shooter;
+    this.swerve = swerve;
+
+    addTalons();
+    
+    orchestra = new Orchestra(talons);
+    
+}
+
+    public void addTalons(){
+      // talons.add(conveyor.conveyorMotor);
+      talons.add(intake.leftIntakeMotor);
+      talons.add(intake.rightIntakeMotor);
+      // talons.add(swerve.backRight.turningMotor);
+      // talons.add(swerve.backRight.driveMotor);
+      // talons.add(swerve.frontRight.turningMotor);
+      // talons.add(swerve.frontRight.driveMotor);
+      // talons.add(swerve.backLeft.driveMotor);
+      // talons.add(swerve.backLeft.turningMotor);
+      // talons.add(swerve.frontLeft.turningMotor);
+      // talons.add(swerve.frontLeft.driveMotor);
+    }
+      
 
     private String[] songs = {
         Filesystem.getDeployDirectory().toString() + "/music/rushE.chrp"
     };
 
+    
     private int songSelection;
 
-    public PlayMusic(int selection){
-        songSelection = selection;
-        Collection<TalonFX> talons = new ArrayList<TalonFX>();
-        for(int i = 0; i < motors.length; i++){
-            talons.add(motors[i]);
-        }
-        orchestra = new Orchestra(talons);
-        loadMusic();
-        orchestra.play();
-    }
+ 
 
     public void loadMusic(){
       orchestra.loadMusic(songs[songSelection]);
@@ -61,7 +83,10 @@ public class PlayMusic extends CommandBase {
 
   
   @Override
-  public void initialize() {}
+  public void initialize() {
+      loadMusic();
+      orchestra.play();
+  }
 
   
   @Override

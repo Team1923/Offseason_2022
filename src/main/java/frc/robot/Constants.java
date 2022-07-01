@@ -132,9 +132,9 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 7;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 4;
-        public static final double kPXController = 0;//2.5;
-        public static final double kPYController = 0;
-        public static final double kPThetaController = 0;
+        public static final double kPXController = 0.1;//2.5;
+        public static final double kPYController = 0.1;
+        public static final double kPThetaController = 20;
 
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
             new TrapezoidProfile.Constraints(kMaxAngularSpeedRadiansPerSecond, 
@@ -196,7 +196,7 @@ public final class Constants {
         public static final double shooterRPMThreshold = 150;
         public static final double shooterTimeThreshold = .1;
 
-        public static final double avoidStallSpeed = .1;
+        public static final double avoidStallSpeed = 0;
 
         public static final double shooterPercentOut = 0.25;
         
@@ -205,7 +205,7 @@ public final class Constants {
     public static final class HoodConstants {
         public static final int hoodMotorID = 13; //change
 
-        public static final double zeroPosition = 40000;
+        public static final double zeroPosition = 0;
 
         public static final int hCurrentLimit = 30;
         public static final int hThresholdLimit = 40;

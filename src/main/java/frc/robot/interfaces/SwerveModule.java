@@ -21,8 +21,8 @@ import frc.robot.Constants.ModuleConstants;
 public class SwerveModule {
 
     // Motors
-    private final WPI_TalonFX driveMotor;
-    private final WPI_TalonFX turningMotor;
+    public final WPI_TalonFX driveMotor;
+    public final WPI_TalonFX turningMotor;
 
     // Turning PID controller 
     private final PIDController turningPidController;

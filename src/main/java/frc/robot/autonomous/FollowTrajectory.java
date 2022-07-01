@@ -7,6 +7,8 @@ package frc.robot.autonomous;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.LoadTrajectory;
@@ -33,13 +35,15 @@ public class FollowTrajectory extends SequentialCommandGroup {
     //this.SWERVE_SUBSYSTEM = swerve;
     this.SWERVE_SUBSYSTEM = swerve;
 
-    this.trajectoryLoader = new LoadTrajectory(path);
+    this.trajectoryLoader = new LoadTrajectory("/routines/" + path);
     
     //SmartDashboard.putString("Path ID: ", path);
 
     // Load a trajectory fron the specified path and convert it to a WPILib trajectory
     Trajectory loaded_trajectory = MKITrajectoryGenerator.generateTrajectory(trajectoryLoader.getInitialPose(), trajectoryLoader.getTranslations(), trajectoryLoader.getFinalPose(), trajectoryLoader.getInitialVelocity(), trajectoryLoader.getFinalVelocity());
     
+    SmartDashboard.putString("Start Pose", trajectoryLoader.getInitialPose().toString());
+    SmartDashboard.putString("End Pose", trajectoryLoader.getFinalPose().toString());
     // Instantiate the x and y PID controllers. They operate indepentently (Holomonic system)
     PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
     PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);
@@ -69,7 +73,9 @@ public class FollowTrajectory extends SequentialCommandGroup {
         SWERVE_SUBSYSTEM::setModuleStates,
         SWERVE_SUBSYSTEM
       ), 
-      new InstantCommand(() -> SWERVE_SUBSYSTEM.stop()));
+      new InstantCommand(() -> SWERVE_SUBSYSTEM.stop()),
+      new InstantCommand(() -> SWERVE_SUBSYSTEM.resetEncoders())
+      );
   }
 
 

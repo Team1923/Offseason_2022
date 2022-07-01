@@ -35,7 +35,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private double[] gyroArray;
 
   // Instantiating four modules using the constants defined in the DriveConstants class in the constants file
-  private final SwerveModule frontLeft = new SwerveModule(
+  public final SwerveModule frontLeft = new SwerveModule(
       DriveConstants.kFrontLeftDriveMotorPort,
       DriveConstants.kFrontLeftTurningMotorPort,
       DriveConstants.kFrontLeftDriveReversed,
@@ -44,7 +44,7 @@ public class SwerveSubsystem extends SubsystemBase {
       DriveConstants.kFrontLeftDriveAbsoluteEncoderOffsetRad,
       DriveConstants.kFrontLeftDriveAbsoluteEncoderOffsetReversed);
 
-  private final SwerveModule frontRight = new SwerveModule(
+  public final SwerveModule frontRight = new SwerveModule(
       DriveConstants.kFrontRightDriveMotorPort,
       DriveConstants.kFrontRightTurningMotorPort,
       DriveConstants.kFrontRightDriveReversed,
@@ -53,7 +53,7 @@ public class SwerveSubsystem extends SubsystemBase {
       DriveConstants.kFrontRightDriveAbsoluteEncoderOffsetRad,
       DriveConstants.kFrontRightDriveAbsoluteEncoderOffsetReversed);
 
-  private final SwerveModule backRight = new SwerveModule(
+  public final SwerveModule backRight = new SwerveModule(
       DriveConstants.kBackRightDriveMotorPort,
       DriveConstants.kBackRightTurningMotorPort,
       DriveConstants.kBackRightDriveReversed,
@@ -62,7 +62,7 @@ public class SwerveSubsystem extends SubsystemBase {
       DriveConstants.kBackRightDriveAbsoluteEncoderOffsetRad,
       DriveConstants.kBackRightDriveAbsoluteEncoderOffsetReversed);
 
-  private final SwerveModule backLeft = new SwerveModule(
+  public final SwerveModule backLeft = new SwerveModule(
       DriveConstants.kBackLeftDriveMotorPort,
       DriveConstants.kBackLeftTurningMotorPort,
       DriveConstants.kBackLeftDriveReversed,
@@ -74,8 +74,6 @@ public class SwerveSubsystem extends SubsystemBase {
   // ? Code is using a Pigeon 1 for testing, we will be upgrading to a Pigeon 2 so make sure that this gets updated to reflect that!
   private Pigeon2 gyro = new Pigeon2(Constants.kPigeonCANID, "Default Name");
   private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
-
-  private final MKIPoseEstimatorLimelight betterOdometer;
 
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem(LimelightInterface lInterface) {
@@ -93,15 +91,6 @@ public class SwerveSubsystem extends SubsystemBase {
     }).start();
 
 
-    betterOdometer = new MKIPoseEstimatorLimelight(
-      frontLeft::getState, 
-      frontRight::getState, 
-      backLeft::getState, 
-      backRight::getState, 
-      new Translation2d(0, 0), 
-      limelightInterface,
-      () -> getVelocityMagnitude());
-
   }
 
   @Override
@@ -111,17 +100,16 @@ public class SwerveSubsystem extends SubsystemBase {
     //SmartDashboard.putString("Robot Location: ", getPose().getTranslation().toString());
     //SmartDashboard.putString("Robot Orientation: ", getPose().getRotation().toString());
 
-    //SmartDashboard.putNumber("Front Left", frontLeft.getAbsoluteEncoderRad());
-   // SmartDashboard.putNumber("Front Right", frontRight.getAbsoluteEncoderRad());
-    //SmartDashboard.putNumber("Back Left", backLeft.getAbsoluteEncoderRad());
-   // SmartDashboard.putNumber("Back Right", backRight.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Front Left", frontLeft.getAbsoluteEncoderRad());
+   SmartDashboard.putNumber("Front Right", frontRight.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Back Left", backLeft.getAbsoluteEncoderRad());
+   SmartDashboard.putNumber("Back Right", backRight.getAbsoluteEncoderRad());
 
    // SmartDashboard.putNumber("Gyro Velocity Value: ", MKIMath.magnitude(getVelocityMagnitude()));
 
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
 
-    betterOdometer.updatePosition();
-    betterOdometer.fixPoseLimelight();
+
 
 
     //SmartDashboard.putString("Better Odometer Position", betterOdometer.getPosition().toString());
@@ -145,6 +133,12 @@ public class SwerveSubsystem extends SubsystemBase {
     return -Math.IEEEremainder(gyro.getYaw(), 360);
   }
 
+  public void resetEncoders(){
+    backLeft.resetEncoders();
+    backRight.resetEncoders();
+    frontLeft.resetEncoders();
+    frontRight.resetEncoders();
+  }
   // Returns a Rotation2d object from the gyro heading, for use with swerve classes
   public Rotation2d getRotation2d() {
     return Rotation2d.fromDegrees(getHeading());

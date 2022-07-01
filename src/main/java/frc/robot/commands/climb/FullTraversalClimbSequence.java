@@ -10,14 +10,18 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class FullTraversalClimbSequence extends SequentialCommandGroup {
   /** Creates a new ClimbSequence. */
-  public FullTraversalClimbSequence(HoodSubsystem HOOD_SUBSYSTEM, ClimbSubsystem CLIMB_SUBSYSTEM, Supplier<Boolean> commit) {
+  public FullTraversalClimbSequence(HoodSubsystem HOOD_SUBSYSTEM, ClimbSubsystem CLIMB_SUBSYSTEM, Supplier<Boolean> commit, ConveyorSubsystem conveyor, ShooterSubsystem shooter, SwerveSubsystem swerve, IntakeSubsystem intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -67,8 +71,8 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
         new ParallelCommandGroup(
-          new HoodHoldPosition(HOOD_SUBSYSTEM, 36000, stateHandler, colorSensor),
-          new PlayMusic(0)
+          new HoodHoldPosition(HOOD_SUBSYSTEM, 36000),
+          new PlayMusic(0, conveyor, HOOD_SUBSYSTEM, intake, shooter, swerve)
         )
         
       )

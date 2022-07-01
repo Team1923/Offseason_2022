@@ -25,8 +25,8 @@ public class IntakeSubsystem extends SubsystemBase {
   private Solenoid solenoid3 = new Solenoid(PneumaticsModuleType.CTREPCM, 6);
   private Solenoid solenoid4 = new Solenoid(PneumaticsModuleType.CTREPCM, 7);
 
-  private WPI_TalonFX leftIntakeMotor = new WPI_TalonFX(IntakeConstants.leftIntakeMotorID);
-  private WPI_TalonFX rightIntakeMotor = new WPI_TalonFX(IntakeConstants.rightIntakemotorID);
+  public WPI_TalonFX leftIntakeMotor = new WPI_TalonFX(IntakeConstants.leftIntakeMotorID);
+  public WPI_TalonFX rightIntakeMotor = new WPI_TalonFX(IntakeConstants.rightIntakemotorID);
   
   public boolean intake_reverse;
 

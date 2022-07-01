@@ -20,8 +20,8 @@ import frc.robot.Constants.ShooterConstants;
 @SuppressWarnings("unused")
 public class ShooterSubsystem extends SubsystemBase {
   
-  private WPI_TalonFX leftShooterMotor = new WPI_TalonFX(ShooterConstants.leftShooterMotorID);
-  private WPI_TalonFX rightShooterMotor = new WPI_TalonFX(ShooterConstants.rightShooterMotorID);
+  public WPI_TalonFX leftShooterMotor = new WPI_TalonFX(ShooterConstants.leftShooterMotorID);
+  public WPI_TalonFX rightShooterMotor = new WPI_TalonFX(ShooterConstants.rightShooterMotorID);
 
   private boolean acceptableRPM;
 

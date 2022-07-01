@@ -17,7 +17,7 @@ import frc.robot.Constants.HoodConstants;
 @SuppressWarnings("unused")
 public class HoodSubsystem extends SubsystemBase {
 
-  private WPI_TalonFX hoodMotor = new WPI_TalonFX(HoodConstants.hoodMotorID);
+  public WPI_TalonFX hoodMotor = new WPI_TalonFX(HoodConstants.hoodMotorID);
 
 
   /** Creates a new HoodSubsystem. */

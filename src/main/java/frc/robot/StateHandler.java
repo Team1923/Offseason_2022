@@ -69,6 +69,15 @@ public class StateHandler {
     // Run the logic we determine to figure out the current state of the robot. 
     public void updateStates() {
 
+        SmartDashboard.putNumber("SENSOR 1 RED", colorSensor.getRawColor(0).red);
+        SmartDashboard.putNumber("SENSOR 1 BLUE", colorSensor.getRawColor(0).blue);
+        SmartDashboard.putNumber("SENSOR 1 GREEN", colorSensor.getRawColor(0).green);
+        SmartDashboard.putString("Ball 1 Value", colorSensor.getBallColor(1).toString());
+        SmartDashboard.putString("Ball 2 Value", colorSensor.getBallColor(0).toString());
+        SmartDashboard.putNumber("SENSOR 2 RED", colorSensor.getRawColor(1).red);
+        SmartDashboard.putNumber("SENSOR 2 BLUE", colorSensor.getRawColor(1).blue);
+        SmartDashboard.putNumber("SENSOR 2 GREEN", colorSensor.getRawColor(1).green);
+
         int emptyCount = Collections.frequency(ballTracker, Balls.EMPTY);
 
         switch(currentRobotState) {
@@ -86,9 +95,8 @@ public class StateHandler {
                 break;
 
             case ONE_BALL_CLOSE_BROKEN:
-
                 if(emptyCount == 2 || (emptyCount == 0 && !intake_reverse)) {
-                    ballTracker = Arrays.asList(Balls.EMPTY, colorSensor.getBallColor(0));
+                    ballTracker = Arrays.asList(Balls.EMPTY, colorSensor.getBallColor(1));
                 } else if((emptyCount == 0) && intake_reverse) {
                     ballTracker = Arrays.asList(Balls.EMPTY, ballTracker.get(0));
                 } else if (emptyCount == 1 && ballTracker.get(1) == Balls.EMPTY) {
@@ -108,6 +116,9 @@ public class StateHandler {
                 }
                 break;
             case ONE_BALL_NONE_BROKEN:
+                if (emptyCount == 1 && ballTracker.get(0) == Balls.EMPTY) {
+                    ballTracker = Arrays.asList(ballTracker.get(1), Balls.EMPTY);
+                }
                 if(this.frontBeamBreak && intake_reverse) {
                     this.currentRobotState = States.ONE_BALL_CLOSE_BROKEN;
                 }
@@ -122,7 +133,7 @@ public class StateHandler {
             case ONE_BALL_FAR_BROKEN:
 
                 if(emptyCount == 2) {
-                    ballTracker = Arrays.asList(colorSensor.getBallColor(1), Balls.EMPTY);
+                    ballTracker = Arrays.asList(colorSensor.getBallColor(0), Balls.EMPTY);
                 } else if (emptyCount == 1 && ballTracker.get(0) == Balls.EMPTY) {
                     ballTracker = Arrays.asList(ballTracker.get(1), Balls.EMPTY);
                 }
@@ -141,11 +152,7 @@ public class StateHandler {
             case TWO_BALLS_ONE_BROKEN:
 
                 if(emptyCount == 1) {
-                    ballTracker = Arrays.asList(ballTracker.get(1), colorSensor.getBallColor(0));
-                }
-
-                if(ballTracker.size() == 1) {
-                    ballTracker.add(colorSensor.getBallColor(0));
+                    ballTracker = Arrays.asList(ballTracker.get(1), colorSensor.getBallColor(1));
                 }
 
                 if(!this.backBeamBreak && !this.frontBeamBreak && intake_reverse) {
@@ -158,7 +165,7 @@ public class StateHandler {
             case TWO_BALLS_BOTH_BROKEN:
 
                 
-                ballTracker = Arrays.asList(colorSensor.getBallColor(1), colorSensor.getBallColor(0));
+                ballTracker = Arrays.asList(colorSensor.getBallColor(0), colorSensor.getBallColor(1));
 
                 if(!this.frontBeamBreak && this.backBeamBreak && this.acceptableRPM) {
                     this.currentRobotState = States.ONE_BALL_FAR_BROKEN;

@@ -1,6 +1,7 @@
 package frc.robot;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class LoadTrajectory {
 
     public LoadTrajectory(String path){
         this.path += path;
+        loadTrajectoryData();
     }
 
     public void loadTrajectoryData(){
@@ -33,6 +35,7 @@ public class LoadTrajectory {
                 Double[] doubleValues = new Double[values.length];
                 for(int i = 0; i < doubleValues.length; i++){
                     doubleValues[i] = Double.parseDouble(values[i]);
+                    System.out.println("!!!!!!!!!1");
                 }
 
                 trajectoryData.add(doubleValues);
@@ -40,12 +43,16 @@ public class LoadTrajectory {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } 
+
+        for(Double[] x : trajectoryData){
+            System.out.print(x);
         }
         
     }
 
     public Pose2d getInitialPose(){
-        return new Pose2d(trajectoryData.get(0)[0], trajectoryData.get(0)[1], new Rotation2d(trajectoryData.get(0)[2]));
+        return new Pose2d(trajectoryData.get(0)[0], trajectoryData.get(0)[1], new Rotation2d(Math.toRadians(trajectoryData.get(0)[2])));
     }
 
     public double getInitialVelocity(){
@@ -61,7 +68,7 @@ public class LoadTrajectory {
     }
 
     public Pose2d getFinalPose(){
-        return new Pose2d(trajectoryData.get(trajectoryData.size()-1)[0], trajectoryData.get(trajectoryData.size()-1)[1], new Rotation2d(trajectoryData.get(trajectoryData.size()-1)[2]));
+        return new Pose2d(trajectoryData.get(trajectoryData.size()-1)[0], trajectoryData.get(trajectoryData.size()-1)[1], new Rotation2d(Math.toRadians(trajectoryData.get(trajectoryData.size()-1)[2])));
     }
 
     public double getFinalVelocity(){

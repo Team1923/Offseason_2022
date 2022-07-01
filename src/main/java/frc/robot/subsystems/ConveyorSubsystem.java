@@ -14,7 +14,7 @@ import frc.robot.Constants.ConveyorConstants;
 @SuppressWarnings("unused")
 public class ConveyorSubsystem extends SubsystemBase {
   /** Creates a new ConveyorSubsystem. */
-  private WPI_TalonFX conveyorMotor = new WPI_TalonFX(ConveyorConstants.conveyorMotorID);
+  public WPI_TalonFX conveyorMotor = new WPI_TalonFX(ConveyorConstants.conveyorMotorID);
 
   private DigitalInput beamBreakOne;
   private DigitalInput beamBreakTwo;

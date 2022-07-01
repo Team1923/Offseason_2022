@@ -315,9 +315,9 @@ public class MKIPicoColorSensor implements AutoCloseable {
 
   public Balls getBallColor(int id) {
     RawColor current = getRawColor(id);
-    if(current.blue > current.red && current.blue > current.green) {
+    if(1.0 * current.blue/current.red > 1.5) {
       return Balls.BLUE;
-    } else if(current.red > current.blue && current.red > current.green) {
+    } else if(1.0 * current.red/current.blue > 1.5) {
       return Balls.RED;
     } else {
       return Balls.EMPTY;

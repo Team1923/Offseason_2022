@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
@@ -155,6 +156,7 @@ public class MKISwerveControllerCommand extends CommandBase {
     double finalAngle = m_trajectory.getStates().get(m_trajectory.getStates().size() - 1).poseMeters.getRotation().getDegrees();
 
     double partialAngle = percentage * (finalAngle - initialAngle);
+    SmartDashboard.putNumber("Partial Angle", partialAngle);
 
     Rotation2d newRotation = new Rotation2d(partialAngle);
 
@@ -164,6 +166,9 @@ public class MKISwerveControllerCommand extends CommandBase {
         m_controller.calculate(m_pose.get(), 
         desiredState, newRotation);
     var targetModuleStates = m_kinematics.toSwerveModuleStates(targetChassisSpeeds);
+
+    SmartDashboard.putString("Target Chassis Speeds", targetChassisSpeeds.toString());
+    SmartDashboard.putString("Desired State", desiredState.toString());
 
     
 
