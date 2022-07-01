@@ -66,7 +66,11 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
       new ParallelCommandGroup(
         new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
-        new HoodHoldPosition(HOOD_SUBSYSTEM, 36000)
+        new ParallelCommandGroup(
+          new HoodHoldPosition(HOOD_SUBSYSTEM, 36000, stateHandler, colorSensor),
+          new PlayMusic(0)
+        )
+        
       )
       
       // new ArmsToPosition(CLIMB_SUBSYSTEM, -20),
