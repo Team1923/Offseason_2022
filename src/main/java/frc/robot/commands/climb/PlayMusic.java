@@ -69,7 +69,10 @@ public class PlayMusic extends CommandBase {
       
 
     private String[] songs = {
-        Filesystem.getDeployDirectory().toString() + "/music/rushE.chrp"
+        Filesystem.getDeployDirectory().toString() + "/music/rushE.chrp",
+        Filesystem.getDeployDirectory().toString() + "/music/rickRoll.chrp",
+        Filesystem.getDeployDirectory().toString() + "/music/firel.chrp",
+        Filesystem.getDeployDirectory().toString() + "/music/susl.chrp"
     };
 
     

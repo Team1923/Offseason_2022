@@ -126,7 +126,7 @@ public class RobotContainer {
     
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
 
-    new JoystickButton(driverJoystick, 7).whenPressed(new PlayMusic(0, CONVEYOR_SUBSYSTEM, HOOD_SUBSYSTEM, INTAKE_SUBSYSTEM, SHOOTER_SUBSYSTEM, SWERVE_SUBSYSTEM));
+    new JoystickButton(driverJoystick, 7).whenPressed(new PlayMusic(3, CONVEYOR_SUBSYSTEM, HOOD_SUBSYSTEM, INTAKE_SUBSYSTEM, SHOOTER_SUBSYSTEM, SWERVE_SUBSYSTEM));
 
     // Run intake command
     new JoystickButton(operatorJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, false, colorSensor));
