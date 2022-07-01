@@ -51,32 +51,37 @@ public class StateManagedConveyorCommand extends CommandBase {
           CONVEYOR_SUBSYSTEM.stop();
           break;
         case ONE_BALL_CLOSE_BROKEN:
+        if(shooterSubsystem.getAcceptableRPMState()){
+          CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
+        }else{
           CONVEYOR_SUBSYSTEM.setConveyor(conveyorPercentOut);
+        }
           break;
         case ONE_BALL_FAR_BROKEN:
-          //if((colorSensor.isRed(1) && !colorSensor.isRedAndRed()) || (colorSensor.isBlue(1) && !colorSensor.isBlueAndBlue())){
-            if(shooterSubsystem.getAcceptableRPMState()){
-              CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
-              System.out.println("SUCK");
-            }
-          //}
-          else{
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+          if(shooterSubsystem.getAcceptableRPMState()){
+            CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
+          }else{
             CONVEYOR_SUBSYSTEM.stop();
           }
-          
           break;
         case ONE_BALL_NONE_BROKEN:
-          
-          CONVEYOR_SUBSYSTEM.stop();
+          if(shooterSubsystem.getAcceptableRPMState()){
+            CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
+          }else{
+            CONVEYOR_SUBSYSTEM.stop();
+          } 
+          break;
+        case TWO_BALLS_ONE_BROKEN:
+          if(shooterSubsystem.getAcceptableRPMState()){
+            CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
+          }else{
+            CONVEYOR_SUBSYSTEM.stop();
+          }
           break;
         case TWO_BALLS_BOTH_BROKEN:
-          // if((colorSensor.isRed(1) && !colorSensor.isRedAndRed()) || (colorSensor.isBlue(1) && !colorSensor.isBlueAndBlue())){
-            if(shooterSubsystem.getAcceptableRPMState()){
-              CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
-            }
-          //}
-          else{
+          if(shooterSubsystem.getAcceptableRPMState()){
+            CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
+          }else{
             CONVEYOR_SUBSYSTEM.stop();
           }
           break;

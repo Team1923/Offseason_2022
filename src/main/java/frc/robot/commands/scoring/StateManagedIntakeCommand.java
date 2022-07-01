@@ -62,6 +62,10 @@ public class StateManagedIntakeCommand extends CommandBase {
             intake.setIntake(intakePercentOut);
             conveyor.setConveyor(ConveyorConstants.conveyorOutPercentOut);
             break;
+          case TWO_BALLS_ONE_BROKEN:
+            intake.setIntake(intakePercentOut);
+            conveyor.setConveyor(ConveyorConstants.conveyorOutPercentOut);
+            break;
           case TWO_BALLS_BOTH_BROKEN:
             intake.setIntake(intakePercentOut);
             conveyor.setConveyor(ConveyorConstants.conveyorOutPercentOut);
@@ -85,6 +89,9 @@ public class StateManagedIntakeCommand extends CommandBase {
             break;
           case ONE_BALL_FAR_BROKEN:
             intake.setIntake(intakePercentOut);
+            break;
+          case TWO_BALLS_ONE_BROKEN:
+            intake.stop();
             break;
           case TWO_BALLS_BOTH_BROKEN:
             intake.stop();

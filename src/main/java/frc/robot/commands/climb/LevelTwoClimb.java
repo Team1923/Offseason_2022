@@ -9,8 +9,6 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.StateHandler;
-import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
 
@@ -19,7 +17,7 @@ import frc.robot.subsystems.HoodSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class LevelTwoClimb extends SequentialCommandGroup {
   /** Creates a new ClimbSequence. */
-  public LevelTwoClimb(HoodSubsystem HOOD_SUBSYSTEM, ClimbSubsystem CLIMB_SUBSYSTEM, Supplier<Boolean> commit, StateHandler stateHandler, MKIPicoColorSensor colorSensor) {
+  public LevelTwoClimb(HoodSubsystem HOOD_SUBSYSTEM, ClimbSubsystem CLIMB_SUBSYSTEM, Supplier<Boolean> commit) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -35,7 +33,7 @@ public class LevelTwoClimb extends SequentialCommandGroup {
       ),
         new ParallelCommandGroup(
             new ArmsToPosition(CLIMB_SUBSYSTEM, 10),
-            new HoodHoldPosition(HOOD_SUBSYSTEM, 40100, stateHandler, colorSensor)
+            new HoodHoldPosition(HOOD_SUBSYSTEM, 40100)
         )
         
       

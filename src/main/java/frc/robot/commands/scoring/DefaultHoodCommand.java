@@ -2,9 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.climb;
+package frc.robot.commands.scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.StateHandler;
 import frc.robot.subsystems.HoodSubsystem;
 
 
@@ -12,17 +13,17 @@ import frc.robot.subsystems.HoodSubsystem;
 // constantly changing setpoint with time as we move closer and farther from the goal. However, during
 // the climb sequence, we will have multiple occurances of wanting the climber to achieve a certain position
 // and report back when it has done so. This command aims to achieve that goal.
-public class HoodHoldPosition extends CommandBase {
+public class DefaultHoodCommand extends CommandBase {
 
   private HoodSubsystem HOOD_SUBSYSTEM;
-  
-  private double goal;
+  private StateHandler stateHandler;
 
 
   /** Creates a new HoodSingleSetpointCommand. */
-  public HoodHoldPosition(HoodSubsystem hood, double position) {
+  public DefaultHoodCommand(HoodSubsystem hood, StateHandler state) {
     this.HOOD_SUBSYSTEM = hood;
-    this.goal = position;
+    this.stateHandler = state;
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(HOOD_SUBSYSTEM);
   }
@@ -32,13 +33,18 @@ public class HoodHoldPosition extends CommandBase {
   public void initialize() {
     //configure PID for hood
     HOOD_SUBSYSTEM.setClimbConstants();
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    HOOD_SUBSYSTEM.setHoodPosition(goal);
+    switch(stateHandler.getState()) {
+      case TWO_BALLS_ONE_BROKEN:
+        break;
+      default:
+        HOOD_SUBSYSTEM.setHoodPosition(0);
+        break; 
+    }
   }
 
   // Called once the command ends or is interrupted.

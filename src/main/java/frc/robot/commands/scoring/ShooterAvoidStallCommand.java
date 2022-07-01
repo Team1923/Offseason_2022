@@ -15,14 +15,12 @@ public class ShooterAvoidStallCommand extends CommandBase {
 
   private ShooterSubsystem SHOOTER_SUBSYSTEM;
   private StateHandler stateHandler;
-  private MKIPicoColorSensor colorSensor;
   private Timer threshold_timer;
 
   /** Creates a new ShooterAvoidStallCommand. */
   public ShooterAvoidStallCommand(ShooterSubsystem shooter, StateHandler state, MKIPicoColorSensor color) {
     this.SHOOTER_SUBSYSTEM = shooter;
     this.stateHandler = state;
-    this.colorSensor = color;
     threshold_timer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(SHOOTER_SUBSYSTEM);
@@ -47,19 +45,22 @@ public class ShooterAvoidStallCommand extends CommandBase {
         SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
         break;
       case ONE_BALL_FAR_BROKEN:
-        if((colorSensor.isRed(1) && !colorSensor.isRedAndRed()) || (colorSensor.isBlue(1) && !colorSensor.isBlueAndBlue())){
-          SHOOTER_SUBSYSTEM.setShooterWheelsRPM(5000);
-          if (Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(5000)) < ShooterConstants.shooterRPMThreshold) {
-            threshold_timer.start();
-          } else {
-            System.out.println("FUCK YOU");
-            threshold_timer.reset();
-            threshold_timer.stop();
-          }
-      
-          SHOOTER_SUBSYSTEM.setAcceptableRPMState(threshold_timer.get() > ShooterConstants.shooterTimeThreshold);
-          
+
+        SHOOTER_SUBSYSTEM.setShooterWheelsRPM(5000);
+
+        if (Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(5000)) < ShooterConstants.shooterRPMThreshold) {
+
+          threshold_timer.start();
+
+        } else {
+
+          threshold_timer.reset();
+          threshold_timer.stop();
+
         }
+
+        SHOOTER_SUBSYSTEM.setAcceptableRPMState(threshold_timer.get() > ShooterConstants.shooterTimeThreshold);
+
         break;
       case TWO_BALLS_BOTH_BROKEN:
         SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);

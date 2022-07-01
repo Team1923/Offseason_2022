@@ -9,8 +9,6 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.StateHandler;
-import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
 
@@ -19,7 +17,7 @@ import frc.robot.subsystems.HoodSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TraversalArmsExtended extends SequentialCommandGroup {
   /** Creates a new ClimbSequence. */
-  public TraversalArmsExtended(HoodSubsystem HOOD_SUBSYSTEM, ClimbSubsystem CLIMB_SUBSYSTEM, Supplier<Boolean> commit, StateHandler stateHandler, MKIPicoColorSensor colorSensor) {
+  public TraversalArmsExtended(HoodSubsystem HOOD_SUBSYSTEM, ClimbSubsystem CLIMB_SUBSYSTEM, Supplier<Boolean> commit) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -38,7 +36,7 @@ public class TraversalArmsExtended extends SequentialCommandGroup {
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
       new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
       new ParallelRaceGroup(
-        new HoodHoldPosition(HOOD_SUBSYSTEM, 9000, stateHandler, colorSensor),
+        new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
         new ArmsToPosition(CLIMB_SUBSYSTEM, 50)
       ),
       new ParallelRaceGroup(
@@ -53,7 +51,7 @@ public class TraversalArmsExtended extends SequentialCommandGroup {
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
       new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
       new ParallelRaceGroup(
-        new HoodHoldPosition(HOOD_SUBSYSTEM, 9000, stateHandler, colorSensor),
+        new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
         new ArmsToPosition(CLIMB_SUBSYSTEM, 50)
       ),
       new ParallelRaceGroup(
@@ -68,7 +66,7 @@ public class TraversalArmsExtended extends SequentialCommandGroup {
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
       new ParallelCommandGroup(
         new ArmsToPosition(CLIMB_SUBSYSTEM, 0),
-        new HoodHoldPosition(HOOD_SUBSYSTEM, 0, stateHandler, colorSensor)
+        new HoodHoldPosition(HOOD_SUBSYSTEM, 0)
       )
       
       // new ArmsToPosition(CLIMB_SUBSYSTEM, -20),

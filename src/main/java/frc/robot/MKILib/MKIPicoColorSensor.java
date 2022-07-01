@@ -10,6 +10,7 @@ import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.StateHandler.Balls;
 
 public class MKIPicoColorSensor implements AutoCloseable {
   public static class RawColor {
@@ -189,8 +190,6 @@ public class MKIPicoColorSensor implements AutoCloseable {
     SerialPortJNI.serialClose(port);
   }
 
-  private Alliance alliance;
-
   public MKIPicoColorSensor() {
     readThread = new Thread(this::threadMain);
     readThread.setName("PicoColorSensorThread");
@@ -287,71 +286,44 @@ public class MKIPicoColorSensor implements AutoCloseable {
 
   void setDebugPrints(boolean debug) {
     debugPrints.set(debug);
-  }
+  }  
 
-  public boolean isRed(int sensorID){
-    if(sensorID == 0){
-        if(sensor0.red > sensor0.blue && sensor0.red > sensor0.green){ 
-            return true;
-        }
-        return false;
-    }
-    else{
-        if(sensor1.red > sensor1.blue && sensor1.red > sensor1.green){ 
-            return true;
-        }
-        return false;
+  public RawColor getRawColor(int id) {
+    if(id == 0) {
+      return getRawColor0();
+    } else if (id == 1){
+      return getRawColor1();
+    } else {
+      return new RawColor(0, 0, 0, 0);
     }
   }
 
-  public boolean isGreen(int sensorID){
-    if(sensorID == 0){
-        if(sensor0.green > sensor0.red && sensor0.green > sensor0.blue){ 
-            return true;
-        }
-        return false;
-    }
-    else{
-        if(sensor1.green > sensor1.red && sensor1.green > sensor1.blue){ 
-            return true;
-        }
+
+  private Alliance alliance;
+
+  public boolean isCorrectColor(int id) {
+    RawColor current = getRawColor(id);
+    switch(alliance) {
+      case Blue:
+        return current.blue > current.red && current.blue > current.green;
+      case Red:
+        return current.red > current.blue && current.red > current.green;
+      default:
         return false;
     }
   }
 
-  public boolean isBlue(int sensorID){
-    if(sensorID == 0){
-        if(sensor0.blue > sensor0.red && sensor0.blue > sensor0.green){ //just a random value, we can figure this out later
-            return true;
-        }
-        return false;
+  public Balls getBallColor(int id) {
+    RawColor current = getRawColor(id);
+    if(current.blue > current.red && current.blue > current.green) {
+      return Balls.BLUE;
+    } else if(current.red > current.blue && current.red > current.green) {
+      return Balls.RED;
+    } else {
+      return Balls.EMPTY;
     }
-    else{
-        if(sensor1.blue > sensor1.red && sensor1.blue > sensor1.green){ //just a random value, we can figure this out later
-            return true;
-        }
-        return false;
-    }
-  }
 
-  public boolean isRedAndRed(){
-    if(alliance.toString().equalsIgnoreCase("RED") && (isRed(0) || isRed(1))){
-      return true;
-    }
-    else{
-      return false;
-    }
   }
-
-  public boolean isBlueAndBlue(){
-    if(alliance.toString().equalsIgnoreCase("BLUE") && (isBlue(0) || isBlue(1))){
-      return true;
-    }
-    return false;
-  }
-
-  
-  
 
   @Override
   public void close() throws Exception {

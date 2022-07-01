@@ -32,6 +32,7 @@ import frc.robot.commands.climb.ScheduleClimb;
 import frc.robot.commands.climb.TraversalArmsExtended;
 import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.commands.drive.SwerveDriveCommand;
+import frc.robot.commands.scoring.DefaultHoodCommand;
 import frc.robot.commands.scoring.HoodChangingSetpointCommand;
 import frc.robot.commands.scoring.RunShooterCommand;
 import frc.robot.commands.scoring.ShooterAvoidStallCommand;
@@ -55,9 +56,9 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class RobotContainer {
 
   private final LimelightInterface Limelight = new LimelightInterface();
-  private DesiredClimb desiredClimb = new DesiredClimb();
+  private final DesiredClimb desiredClimb = new DesiredClimb();
 
-  ShooterData shooterData = new ShooterData();
+  private final ShooterData shooterData = new ShooterData();
 
   // Joystick Instances
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
@@ -72,18 +73,13 @@ public class RobotContainer {
   private final HoodSubsystem HOOD_SUBSYSTEM = new HoodSubsystem();
   private final ShooterSubsystem SHOOTER_SUBSYSTEM = new ShooterSubsystem();
 
-  private Climbs climbSequence;
-
-  
-
   //color sensor
-  MKIPicoColorSensor colorSensor = new MKIPicoColorSensor();
+  private final MKIPicoColorSensor colorSensor = new MKIPicoColorSensor();
 
   // Singleton State Handler
-  StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM);  
-  DesiredClimb climb = new DesiredClimb();
+  public final StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM, colorSensor);  
 
-  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, climb, HOOD_SUBSYSTEM, driverJoystick, stateHandler, colorSensor);
+  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, desiredClimb, HOOD_SUBSYSTEM, driverJoystick, stateHandler, colorSensor);
 
 
 
@@ -116,7 +112,7 @@ public class RobotContainer {
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
     SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, stateHandler, colorSensor));
     CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, SHOOTER_SUBSYSTEM, stateHandler));
-    HOOD_SUBSYSTEM.setDefaultCommand(new HoodHoldPosition(HOOD_SUBSYSTEM, 0, stateHandler, colorSensor));    
+    HOOD_SUBSYSTEM.setDefaultCommand(new DefaultHoodCommand(HOOD_SUBSYSTEM, stateHandler));    
 
     
   }
@@ -124,7 +120,7 @@ public class RobotContainer {
   // Define what buttons will do
   private void configureButtonBindings() {
 
-    new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whenPressed(new ScheduleClimb(climb, HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, colorSensor, stateHandler, () -> driverJoystick.getRawButton(5)));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whenPressed(new ScheduleClimb(desiredClimb, HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5)));
     
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
 
