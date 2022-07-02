@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.MKILib.MKIPicoColorSensor;
+import frc.robot.StateHandler.EjectionStatus;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterAvoidStallCommand extends CommandBase {
@@ -45,6 +46,7 @@ public class ShooterAvoidStallCommand extends CommandBase {
         SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
         break;
       case ONE_BALL_FAR_BROKEN:
+        if(stateHandler.getEjectionStatus() == EjectionStatus.DUMPING){
 
         SHOOTER_SUBSYSTEM.setShooterWheelsRPM(5000);
 
@@ -61,9 +63,34 @@ public class ShooterAvoidStallCommand extends CommandBase {
 
         SHOOTER_SUBSYSTEM.setAcceptableRPMState(threshold_timer.get() > ShooterConstants.shooterTimeThreshold);
 
+      }
+      else{
+        SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
+      }
+
         break;
       case TWO_BALLS_BOTH_BROKEN:
+      if(stateHandler.getEjectionStatus() == EjectionStatus.DUMPING){
+
+        SHOOTER_SUBSYSTEM.setShooterWheelsRPM(5000);
+
+        if (Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(5000)) < ShooterConstants.shooterRPMThreshold) {
+
+          threshold_timer.start();
+
+        } else {
+
+          threshold_timer.reset();
+          threshold_timer.stop();
+
+        }
+
+        SHOOTER_SUBSYSTEM.setAcceptableRPMState(threshold_timer.get() > ShooterConstants.shooterTimeThreshold);
+
+      }
+      else{
         SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
+      }
         break;
       default:
         SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed); 

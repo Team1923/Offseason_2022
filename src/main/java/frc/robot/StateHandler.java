@@ -90,15 +90,6 @@ public class StateHandler {
     // Run the logic we determine to figure out the current state of the robot. 
     public void updateStates() {
 
-        SmartDashboard.putNumber("SENSOR 1 RED", colorSensor.getRawColor(0).red);
-        SmartDashboard.putNumber("SENSOR 1 BLUE", colorSensor.getRawColor(0).blue);
-        SmartDashboard.putNumber("SENSOR 1 GREEN", colorSensor.getRawColor(0).green);
-        SmartDashboard.putString("Ball 1 Value", colorSensor.getBallColor(1).toString());
-        SmartDashboard.putString("Ball 2 Value", colorSensor.getBallColor(0).toString());
-        SmartDashboard.putNumber("SENSOR 2 RED", colorSensor.getRawColor(1).red);
-        SmartDashboard.putNumber("SENSOR 2 BLUE", colorSensor.getRawColor(1).blue);
-        SmartDashboard.putNumber("SENSOR 2 GREEN", colorSensor.getRawColor(1).green);
-
         int emptyCount = Collections.frequency(ballTracker, Balls.EMPTY);
 
         switch(currentRobotState) {
