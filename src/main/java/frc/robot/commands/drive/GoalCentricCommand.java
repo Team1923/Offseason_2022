@@ -69,7 +69,7 @@ public class GoalCentricCommand extends CommandBase {
       turningSpeed = LIMELIGHT_SUBSYSTEM.getX() * kP;
     }
     else{
-      turningSpeed = -getHeadingTowardHub() * 0.005;
+      turningSpeed = 0;
     }
 
     // Apply a deadband

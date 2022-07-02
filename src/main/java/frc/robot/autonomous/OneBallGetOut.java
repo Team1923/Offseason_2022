@@ -4,8 +4,12 @@
 
 package frc.robot.autonomous;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ConveyorConstants;
+import frc.robot.commands.scoring.independent.RunIntakeCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -21,8 +25,17 @@ public class OneBallGetOut extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoShoot(shooter, conveyor, hood, 5000, 3200).withTimeout(1.5),
-      new RunTrajectory(swerve, "oneBallGetOut", true)
+      new InstantCommand(() -> swerve.zeroHeading()),
+      new AutoShoot(shooter, conveyor, hood, 0, 3000).withTimeout(1.5),
+      new ParallelCommandGroup(
+        new RunTrajectory(swerve, "oneBallGetOut", true),
+        new SequentialCommandGroup(
+          new WaitCommand(0.5),
+          new RunIntakeCommand(intake, false)
+        )
+      ).withTimeout(4),
+      new PIDRotate(swerve, -90).withTimeout(2),
+      new AutoShoot(shooter, conveyor, hood, 25000, 5000)
     );
   }
 }

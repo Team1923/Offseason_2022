@@ -9,8 +9,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.MKILib.MKIPicoColorSensor;
+import frc.robot.autonomous.DeuxBall;
 import frc.robot.autonomous.FollowTrajectory;
 import frc.robot.autonomous.OneBallGetOut;
+import frc.robot.autonomous.PIDRotate;
+import frc.robot.autonomous.UnoBall;
 import frc.robot.commands.scoring.ShootCommandGroup;
 import frc.robot.commands.climb.PlayMusic;
 import frc.robot.commands.climb.ResetArms;
@@ -99,7 +102,7 @@ public class RobotContainer {
     
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
 
-    new JoystickButton(driverJoystick, 7).whenPressed(new PlayMusic(1, CONVEYOR_SUBSYSTEM, HOOD_SUBSYSTEM, INTAKE_SUBSYSTEM, SHOOTER_SUBSYSTEM, SWERVE_SUBSYSTEM));
+    new JoystickButton(driverJoystick, 7).toggleWhenPressed(new PIDRotate(SWERVE_SUBSYSTEM, -90));
 
     // Run intake command
     new JoystickButton(operatorJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, false, colorSensor));
@@ -130,7 +133,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     //return new ShittyAutoCommand(SWERVE_SUBSYSTEM);
-    return new OneBallGetOut(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM);
+    return new DeuxBall(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM);
   }
 
 

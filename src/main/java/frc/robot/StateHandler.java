@@ -90,6 +90,7 @@ public class StateHandler {
     // Run the logic we determine to figure out the current state of the robot. 
     public void updateStates() {
 
+
         int emptyCount = Collections.frequency(ballTracker, Balls.EMPTY);
 
         switch(currentRobotState) {

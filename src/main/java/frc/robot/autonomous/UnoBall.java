@@ -21,7 +21,7 @@ public class UnoBall extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoShoot(shooter, conveyor, hood, 5000, 3200).withTimeout(1.5),
+      new AutoShoot(shooter, conveyor, hood, 3200, 2900).withTimeout(1.5),
       new RunTrajectory(swerve, "oneBallPath", true)
     );
   }

@@ -96,7 +96,7 @@ public class SwerveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Prints out robot heading for debug purposes
-    //SmartDashboard.putNumber("Robot Heading: ", getHeading());
+    SmartDashboard.putNumber("Robot Heading: ", getRawHeading());
     //SmartDashboard.putString("Robot Location: ", getPose().getTranslation().toString());
     //SmartDashboard.putString("Robot Orientation: ", getPose().getRotation().toString());
 
@@ -131,6 +131,10 @@ public class SwerveSubsystem extends SubsystemBase {
   // Gets a gyro heading between 0 and 360 degrees
   public double getHeading() {
     return -Math.IEEEremainder(gyro.getYaw(), 360);
+  }
+
+  public double getRawHeading() {
+    return -gyro.getYaw();
   }
 
   public void resetEncoders(){
