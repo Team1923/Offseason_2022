@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -21,6 +23,12 @@ public class StateHandler {
     public States currentRobotState;
     
     public List<Balls> ballTracker = new ArrayList<>();
+
+    public EjectionStatus ejectionStatus;
+
+    private Alliance alliance;
+    private Balls goodColor;
+    private Balls badColor;
 
     public boolean frontBeamBreak;
     public boolean backBeamBreak;
@@ -45,6 +53,11 @@ public class StateHandler {
         EMPTY
     }
 
+    public enum EjectionStatus {
+        DUMPING,
+        REVERSE,
+        NONE,
+    }
     private ShooterSubsystem SHOOTER_SUBSYSTEM;
     private IntakeSubsystem INTAKE_SUBSYSTEM;
     private ConveyorSubsystem CONVEYOR_SUBSYSTEM;
@@ -54,6 +67,7 @@ public class StateHandler {
     // Define all of the variables required to track the state of the robot.
     public StateHandler(ShooterSubsystem shooter, IntakeSubsystem intake, ConveyorSubsystem conveyor, MKIPicoColorSensor cs) {
         this.currentRobotState = States.NO_BALLS;
+        this.ejectionStatus = EjectionStatus.NONE;
 
         this.SHOOTER_SUBSYSTEM = shooter;
         this.INTAKE_SUBSYSTEM = intake;
@@ -61,9 +75,16 @@ public class StateHandler {
 
         this.acceptableRPM = false;
         this.intake_reverse = false;
-
+        this.alliance = DriverStation.getAlliance();
         this.colorSensor = cs;
 
+        if(alliance == Alliance.Blue) {
+            this.goodColor = Balls.BLUE;
+            this.badColor = Balls.RED;
+        } else {
+            this.goodColor = Balls.RED;
+            this.badColor = Balls.BLUE;
+        }
     }
 
     // Run the logic we determine to figure out the current state of the robot. 
@@ -187,8 +208,24 @@ public class StateHandler {
             currentRobotState = States.TWO_BALLS_BOTH_BROKEN;
         }
 
+        updateEjectionStatus();
+
         SmartDashboard.putString("Current Robot State: ", currentRobotState.toString());
         SmartDashboard.putString("Ball Tracker: ", ballTracker.get(0) + "  " + ballTracker.get(1));
+    }
+
+    public void updateEjectionStatus() {
+        if(ballTracker.get(0) == Balls.EMPTY && ballTracker.get(1) == Balls.EMPTY) {
+            ejectionStatus = EjectionStatus.NONE;
+        } else if(ballTracker.get(0) == badColor) {
+            ejectionStatus = EjectionStatus.DUMPING;
+        } else if(ballTracker.get(1) == badColor) {
+            ejectionStatus = EjectionStatus.REVERSE;
+        } else {
+            ejectionStatus = EjectionStatus.NONE;
+        }
+
+        SmartDashboard.putString("Ejection Status: ", ejectionStatus.toString());
     }
 
     public void updateBooleans() {
@@ -212,6 +249,10 @@ public class StateHandler {
 
     public void resetState(){
         currentRobotState = States.NO_BALLS;
+    }
+
+    public EjectionStatus getEjectionStatus() {
+        return ejectionStatus;
     }
 
 }

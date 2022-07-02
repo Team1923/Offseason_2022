@@ -33,11 +33,17 @@ public class LoadTrajectory {
             while((line = br.readLine()) != null){
                 String[] values = line.split(",");
                 Double[] doubleValues = new Double[values.length];
-                for(int i = 0; i < doubleValues.length; i++){
-                    doubleValues[i] = Double.parseDouble(values[i]);
-                    System.out.println("!!!!!!!!!1");
+                if(values.length == 2){
+                    for(int i = 1; i <= 2; i++){
+                        doubleValues[i] = Double.parseDouble(values[i]);
+                    }
                 }
-
+                else{
+                    for(int i = 0; i < doubleValues.length; i++){
+                        doubleValues[i] = Double.parseDouble(values[i]);
+                    }
+                }
+                
                 trajectoryData.add(doubleValues);
             }
         } catch (IOException e) {
@@ -45,9 +51,6 @@ public class LoadTrajectory {
             e.printStackTrace();
         } 
 
-        for(Double[] x : trajectoryData){
-            System.out.print(x);
-        }
         
     }
 

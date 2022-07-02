@@ -7,24 +7,15 @@ package frc.robot.commands.climb;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.swing.plaf.basic.BasicComboPopup.InvocationKeyHandler;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ConveyorConstants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.HoodConstants;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -51,7 +42,6 @@ public class PlayMusic extends CommandBase {
     
     orchestra = new Orchestra(talons);
 
-    addRequirements(conveyor, intake, shooter, swerve);
     
 }
 

@@ -22,7 +22,7 @@ public class UnoBall extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutoShoot(shooter, conveyor, hood, 5000, 3200).withTimeout(1.5),
-      new RunTrajectory(swerve, "oneBallPath")
+      new RunTrajectory(swerve, "oneBallPath", true)
     );
   }
 }

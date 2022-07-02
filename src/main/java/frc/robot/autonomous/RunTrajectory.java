@@ -24,7 +24,7 @@ public class RunTrajectory extends SequentialCommandGroup {
 
     private LoadTrajectory trajectoryLoader;
 
-    public RunTrajectory(SwerveSubsystem s_Swerve, String path){
+    public RunTrajectory(SwerveSubsystem s_Swerve, String path, boolean reverse){
         trajectoryLoader = new LoadTrajectory("/routines/" + path + ".csv");
         
         TrajectoryConfig config =
@@ -34,7 +34,7 @@ public class RunTrajectory extends SequentialCommandGroup {
                 .setKinematics(DriveConstants.kDriveKinematics);
         config.setStartVelocity(trajectoryLoader.getInitialVelocity());
         config.setEndVelocity(trajectoryLoader.getFinalVelocity());
-        config.setReversed(true);
+        config.setReversed(reverse);
         
 
        // An example trajectory to follow.  All units in meters.
