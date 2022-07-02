@@ -52,7 +52,7 @@ public class LoadTrajectory {
     }
 
     public Pose2d getInitialPose(){
-        return new Pose2d(trajectoryData.get(0)[0], trajectoryData.get(0)[1], new Rotation2d(Math.toRadians(trajectoryData.get(0)[2])));
+        return new Pose2d(trajectoryData.get(0)[0]*1.42, trajectoryData.get(0)[1]*1.42, new Rotation2d(Math.toRadians(trajectoryData.get(0)[2])));
     }
 
     public double getInitialVelocity(){
@@ -68,7 +68,7 @@ public class LoadTrajectory {
     }
 
     public Pose2d getFinalPose(){
-        return new Pose2d(trajectoryData.get(trajectoryData.size()-1)[0], trajectoryData.get(trajectoryData.size()-1)[1], new Rotation2d(Math.toRadians(trajectoryData.get(trajectoryData.size()-1)[2])));
+        return new Pose2d(trajectoryData.get(trajectoryData.size()-1)[0]*1.42, trajectoryData.get(trajectoryData.size()-1)[1]*1.42, new Rotation2d(Math.toRadians(trajectoryData.get(trajectoryData.size()-1)[2])));
     }
 
     public double getFinalVelocity(){

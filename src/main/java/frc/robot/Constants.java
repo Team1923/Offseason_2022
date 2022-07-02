@@ -27,8 +27,8 @@ public final class Constants {
     public static final class ModuleConstants {
         public static final double kTicksPerRotation = 2048;
         public static final double kWheelDiameterMeters = Units.inchesToMeters(3.7); 
-        public static final double kDriveMotorGearRatio = 1 / 6.55;                
-        public static final double kTurningGearRatio = 1 / 10.29;                   
+        public static final double kDriveMotorGearRatio = 1.0 / 6.55;                
+        public static final double kTurningGearRatio = 1.0 / 10.29;                   
         public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
         public static final double kDriveEncoderTicks2Meter = kDriveEncoderRot2Meter / kTicksPerRotation; // ? Wrote this to convert from ticks -> rpm -> meters, 0-2-Auto used built in RPM measurements instead. Need to test this logic 
         public static final double kTurningEncoderRot2Rad = kTurningGearRatio * 2 * Math.PI;
@@ -132,7 +132,7 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 7;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 4;
-        public static final double kPXController = 0.1;//2.5;
+        public static final double kPXController = 0.2;//2.5;
         public static final double kPYController = 0.1;
         public static final double kPThetaController = 15;
 
@@ -196,7 +196,7 @@ public final class Constants {
         public static final double shooterRPMThreshold = 150;
         public static final double shooterTimeThreshold = .1;
 
-        public static final double avoidStallSpeed = 0;
+        public static final double avoidStallSpeed = 0.1;
 
         public static final double shooterPercentOut = 0.25;
         

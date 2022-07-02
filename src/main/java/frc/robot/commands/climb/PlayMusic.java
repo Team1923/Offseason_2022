@@ -50,21 +50,23 @@ public class PlayMusic extends CommandBase {
     addTalons();
     
     orchestra = new Orchestra(talons);
+
+    addRequirements(conveyor, intake, shooter, swerve);
     
 }
 
     public void addTalons(){
-      // talons.add(conveyor.conveyorMotor);
+      talons.add(conveyor.conveyorMotor);
       talons.add(intake.leftIntakeMotor);
       talons.add(intake.rightIntakeMotor);
-      // talons.add(swerve.backRight.turningMotor);
-      // talons.add(swerve.backRight.driveMotor);
-      // talons.add(swerve.frontRight.turningMotor);
-      // talons.add(swerve.frontRight.driveMotor);
-      // talons.add(swerve.backLeft.driveMotor);
-      // talons.add(swerve.backLeft.turningMotor);
-      // talons.add(swerve.frontLeft.turningMotor);
-      // talons.add(swerve.frontLeft.driveMotor);
+      talons.add(swerve.backRight.turningMotor);
+      talons.add(swerve.backRight.driveMotor);
+      talons.add(swerve.frontRight.turningMotor);
+      talons.add(swerve.frontRight.driveMotor);
+      talons.add(swerve.backLeft.driveMotor);
+      talons.add(swerve.backLeft.turningMotor);
+      talons.add(swerve.frontLeft.turningMotor);
+      talons.add(swerve.frontLeft.driveMotor);
     }
       
 
@@ -72,7 +74,8 @@ public class PlayMusic extends CommandBase {
         Filesystem.getDeployDirectory().toString() + "/music/rushE.chrp",
         Filesystem.getDeployDirectory().toString() + "/music/rickRoll.chrp",
         Filesystem.getDeployDirectory().toString() + "/music/firel.chrp",
-        Filesystem.getDeployDirectory().toString() + "/music/susl.chrp"
+        Filesystem.getDeployDirectory().toString() + "/music/susl.chrp",
+        Filesystem.getDeployDirectory().toString() + "/music/imperial.chrp"
     };
 
     

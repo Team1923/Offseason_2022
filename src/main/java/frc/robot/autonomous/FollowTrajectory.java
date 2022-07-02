@@ -7,10 +7,13 @@ package frc.robot.autonomous;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.LoadTrajectory;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -35,12 +38,25 @@ public class FollowTrajectory extends SequentialCommandGroup {
     //this.SWERVE_SUBSYSTEM = swerve;
     this.SWERVE_SUBSYSTEM = swerve;
 
-    this.trajectoryLoader = new LoadTrajectory("/routines/" + path);
+    this.trajectoryLoader = new LoadTrajectory("/routines/" + path + ".csv");
     
     //SmartDashboard.putString("Path ID: ", path);
 
+    TrajectoryConfig config =
+            new TrajectoryConfig(
+                    AutoConstants.kMaxSpeedMetersPerSecond,
+                    AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(DriveConstants.kDriveKinematics);
+        config.setStartVelocity(trajectoryLoader.getInitialVelocity());
+        config.setEndVelocity(trajectoryLoader.getFinalVelocity());
+
     // Load a trajectory fron the specified path and convert it to a WPILib trajectory
-    Trajectory loaded_trajectory = MKITrajectoryGenerator.generateTrajectory(trajectoryLoader.getInitialPose(), trajectoryLoader.getTranslations(), trajectoryLoader.getFinalPose(), trajectoryLoader.getInitialVelocity(), trajectoryLoader.getFinalVelocity());
+    Trajectory loaded_trajectory = TrajectoryGenerator.generateTrajectory(
+      trajectoryLoader.getInitialPose(),
+      trajectoryLoader.getTranslations(),
+      trajectoryLoader.getFinalPose(),
+      config
+  );
     
     SmartDashboard.putString("Start Pose", trajectoryLoader.getInitialPose().toString());
     SmartDashboard.putString("End Pose", trajectoryLoader.getFinalPose().toString());
@@ -63,7 +79,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new InstantCommand(() -> SWERVE_SUBSYSTEM.resetOdometry(loaded_trajectory.getInitialPose())),
-      new MKISwerveControllerCommand(
+      new SwerveControllerCommand(
         loaded_trajectory,
         SWERVE_SUBSYSTEM::getPose,
         DriveConstants.kDriveKinematics,
@@ -83,23 +99,5 @@ public class FollowTrajectory extends SequentialCommandGroup {
 
 
 
-// Storing these things at the end of the file in case they are needed for the future.
-// This is the manual way to make trajectories in WPILib. Trajectory config is used
-// to define the rotational constraints
-
-    // //Create trajectory settings
-    // TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-    //     AutoConstants.kMaxSpeedMetersPerSecond,
-    //     AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-    //     .setKinematics(DriveConstants.kDriveKinematics
-    //     );
-
-    // //Generate Trajectory
-    // Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-    //     trajectoryLoader.getInitialPose(),
-    //     trajectoryLoader.getTranslations(),
-    //     trajectoryLoader.getFinalPose(),
-    //     trajectoryConfig
-    //     );
 
 }

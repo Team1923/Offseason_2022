@@ -72,7 +72,7 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
         new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
         new ParallelCommandGroup(
           new HoodHoldPosition(HOOD_SUBSYSTEM, 36000),
-          new PlayMusic(0, conveyor, HOOD_SUBSYSTEM, intake, shooter, swerve)
+          new PlayMusic(4, conveyor, HOOD_SUBSYSTEM, intake, shooter, swerve)
         )
         
       )

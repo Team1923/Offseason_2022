@@ -21,7 +21,9 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.DesiredClimb.Climbs;
 import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.autonomous.FollowTrajectory;
-import frc.robot.autonomous.ShittyAutoCommand;
+import frc.robot.autonomous.OneBallGetOut;
+import frc.robot.autonomous.RunTrajectory;
+import frc.robot.autonomous.UnoBall;
 import frc.robot.commands.scoring.ShootCommandGroup;
 import frc.robot.commands.climb.FullTraversalClimbSequence;
 import frc.robot.commands.climb.HoodHoldPosition;
@@ -126,7 +128,7 @@ public class RobotContainer {
     
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
 
-    new JoystickButton(driverJoystick, 7).whenPressed(new PlayMusic(3, CONVEYOR_SUBSYSTEM, HOOD_SUBSYSTEM, INTAKE_SUBSYSTEM, SHOOTER_SUBSYSTEM, SWERVE_SUBSYSTEM));
+    new JoystickButton(driverJoystick, 7).whenPressed(new PlayMusic(1, CONVEYOR_SUBSYSTEM, HOOD_SUBSYSTEM, INTAKE_SUBSYSTEM, SHOOTER_SUBSYSTEM, SWERVE_SUBSYSTEM));
 
     // Run intake command
     new JoystickButton(operatorJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, false, colorSensor));
@@ -157,7 +159,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     //return new ShittyAutoCommand(SWERVE_SUBSYSTEM);
-    return new FollowTrajectory(SWERVE_SUBSYSTEM, "testPath.csv");
+    return new OneBallGetOut(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM);
   }
 
 
