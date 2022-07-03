@@ -245,6 +245,6 @@ public final class Constants {
 
     public static final double gyroToMPS = 1;
 
-    public static final Point hubPosition = new Point(8.3, -4.2); //will need to update
+    public static final Point hubPosition = new Point(8.3, 4.2); // NEEDS TO BE UPDATED,,, BUT MAKING Y POSITIVE. HAVE TO INVERT ODOMETRY INPUT.
 
 }

@@ -116,6 +116,10 @@ public class SwerveSubsystem extends SubsystemBase {
     gyro.setYaw(0);
   }
 
+  public void setHeading(double heading) {
+    gyro.setYaw(-heading);
+  }
+
   // Gets a gyro heading between 0 and 360 degrees
   public double getHeading() {
     return -Math.IEEEremainder(gyro.getYaw(), 360);

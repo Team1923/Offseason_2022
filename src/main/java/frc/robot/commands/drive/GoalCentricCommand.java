@@ -6,9 +6,8 @@ package frc.robot.commands.drive;
 
 import java.util.function.Supplier;
 
-import org.opencv.core.Point;
-
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -27,7 +26,8 @@ public class GoalCentricCommand extends CommandBase {
 
   // Value used to scale the x-offset of the limelight when targeting
   // .1 was too fast, .01 was a little too slow, maybe try .02.
-  private final double kP = .015;
+  private final double kPTarget = .015;
+  private final double kPNoTarget = .015;
 
   /** Creates a new GoalCentricCommand where the robot follows the goal rotationally as it translates in field-oriented mode. */
   public GoalCentricCommand(SwerveSubsystem swerve, Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> tS, 
@@ -71,10 +71,10 @@ public class GoalCentricCommand extends CommandBase {
     if(Math.abs(inputRotational) > .05) {
       turningSpeed = inputRotational;
     } else if(LIMELIGHT_SUBSYSTEM.hasTarget()){
-      turningSpeed = LIMELIGHT_SUBSYSTEM.getX() * kP;
+      turningSpeed = LIMELIGHT_SUBSYSTEM.getX() * kPTarget;
     }
     else{
-      turningSpeed = 0;
+      turningSpeed = getHeadingTowardsHub() * kPNoTarget;
     }
 
     // Apply a deadband
@@ -104,22 +104,19 @@ public class GoalCentricCommand extends CommandBase {
     LIMELIGHT_SUBSYSTEM.isGoalCentric = false;
   }
 
-  public double getHeadingTowardHub(){
-    Point hub = Constants.hubPosition;
-    double xHub = hub.x;
-    double yHub = hub.y;
-    double xCurrentRobot = SWERVE_SUBSYSTEM.getPose().getX();
-    double yCurrentRobot = SWERVE_SUBSYSTEM.getPose().getY();
-    double currentAngle = SWERVE_SUBSYSTEM.getPose().getRotation().getDegrees();
-    if(xHub > xCurrentRobot){
-      return (180 + currentAngle) - Math.toDegrees(Math.atan((xCurrentRobot - xHub) / (yCurrentRobot - yHub)));
-    }
-    else{
-      return Math.toDegrees(Math.atan((xCurrentRobot - xHub) / (yCurrentRobot - yHub)));
-    }
+  public double getHeadingTowardsHub() {
+    Pose2d currentRobotPosition = SWERVE_SUBSYSTEM.getPose();
 
-    
+    double robotX = currentRobotPosition.getX();
+    double robotY = -currentRobotPosition.getY();
+
+    double deltaX = robotX - Constants.hubPosition.x;
+    double deltaY = robotY - Constants.hubPosition.y;
+
+    return (Math.atan2(deltaY, deltaX) * 180 / 3.1415) - SWERVE_SUBSYSTEM.getHeading();
   }
+
+
 
   // Returns true when the command should end.
   @Override
@@ -127,3 +124,22 @@ public class GoalCentricCommand extends CommandBase {
     return false;
   }
 }
+
+
+
+// public double getHeadingTowardHub(){
+//   Point hub = Constants.hubPosition;
+//   double xHub = hub.x;
+//   double yHub = hub.y;
+//   double xCurrentRobot = SWERVE_SUBSYSTEM.getPose().getX();
+//   double yCurrentRobot = SWERVE_SUBSYSTEM.getPose().getY();
+//   double currentAngle = SWERVE_SUBSYSTEM.getPose().getRotation().getDegrees();
+//   if(xHub > xCurrentRobot){
+//     return (180 + currentAngle) - Math.toDegrees(Math.atan((xCurrentRobot - xHub) / (yCurrentRobot - yHub)));
+//   }
+//   else{
+//     return Math.toDegrees(Math.atan((xCurrentRobot - xHub) / (yCurrentRobot - yHub)));
+//   }
+
+  
+// }

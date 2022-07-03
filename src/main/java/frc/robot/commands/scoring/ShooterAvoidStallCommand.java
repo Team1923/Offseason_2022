@@ -43,7 +43,27 @@ public class ShooterAvoidStallCommand extends CommandBase {
         SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
         break;
       case ONE_BALL_NONE_BROKEN:
+       if(stateHandler.getEjectionStatus() == EjectionStatus.DUMPING){
+
+        SHOOTER_SUBSYSTEM.setShooterWheelsRPM(5000);
+
+        if (Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(5000)) < ShooterConstants.shooterRPMThreshold) {
+
+          threshold_timer.start();
+
+        } else {
+
+          threshold_timer.reset();
+          threshold_timer.stop();
+
+        }
+
+        SHOOTER_SUBSYSTEM.setAcceptableRPMState(threshold_timer.get() > ShooterConstants.shooterTimeThreshold);
+
+      }
+      else{
         SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
+      }
         break;
       case ONE_BALL_FAR_BROKEN:
         if(stateHandler.getEjectionStatus() == EjectionStatus.DUMPING){

@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.ShooterData;
-import frc.robot.autonomous.VisionTrack;
+import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -22,7 +22,7 @@ public class ShootCommandGroup extends ParallelCommandGroup {
   LimelightSubsystem limelight, HoodSubsystem hood, ShooterData shooterData) {
     
     addCommands(
-        new VisionTrack(swerve, xSpdFunction, ySpdFunction, limelight),
+        new GoalCentricCommand(swerve, xSpdFunction, ySpdFunction, ts, limelight),
         new HoodChangingSetpointCommand(hood, limelight, shooterData)
 
     );
