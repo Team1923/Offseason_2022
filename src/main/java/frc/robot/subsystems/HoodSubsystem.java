@@ -11,10 +11,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.ShooterData;
 import frc.robot.Constants.HoodConstants;
 
-@SuppressWarnings("unused")
 public class HoodSubsystem extends SubsystemBase {
 
   public WPI_TalonFX hoodMotor = new WPI_TalonFX(HoodConstants.hoodMotorID);

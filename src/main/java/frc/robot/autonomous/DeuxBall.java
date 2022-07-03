@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.UnitConversion;
-import frc.robot.commands.drive.GoalCentricCommand;
-import frc.robot.commands.scoring.StateManagedIntakeCommand;
 import frc.robot.commands.scoring.independent.RunIntakeCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
@@ -33,7 +31,7 @@ public class DeuxBall extends SequentialCommandGroup {
         new RunTrajectory(swerve, "twoBallPath", false)
       ).withTimeout(2),
       new PIDRotate(swerve, -180),
-      new GoalCentricCommand(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(1),
+      new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(1),
       new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(27.5), 3300)
         
     );

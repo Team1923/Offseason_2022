@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -15,19 +14,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.DesiredClimb;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ClimbConstants;
-import frc.robot.Constants.OIConstants;
-import frc.robot.DesiredClimb.Climbs;
 import frc.robot.MKILib.MKIPicoColorSensor;
-import frc.robot.commands.climb.FullTraversalClimbSequence;
-import frc.robot.commands.climb.LevelThreeClimb;
-import frc.robot.commands.climb.LevelTwoClimb;
-import frc.robot.commands.climb.TraversalArmsExtended;
-
-@SuppressWarnings("unused")
 public class ClimbSubsystem extends SubsystemBase {
 
   private CANSparkMax leftClimber;
@@ -41,10 +31,6 @@ public class ClimbSubsystem extends SubsystemBase {
 
   private DesiredClimb desiredClimb;
   private Joystick operatorJoystick;
-  private HoodSubsystem HOOD_SUBSYSTEM;
-  private Joystick driverJoystick;
-  private StateHandler stateHandler;
-  private MKIPicoColorSensor colorSensor;
 
   /** Creates a new ClimbSubsystem. */
   public ClimbSubsystem(Joystick oJoystick, DesiredClimb d, HoodSubsystem hood, Joystick driver, StateHandler state, MKIPicoColorSensor color) {
@@ -92,10 +78,6 @@ public class ClimbSubsystem extends SubsystemBase {
 
     this.operatorJoystick = oJoystick;
     this.desiredClimb = d;
-    this.HOOD_SUBSYSTEM = hood;
-    this.driverJoystick = driver;
-    this.stateHandler = state;
-    this.colorSensor = color;
 
     resetEncoders();
   }

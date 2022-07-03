@@ -4,12 +4,7 @@
 
 package frc.robot.autonomous;
 
-import java.util.function.Supplier;
-
-import org.opencv.core.Point;
-
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

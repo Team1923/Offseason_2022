@@ -8,31 +8,20 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.ctre.phoenix.sensors.Pigeon2;
-import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.StateHandler;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.MKILib.MKIMath;
-import frc.robot.MKILib.MKIPoseEstimatorLimelight;
 import frc.robot.interfaces.LimelightInterface;
 import frc.robot.interfaces.SwerveModule;
-import frc.robot.pathplanning.dependencies.MKISwerveDriveOdometry;
 
-@SuppressWarnings("unused")
 public class SwerveSubsystem extends SubsystemBase {
-
-  private LimelightInterface limelightInterface;
-
-  private double[] gyroArray;
 
   // Instantiating four modules using the constants defined in the DriveConstants class in the constants file
   public final SwerveModule frontLeft = new SwerveModule(
@@ -77,7 +66,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem(LimelightInterface lInterface) {
-    limelightInterface = lInterface;
 
 
     // Gyro is going to be calibrating for first part of boot, so delay wipe of settings and zeroing of heading by a second each on a seperate thread

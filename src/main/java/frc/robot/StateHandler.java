@@ -27,7 +27,6 @@ public class StateHandler {
     public EjectionStatus ejectionStatus;
 
     private Alliance alliance;
-    private Balls goodColor;
     private Balls badColor;
 
     public boolean frontBeamBreak;
@@ -79,10 +78,8 @@ public class StateHandler {
         this.colorSensor = cs;
 
         if(alliance == Alliance.Blue) {
-            this.goodColor = Balls.BLUE;
             this.badColor = Balls.RED;
         } else {
-            this.goodColor = Balls.RED;
             this.badColor = Balls.BLUE;
         }
     }

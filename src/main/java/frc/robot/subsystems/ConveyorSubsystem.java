@@ -8,10 +8,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.StateHandler;
 import frc.robot.Constants.ConveyorConstants;
 
-@SuppressWarnings("unused")
 public class ConveyorSubsystem extends SubsystemBase {
   /** Creates a new ConveyorSubsystem. */
   public WPI_TalonFX conveyorMotor = new WPI_TalonFX(ConveyorConstants.conveyorMotorID);

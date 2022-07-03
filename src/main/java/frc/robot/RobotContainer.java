@@ -10,12 +10,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.autonomous.DeuxBall;
-import frc.robot.autonomous.FollowTrajectory;
-import frc.robot.autonomous.OneBallGetOut;
 import frc.robot.autonomous.PIDRotate;
-import frc.robot.autonomous.UnoBall;
 import frc.robot.commands.scoring.ShootCommandGroup;
-import frc.robot.commands.climb.PlayMusic;
 import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.climb.ScheduleClimb;
 import frc.robot.commands.drive.SwerveDriveCommand;
@@ -126,7 +122,8 @@ public class RobotContainer {
       new JoystickButton(driverJoystick, OIConstants.kDriverAButton).whileHeld(new ShootCommandGroup(
         SWERVE_SUBSYSTEM, 
         () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
-        () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis), 
+        () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
+        () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis), 
         LIMELIGHT_SUBSYSTEM, HOOD_SUBSYSTEM, shooterData));
 
   }

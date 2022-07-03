@@ -6,22 +6,12 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.StateHandler;
 import frc.robot.interfaces.LimelightInterface;
 
-@SuppressWarnings("unused")
 public class LimelightSubsystem extends SubsystemBase {
   /** Creates a new LimelightSubsystem. */
   private LimelightInterface Limelight;
   public boolean isGoalCentric;
-  
-
-  // height in inches of camera from ground
-  private double limelight_height = 20;
-  // height in inches of center of target from ground
-  private double target_height = 100;
-  // limelight mounting angle above positive x axis in degrees
-  private double limelight_mount_angle = 30;
 
   public LimelightSubsystem(LimelightInterface limelight) {    
     Limelight = limelight;
@@ -55,10 +45,6 @@ public class LimelightSubsystem extends SubsystemBase {
 
   public double map(double a1, double a2, double b1, double b2, double input) {
     return b1 + ((input-a1)*(b2-b1)/(a2-a1));
-  }
-
-  public double angle() {
-    return limelight_mount_angle - getY();
   }
 
   public double getDistance(){

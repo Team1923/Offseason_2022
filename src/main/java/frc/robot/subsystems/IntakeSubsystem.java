@@ -14,10 +14,8 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.StateHandler;
 import frc.robot.Constants.IntakeConstants;
 
-@SuppressWarnings("unused")
 public class IntakeSubsystem extends SubsystemBase {
 
   private Solenoid solenoid1 = new Solenoid(PneumaticsModuleType.CTREPCM, 0);

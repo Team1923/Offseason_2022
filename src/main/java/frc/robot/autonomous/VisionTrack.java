@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.drive;
+package frc.robot.autonomous;
 
 import java.util.function.Supplier;
 
@@ -18,11 +18,11 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class GoalCentricCommand extends CommandBase {
+public class VisionTrack extends CommandBase {
 
   private final SwerveSubsystem SWERVE_SUBSYSTEM;
   private final LimelightSubsystem LIMELIGHT_SUBSYSTEM;
-  private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpeedFunction;
+  private final Supplier<Double> xSpdFunction, ySpdFunction;
   private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
   // Value used to scale the x-offset of the limelight when targeting
@@ -30,14 +30,13 @@ public class GoalCentricCommand extends CommandBase {
   private final double kP = .015;
 
   /** Creates a new GoalCentricCommand where the robot follows the goal rotationally as it translates in field-oriented mode. */
-  public GoalCentricCommand(SwerveSubsystem swerve, Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> tS, 
+  public VisionTrack(SwerveSubsystem swerve, Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, 
                             LimelightSubsystem limelight) {
 
     // Set instance variables equal to what was passed in
     this.SWERVE_SUBSYSTEM = swerve;
     this.xSpdFunction = xSpdFunction;
     this.ySpdFunction = ySpdFunction;
-    this.turningSpeedFunction = tS;
     this.LIMELIGHT_SUBSYSTEM = limelight;
     
     // Slew Rate Limiters for smoother driving
@@ -63,14 +62,10 @@ public class GoalCentricCommand extends CommandBase {
     double xSpeed = xSpdFunction.get();
     double ySpeed = ySpdFunction.get();
 
-    double inputRotational = turningSpeedFunction.get();
-
     // Instead of turning based off an axis value, lets use the horizontal angle to the 
     // target measured by the limelight times some value to make it fit within the scope of robot control
     double turningSpeed;
-    if(Math.abs(inputRotational) > .05) {
-      turningSpeed = inputRotational;
-    } else if(LIMELIGHT_SUBSYSTEM.hasTarget()){
+    if(LIMELIGHT_SUBSYSTEM.hasTarget()){
       turningSpeed = LIMELIGHT_SUBSYSTEM.getX() * kP;
     }
     else{

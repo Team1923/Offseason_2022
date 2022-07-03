@@ -14,7 +14,6 @@ import com.ctre.phoenix.music.Orchestra;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ConveyorSubsystem;
-import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -22,20 +21,16 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class PlayMusic extends CommandBase {
   private Orchestra orchestra;
   private ConveyorSubsystem conveyor;
-  private HoodSubsystem hood;
   private IntakeSubsystem intake;
-  private ShooterSubsystem shooter;
   private SwerveSubsystem swerve;
 
   private Collection<TalonFX> talons = new ArrayList<TalonFX>();
   
 
-  public PlayMusic(int selection, ConveyorSubsystem conveyor, HoodSubsystem hood, IntakeSubsystem intake, ShooterSubsystem shooter, SwerveSubsystem swerve){
+  public PlayMusic(int selection, ConveyorSubsystem conveyor, IntakeSubsystem intake, ShooterSubsystem shooter, SwerveSubsystem swerve){
     songSelection = selection;
     this.conveyor = conveyor;
-    this.hood  = hood;
     this.intake = intake;
-    this.shooter = shooter;
     this.swerve = swerve;
 
     addTalons();
