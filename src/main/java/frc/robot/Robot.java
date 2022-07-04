@@ -5,8 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.autonomous.AutoChooser;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,6 +21,9 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private AutoChooser selector;
+
+  ShuffleboardTab driverDashboard = Shuffleboard.getTab("Driver Dashboard");
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -32,6 +38,7 @@ public class Robot extends TimedRobot {
     // Run the update booleans method in the state handler at an interval of every 20ms, offset from the main loop by 10ms to avoid commands not fully updating. 
     addPeriodic(() -> m_robotContainer.stateHandler.updateBooleans(), .02, .01);
     addPeriodic(() -> m_robotContainer.stateHandler.updateStates(), .02, .01);
+    this.selector = new AutoChooser();
   }
 
   /**
@@ -60,7 +67,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.initializeAuto(selector);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
