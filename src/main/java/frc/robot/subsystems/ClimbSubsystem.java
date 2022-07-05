@@ -49,6 +49,9 @@ public class ClimbSubsystem extends SubsystemBase {
     leftClimbPIDController = leftClimber.getPIDController();
     rightClimbPIDController = rightClimber.getPIDController();
 
+    // leftClimber.setSmartCurrentLimit(60);
+    // rightClimber.setSmartCurrentLimit(60);
+
     leftClimbPIDController.setP(ClimbConstants.arm_kP);
     leftClimbPIDController.setI(ClimbConstants.arm_kI);
     leftClimbPIDController.setD(ClimbConstants.arm_kD);
@@ -88,9 +91,12 @@ public class ClimbSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Left Climb Encoder Position: ", getLeftClimbEncoderPosition());
     SmartDashboard.putNumber("Right Climb Encoder Position: ", getRightClimbEncoderPosition());
 
-    //SmartDashboard.putNumber("Left Climber Current Draw: ", getLeftClimbCurrentDraw());
-    //SmartDashboard.putNumber("Right Climber Current Draw: ", getRightClimbCurrentDraw());
+    SmartDashboard.putNumber("Left Climber Current Draw: ", getLeftClimbCurrentDraw());
+    SmartDashboard.putNumber("Right Climber Current Draw: ", getRightClimbCurrentDraw());
 
+    SmartDashboard.putNumber("Left Climber Output: ", leftClimber.getAppliedOutput());
+    SmartDashboard.putNumber("Right Climber Output: ", rightClimber.getAppliedOutput());
+    
     desiredClimb.updateCurrentClimb(operatorJoystick);
     SmartDashboard.putString("CURRENT CLIMB SEQUENCE", desiredClimb.getCurrentClimb().toString());
 

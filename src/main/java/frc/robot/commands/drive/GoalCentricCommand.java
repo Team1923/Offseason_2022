@@ -57,6 +57,8 @@ public class GoalCentricCommand extends CommandBase {
   @Override
   public void execute() {
 
+    System.out.println("TRACKING!");
+
     LIMELIGHT_SUBSYSTEM.isGoalCentric = true;
 
     // Get real-time joystick values
@@ -74,7 +76,8 @@ public class GoalCentricCommand extends CommandBase {
       turningSpeed = LIMELIGHT_SUBSYSTEM.getX() * kPTarget;
     }
     else{
-      turningSpeed = getHeadingTowardsHub() * kPNoTarget;
+      //turningSpeed = getHeadingTowardsHub() * kPNoTarget;
+      turningSpeed = 0;
     }
 
     // Apply a deadband

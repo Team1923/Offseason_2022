@@ -38,10 +38,10 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
-      new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
+      // new ArmsToPosition(CLIMB_SUBSYSTEM, 30), MERGED WITH BELOW
       new ParallelRaceGroup(
         new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
-        new ArmsToPosition(CLIMB_SUBSYSTEM, 50)
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 80) // MERGING WAS PREV. 50
       ),
       new ParallelRaceGroup(
         new ArmsToPosition(CLIMB_SUBSYSTEM, -80),
@@ -53,10 +53,10 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
-      new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
+      //new ArmsToPosition(CLIMB_SUBSYSTEM, 30), MERGING WITH BELOW
       new ParallelRaceGroup(
         new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
-        new ArmsToPosition(CLIMB_SUBSYSTEM, 50)
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 80) // WAS ORGINALLY 50
       ),
       new ParallelRaceGroup(
         new ArmsToPosition(CLIMB_SUBSYSTEM, -80),
@@ -70,11 +70,7 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
       new ParallelCommandGroup(
         new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
-        new ParallelCommandGroup(
-          new HoodHoldPosition(HOOD_SUBSYSTEM, 36000),
-          new PlayMusic(4, conveyor, intake, shooter, swerve)
-        )
-        
+        new HoodHoldPosition(HOOD_SUBSYSTEM, 36000)
       )
       
       // new ArmsToPosition(CLIMB_SUBSYSTEM, -20),

@@ -197,10 +197,11 @@ public class StateHandler {
             currentRobotState = States.TWO_BALLS_BOTH_BROKEN;
         }
 
-        updateEjectionStatus();
+        //updateEjectionStatus();
 
         SmartDashboard.putString("Current Robot State: ", currentRobotState.toString());
         SmartDashboard.putString("Ball Tracker: ", ballTracker.get(0) + "  " + ballTracker.get(1));
+        SmartDashboard.putString("Ejection State: ", ejectionStatus.toString());
     }
 
     public void updateEjectionStatus() {

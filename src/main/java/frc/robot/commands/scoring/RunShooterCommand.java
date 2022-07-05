@@ -60,16 +60,15 @@ public class RunShooterCommand extends CommandBase {
       goal_rpm = -2750;
     }
     
-
     SmartDashboard.putNumber("GOAL RPM", goal_rpm);
 
     SHOOTER_SUBSYSTEM.setShooterWheelsRPM(goal_rpm);
-
+    double error = Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(goal_rpm));
+    SmartDashboard.putNumber("Shooter Error: ", error);
     // If we are within a certain bound of RPM from the RPM goal, start at timer. Otherwise, reset and stop the timer.
-    if (Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(goal_rpm)) < ShooterConstants.shooterRPMThreshold) {
+    if (error < ShooterConstants.shooterRPMThreshold) {
       threshold_timer.start();
     } else {
-      System.out.println("FUCK YOU");
       threshold_timer.reset();
       threshold_timer.stop();
     }
@@ -77,8 +76,7 @@ public class RunShooterCommand extends CommandBase {
     // If the timer is above a certain value, we deem that the shooter is in an acceptable range.
     canFire = threshold_timer.get() > ShooterConstants.shooterTimeThreshold;
     //SmartDashboard.putNumber("THRESHOLD TIMER: ",threshold_timer.get());
-
-
+    
     SHOOTER_SUBSYSTEM.setAcceptableRPMState(canFire);
     //SmartDashboard.putBoolean("Can Fire?", canFire);
     if(canFire) {

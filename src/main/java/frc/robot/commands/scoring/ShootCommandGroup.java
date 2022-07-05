@@ -24,7 +24,6 @@ public class ShootCommandGroup extends ParallelCommandGroup {
     addCommands(
         new GoalCentricCommand(swerve, xSpdFunction, ySpdFunction, ts, limelight),
         new HoodChangingSetpointCommand(hood, limelight, shooterData)
-
     );
   }
 }

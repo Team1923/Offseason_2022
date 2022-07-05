@@ -7,13 +7,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 import frc.robot.MKILib.MKIPicoColorSensor;
+import frc.robot.autonomous.AutoChooser;
 import frc.robot.autonomous.DeuxBall;
 import frc.robot.autonomous.PIDRotate;
 import frc.robot.commands.scoring.ShootCommandGroup;
 import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.climb.ScheduleClimb;
+import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.commands.drive.SwerveDriveCommand;
 import frc.robot.commands.scoring.DefaultHoodCommand;
 import frc.robot.commands.scoring.RunShooterCommand;
@@ -33,6 +36,8 @@ import frc.robot.subsystems.SwerveSubsystem;
 // does not mean that they are actually not being used. When defined, the
 // command scheduler will automatically schedule the periodic loop defined in them.
 public class RobotContainer {
+
+  private AutoChooser selector;
 
   private final LimelightInterface Limelight = new LimelightInterface();
   private final DesiredClimb desiredClimb = new DesiredClimb();
@@ -97,12 +102,10 @@ public class RobotContainer {
     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whenPressed(new ScheduleClimb(desiredClimb, HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, SHOOTER_SUBSYSTEM, SWERVE_SUBSYSTEM));
     
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
-
-    new JoystickButton(driverJoystick, 7).toggleWhenPressed(new PIDRotate(SWERVE_SUBSYSTEM, -90));
-
+ 
     // Run intake command
-    new JoystickButton(operatorJoystick, OIConstants.kOperatorXButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, false, colorSensor));
-    new JoystickButton(operatorJoystick, OIConstants.kOperatorSquareButton).toggleWhenPressed(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, true, colorSensor));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorXButton).whileHeld(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, false, colorSensor));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorSquareButton).whileHeld(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, true, colorSensor));
     
     // Creates an "instant command" that will execute the line of code past the "() ->", zeros the heading
     new JoystickButton(driverJoystick, OIConstants.kDriverBButton).whenPressed(() -> SWERVE_SUBSYSTEM.zeroHeading());
@@ -113,13 +116,7 @@ public class RobotContainer {
     new JoystickButton(operatorJoystick, OIConstants.kOperatorTriangleButton).whileHeld(new RunShooterCommand(SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, shooterData, LIMELIGHT_SUBSYSTEM));
 
     // Hub-centric driving command
-    // new JoystickButton(driverJoystick, OIConstants.kDriverAButton).whileHeld(new GoalCentricCommand(
-    //   SWERVE_SUBSYSTEM, 
-    //   () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
-    //   () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis), 
-    //   LIMELIGHT_SUBSYSTEM));
-
-      new JoystickButton(driverJoystick, OIConstants.kDriverAButton).whileHeld(new ShootCommandGroup(
+    new Trigger(() -> driverJoystick.getRawAxis(3) > .1).whileActiveContinuous(new ShootCommandGroup(
         SWERVE_SUBSYSTEM, 
         () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
         () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
@@ -133,5 +130,10 @@ public class RobotContainer {
     return new DeuxBall(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM);
   }
 
+  public Command initializeAuto(AutoChooser selector) {
+    System.out.println("REACHED");
+    this.selector = selector;
+    return selector.startMode(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM);
+  } 
 
 }

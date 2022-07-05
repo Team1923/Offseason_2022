@@ -99,7 +99,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
 
 
-
     SmartDashboard.putString("Odometer Position", odometer.getPoseMeters().toString());
 
     //SmartDashboard.putNumber("Front Right Position", frontRight.getTurningPositionRads());

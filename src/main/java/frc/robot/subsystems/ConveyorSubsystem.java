@@ -46,6 +46,8 @@ public class ConveyorSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("BEAM BREAK ONE: ", getFrontBeamBreak());
     SmartDashboard.putBoolean("BEAM BREAK TWO: ", getBackBeamBreak());
+
+    SmartDashboard.putNumber("Running Conveyor?", conveyorMotor.get());
     //SmartDashboard.putNumber("System Time", System.currentTimeMillis());
   }
 

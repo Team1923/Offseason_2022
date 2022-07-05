@@ -55,17 +55,17 @@ public class TraversalArmsExtended extends SequentialCommandGroup {
         new ArmsToPosition(CLIMB_SUBSYSTEM, 50)
       ),
       new ParallelRaceGroup(
-        new ArmsToPosition(CLIMB_SUBSYSTEM, -80),
-        new SequentialCommandGroup(
-          new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
-          new HoodApplyVoltage(HOOD_SUBSYSTEM, 0.1)
-        )
+        new ArmsToPosition(CLIMB_SUBSYSTEM, -40)
+        // new SequentialCommandGroup(
+        //   new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 0),
+        //   new HoodApplyVoltage(HOOD_SUBSYSTEM, 0.1)
+        // )
       ),
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 0),
         new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
       new ParallelCommandGroup(
-        new ArmsToPosition(CLIMB_SUBSYSTEM, 0),
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 40),
         new HoodHoldPosition(HOOD_SUBSYSTEM, 0)
       )
       

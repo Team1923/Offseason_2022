@@ -32,8 +32,11 @@ public class LevelTwoClimb extends SequentialCommandGroup {
         new ArmsToPosition(CLIMB_SUBSYSTEM, -80)
       ),
         new ParallelCommandGroup(
-            new ArmsToPosition(CLIMB_SUBSYSTEM, 10),
-            new HoodHoldPosition(HOOD_SUBSYSTEM, 40100)
+            new SequentialCommandGroup(
+              new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3).withTimeout(1),
+              new ArmsToPosition(CLIMB_SUBSYSTEM, 10)
+            ),
+            new HoodHoldPosition(HOOD_SUBSYSTEM, 36000)
         )
         
       
