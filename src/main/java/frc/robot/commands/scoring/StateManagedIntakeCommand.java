@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ConveyorConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -18,7 +17,7 @@ public class StateManagedIntakeCommand extends CommandBase {
   private boolean intakeReversed;
   private ConveyorSubsystem conveyor;
 
-  public StateManagedIntakeCommand(IntakeSubsystem intake, StateHandler stateHandler, ConveyorSubsystem conveyor, boolean reversed, MKIPicoColorSensor colorSensor) {
+  public StateManagedIntakeCommand(IntakeSubsystem intake, StateHandler stateHandler, ConveyorSubsystem conveyor, boolean reversed) {
     this.intake = intake;
     this.stateHandler = stateHandler;
     this.conveyor = conveyor;

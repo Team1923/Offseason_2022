@@ -10,7 +10,6 @@ import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import frc.robot.StateHandler.Balls;
 
 public class MKIPicoColorSensor implements AutoCloseable {
   public static class RawColor {
@@ -313,17 +312,6 @@ public class MKIPicoColorSensor implements AutoCloseable {
     }
   }
 
-  public Balls getBallColor(int id) {
-    RawColor current = getRawColor(id);
-    if(1.0 * current.blue/current.red > 1.5) {
-      return Balls.BLUE;
-    } else if(1.0 * current.red/current.blue > 1.5) {
-      return Balls.RED;
-    } else {
-      return Balls.EMPTY;
-    }
-
-  }
 
   @Override
   public void close() throws Exception {

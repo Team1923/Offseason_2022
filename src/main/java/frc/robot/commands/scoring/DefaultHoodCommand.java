@@ -5,8 +5,6 @@
 package frc.robot.commands.scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.StateHandler;
-import frc.robot.StateHandler.EjectionStatus;
 import frc.robot.subsystems.HoodSubsystem;
 
 
@@ -17,13 +15,10 @@ import frc.robot.subsystems.HoodSubsystem;
 public class DefaultHoodCommand extends CommandBase {
 
   private HoodSubsystem HOOD_SUBSYSTEM;
-  private StateHandler stateHandler;
-
 
   /** Creates a new HoodSingleSetpointCommand. */
-  public DefaultHoodCommand(HoodSubsystem hood, StateHandler state) {
+  public DefaultHoodCommand(HoodSubsystem hood) {
     this.HOOD_SUBSYSTEM = hood;
-    this.stateHandler = state;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(HOOD_SUBSYSTEM);
@@ -39,26 +34,7 @@ public class DefaultHoodCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    switch(stateHandler.getState()) {
-      case ONE_BALL_FAR_BROKEN:
-        if(stateHandler.getEjectionStatus() == EjectionStatus.DUMPING){
-          HOOD_SUBSYSTEM.setHoodPosition(5000);
-        }
-        else{
-          HOOD_SUBSYSTEM.setHoodPosition(0);
-        }
-        break;
-      case TWO_BALLS_BOTH_BROKEN:
-        if(stateHandler.getEjectionStatus() == EjectionStatus.DUMPING){
-          HOOD_SUBSYSTEM.setHoodPosition(5000);
-        }
-        else{
-          HOOD_SUBSYSTEM.setHoodPosition(0);
-        }
-      default:
-        HOOD_SUBSYSTEM.setHoodPosition(0);
-        break; 
-    }
+    HOOD_SUBSYSTEM.setHoodPosition(0);
   }
 
   // Called once the command ends or is interrupted.

@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.DesiredClimb;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ClimbConstants;
-import frc.robot.MKILib.MKIPicoColorSensor;
 public class ClimbSubsystem extends SubsystemBase {
 
   private CANSparkMax leftClimber;
@@ -33,7 +32,7 @@ public class ClimbSubsystem extends SubsystemBase {
   private Joystick operatorJoystick;
 
   /** Creates a new ClimbSubsystem. */
-  public ClimbSubsystem(Joystick oJoystick, DesiredClimb d, HoodSubsystem hood, Joystick driver, StateHandler state, MKIPicoColorSensor color) {
+  public ClimbSubsystem(Joystick oJoystick, DesiredClimb d, HoodSubsystem hood, Joystick driver, StateHandler state) {
     
     leftClimber = new CANSparkMax(17, MotorType.kBrushless);
     rightClimber = new CANSparkMax(18, MotorType.kBrushless);

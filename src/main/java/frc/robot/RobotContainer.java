@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
-import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.autonomous.AutoChooser;
 import frc.robot.autonomous.DeuxBall;
 import frc.robot.commands.scoring.ShootCommandGroup;
@@ -52,19 +51,13 @@ public class RobotContainer {
   private final ConveyorSubsystem CONVEYOR_SUBSYSTEM = new ConveyorSubsystem();
   private final HoodSubsystem HOOD_SUBSYSTEM = new HoodSubsystem();
   private final ShooterSubsystem SHOOTER_SUBSYSTEM = new ShooterSubsystem();
-
-  private Climbs climbSequence;
-
   
-
-  //color sensor
-  MKIPicoColorSensor colorSensor = new MKIPicoColorSensor();
 
   // Singleton State Handler
   StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM);  
   DesiredClimb climb = new DesiredClimb();
 
-  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, climb, HOOD_SUBSYSTEM, driverJoystick, stateHandler, colorSensor);
+  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, climb, HOOD_SUBSYSTEM, driverJoystick, stateHandler);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -90,9 +83,9 @@ public class RobotContainer {
         () -> !driverJoystick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); // Field oriented control vs robot oriented. By default, since "!" is included, field oriented is default
 
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
-    SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, stateHandler, colorSensor));
+    SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM));
     CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, SHOOTER_SUBSYSTEM, stateHandler));
-    HOOD_SUBSYSTEM.setDefaultCommand(new HoodHoldPosition(HOOD_SUBSYSTEM, 0, stateHandler, colorSensor));    
+    HOOD_SUBSYSTEM.setDefaultCommand(new DefaultHoodCommand(HOOD_SUBSYSTEM));    
 
     
   }
@@ -105,8 +98,8 @@ public class RobotContainer {
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
  
     // Run intake command
-    new JoystickButton(operatorJoystick, OIConstants.kOperatorXButton).whileHeld(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, false, colorSensor));
-    new JoystickButton(operatorJoystick, OIConstants.kOperatorSquareButton).whileHeld(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, true, colorSensor));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorXButton).whileHeld(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, false));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorSquareButton).whileHeld(new StateManagedIntakeCommand(INTAKE_SUBSYSTEM, stateHandler, CONVEYOR_SUBSYSTEM, true));
     
     // Creates an "instant command" that will execute the line of code past the "() ->", zeros the heading
     new JoystickButton(driverJoystick, OIConstants.kDriverBButton).whenPressed(() -> SWERVE_SUBSYSTEM.zeroHeading());
