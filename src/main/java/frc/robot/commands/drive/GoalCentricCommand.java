@@ -10,6 +10,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -27,7 +28,7 @@ public class GoalCentricCommand extends CommandBase {
   // Value used to scale the x-offset of the limelight when targeting
   // .1 was too fast, .01 was a little too slow, maybe try .02.
   private final double kPTarget = .015;
-  private final double kPNoTarget = .015;
+  //private final double kPNoTarget = .015;
 
   /** Creates a new GoalCentricCommand where the robot follows the goal rotationally as it translates in field-oriented mode. */
   public GoalCentricCommand(SwerveSubsystem swerve, Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> tS, 
@@ -57,7 +58,6 @@ public class GoalCentricCommand extends CommandBase {
   @Override
   public void execute() {
 
-    System.out.println("TRACKING!");
 
     LIMELIGHT_SUBSYSTEM.isGoalCentric = true;
 

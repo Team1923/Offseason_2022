@@ -12,11 +12,9 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.MKILib.MKIPicoColorSensor;
 import frc.robot.autonomous.AutoChooser;
 import frc.robot.autonomous.DeuxBall;
-import frc.robot.autonomous.PIDRotate;
 import frc.robot.commands.scoring.ShootCommandGroup;
 import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.climb.ScheduleClimb;
-import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.commands.drive.SwerveDriveCommand;
 import frc.robot.commands.scoring.DefaultHoodCommand;
 import frc.robot.commands.scoring.RunShooterCommand;
@@ -36,8 +34,6 @@ import frc.robot.subsystems.SwerveSubsystem;
 // does not mean that they are actually not being used. When defined, the
 // command scheduler will automatically schedule the periodic loop defined in them.
 public class RobotContainer {
-
-  private AutoChooser selector;
 
   private final LimelightInterface Limelight = new LimelightInterface();
   private final DesiredClimb desiredClimb = new DesiredClimb();
@@ -132,7 +128,6 @@ public class RobotContainer {
 
   public Command initializeAuto(AutoChooser selector) {
     System.out.println("REACHED");
-    this.selector = selector;
     return selector.startMode(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM);
   } 
 
