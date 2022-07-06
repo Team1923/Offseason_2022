@@ -57,7 +57,7 @@ public class RobotContainer {
   StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM);  
   DesiredClimb climb = new DesiredClimb();
 
-  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, climb, HOOD_SUBSYSTEM, driverJoystick, stateHandler);
+  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, climb, HOOD_SUBSYSTEM, driverJoystick);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -84,7 +84,12 @@ public class RobotContainer {
 
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
     SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM));
-    CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, SHOOTER_SUBSYSTEM, stateHandler));
+    CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(
+        CONVEYOR_SUBSYSTEM, 
+        SHOOTER_SUBSYSTEM, 
+        stateHandler, 
+        () -> SHOOTER_SUBSYSTEM.leftShooterMotor.getStatorCurrent() > 25));
+
     HOOD_SUBSYSTEM.setDefaultCommand(new DefaultHoodCommand(HOOD_SUBSYSTEM));    
 
     

@@ -27,8 +27,7 @@ public class ShooterAvoidStallCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
-    //SmartDashboard.putNumber("SYSTEM TIME SHOOTER: ", System.currentTimeMillis());
+    SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed); 
   }
 
   // Called once the command ends or is interrupted.

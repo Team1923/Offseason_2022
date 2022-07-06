@@ -185,6 +185,7 @@ public final class Constants {
         public static final double conveyorPercentOut = 0.5; //change this
         public static final double conveyorOutPercentOut = -0.9;
         public static final double conveyorShootPercentOut = 0.96731; //change this
+        public static final double cancelStallPercentOut = -.15; //change this
         public static final int currentLimit = 30; //still needs to be set
         public static final int thresholdLimit = 40; //still needs to be set I just guessed
         public static final SupplyCurrentLimitConfiguration conveyorCurrentLimit =

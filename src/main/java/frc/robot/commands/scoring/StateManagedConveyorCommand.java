@@ -4,6 +4,8 @@
 
 package frc.robot.commands.scoring;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.StateHandler;
 import frc.robot.Constants.ConveyorConstants;
@@ -17,6 +19,7 @@ public class StateManagedConveyorCommand extends CommandBase {
   private StateHandler stateHandler;
   private States currentRobotState;
   private ShooterSubsystem shooterSubsystem;
+  private Supplier<Boolean> stallingSupplier;
   /** 
    *  Defines a new 
    * 
@@ -24,10 +27,11 @@ public class StateManagedConveyorCommand extends CommandBase {
    * @param handler The singleton state handler.
    * @param intaking A boolean defining whether the robot is currently intaking vs shooting.
    */
-  public StateManagedConveyorCommand(ConveyorSubsystem conveyor, ShooterSubsystem shooter, StateHandler handler) {
+  public StateManagedConveyorCommand(ConveyorSubsystem conveyor, ShooterSubsystem shooter, StateHandler handler, Supplier<Boolean> stalling) {
     this.CONVEYOR_SUBSYSTEM = conveyor;
     this.stateHandler = handler;
     this.shooterSubsystem = shooter;
+    this.stallingSupplier = stalling;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(CONVEYOR_SUBSYSTEM);
   }
@@ -45,6 +49,7 @@ public class StateManagedConveyorCommand extends CommandBase {
     // Update the robot state in this command with the actual current robot state from the state handler.
     currentRobotState = stateHandler.getState();
 
+
     double conveyorPercentOut = stateHandler.getEjecting() ?  ConveyorConstants.conveyorOutPercentOut : ConveyorConstants.conveyorPercentOut;
       switch(currentRobotState) {
         case NO_BALLS:
@@ -56,21 +61,27 @@ public class StateManagedConveyorCommand extends CommandBase {
         case ONE_BALL_FAR_BROKEN:
           if(shooterSubsystem.getAcceptableRPMState()) {
             CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
-          } else{
+          } else if (stallingSupplier.get()) {
+            CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.cancelStallPercentOut);
+          } else {
             CONVEYOR_SUBSYSTEM.stop();
           }
           break;
         case ONE_BALL_NONE_BROKEN:
           if(shooterSubsystem.getAcceptableRPMState()) {
             CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
-          } else{
+          } else if (stallingSupplier.get()) {
+            CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.cancelStallPercentOut);
+          } else {
             CONVEYOR_SUBSYSTEM.stop();
           }
           break;
         case TWO_BALLS_BOTH_BROKEN:
           if(shooterSubsystem.getAcceptableRPMState()) {
             CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
-          } else{
+          } else if (stallingSupplier.get()) {
+            CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.cancelStallPercentOut);
+          } else {
             CONVEYOR_SUBSYSTEM.stop();
           }
           break;

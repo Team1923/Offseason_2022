@@ -21,6 +21,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public WPI_TalonFX rightShooterMotor = new WPI_TalonFX(ShooterConstants.rightShooterMotorID);
 
   private boolean acceptableRPM;
+  private boolean shooterStalling;
 
   public ShooterSubsystem() {
     
@@ -108,6 +109,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public boolean getAcceptableRPMState() {
     return acceptableRPM;
+  }
+
+  public boolean getStalling() {
+    return shooterStalling;
+  }
+
+  public void setStalling(boolean set) {
+    this.shooterStalling = set;
   }
 
 }
