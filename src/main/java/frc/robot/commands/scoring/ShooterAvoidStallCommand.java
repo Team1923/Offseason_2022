@@ -15,14 +15,10 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterAvoidStallCommand extends CommandBase {
 
   private ShooterSubsystem SHOOTER_SUBSYSTEM;
-  private StateHandler stateHandler;
-  private Timer threshold_timer;
 
   /** Creates a new ShooterAvoidStallCommand. */
-  public ShooterAvoidStallCommand(ShooterSubsystem shooter, StateHandler state, MKIPicoColorSensor color) {
+  public ShooterAvoidStallCommand(ShooterSubsystem shooter) {
     this.SHOOTER_SUBSYSTEM = shooter;
-    this.stateHandler = state;
-    threshold_timer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(SHOOTER_SUBSYSTEM);
   }
@@ -35,88 +31,7 @@ public class ShooterAvoidStallCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    switch(stateHandler.getState()){
-      case NO_BALLS:
-        SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed); 
-        break;
-      case ONE_BALL_CLOSE_BROKEN:
-        SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
-        break;
-      case ONE_BALL_NONE_BROKEN:
-       if(stateHandler.getEjectionStatus() == EjectionStatus.DUMPING){
-
-        SHOOTER_SUBSYSTEM.setShooterWheelsRPM(5000);
-
-        if (Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(5000)) < ShooterConstants.shooterRPMThreshold) {
-
-          threshold_timer.start();
-
-        } else {
-
-          threshold_timer.reset();
-          threshold_timer.stop();
-
-        }
-
-        SHOOTER_SUBSYSTEM.setAcceptableRPMState(threshold_timer.get() > ShooterConstants.shooterTimeThreshold);
-
-      }
-      else{
-        SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
-      }
-        break;
-      case ONE_BALL_FAR_BROKEN:
-        if(stateHandler.getEjectionStatus() == EjectionStatus.DUMPING){
-
-        SHOOTER_SUBSYSTEM.setShooterWheelsRPM(5000);
-
-        if (Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(5000)) < ShooterConstants.shooterRPMThreshold) {
-
-          threshold_timer.start();
-
-        } else {
-
-          threshold_timer.reset();
-          threshold_timer.stop();
-
-        }
-
-        SHOOTER_SUBSYSTEM.setAcceptableRPMState(threshold_timer.get() > ShooterConstants.shooterTimeThreshold);
-
-      }
-      else{
-        SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
-      }
-
-        break;
-      case TWO_BALLS_BOTH_BROKEN:
-      if(stateHandler.getEjectionStatus() == EjectionStatus.DUMPING){
-
-        SHOOTER_SUBSYSTEM.setShooterWheelsRPM(5000);
-
-        if (Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(5000)) < ShooterConstants.shooterRPMThreshold) {
-
-          threshold_timer.start();
-
-        } else {
-
-          threshold_timer.reset();
-          threshold_timer.stop();
-
-        }
-
-        SHOOTER_SUBSYSTEM.setAcceptableRPMState(threshold_timer.get() > ShooterConstants.shooterTimeThreshold);
-
-      }
-      else{
-        SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
-      }
-        break;
-      default:
-        SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed); 
-        break;
-    }
-    
+    SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed);
     //SmartDashboard.putNumber("SYSTEM TIME SHOOTER: ", System.currentTimeMillis());
   }
 

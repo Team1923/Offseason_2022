@@ -36,9 +36,9 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class RobotContainer {
 
   private final LimelightInterface Limelight = new LimelightInterface();
-  private final DesiredClimb desiredClimb = new DesiredClimb();
+  private DesiredClimb desiredClimb = new DesiredClimb();
 
-  private final ShooterData shooterData = new ShooterData();
+  ShooterData shooterData = new ShooterData();
 
   // Joystick Instances
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
@@ -53,13 +53,18 @@ public class RobotContainer {
   private final HoodSubsystem HOOD_SUBSYSTEM = new HoodSubsystem();
   private final ShooterSubsystem SHOOTER_SUBSYSTEM = new ShooterSubsystem();
 
+  private Climbs climbSequence;
+
+  
+
   //color sensor
-  private final MKIPicoColorSensor colorSensor = new MKIPicoColorSensor();
+  MKIPicoColorSensor colorSensor = new MKIPicoColorSensor();
 
   // Singleton State Handler
-  public final StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM, colorSensor);  
+  StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM);  
+  DesiredClimb climb = new DesiredClimb();
 
-  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, desiredClimb, HOOD_SUBSYSTEM, driverJoystick, stateHandler, colorSensor);
+  private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, climb, HOOD_SUBSYSTEM, driverJoystick, stateHandler, colorSensor);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -87,7 +92,7 @@ public class RobotContainer {
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
     SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, stateHandler, colorSensor));
     CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(CONVEYOR_SUBSYSTEM, SHOOTER_SUBSYSTEM, stateHandler));
-    HOOD_SUBSYSTEM.setDefaultCommand(new DefaultHoodCommand(HOOD_SUBSYSTEM, stateHandler));    
+    HOOD_SUBSYSTEM.setDefaultCommand(new HoodHoldPosition(HOOD_SUBSYSTEM, 0, stateHandler, colorSensor));    
 
     
   }

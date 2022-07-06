@@ -52,49 +52,26 @@ public class StateManagedConveyorCommand extends CommandBase {
           CONVEYOR_SUBSYSTEM.stop();
           break;
         case ONE_BALL_CLOSE_BROKEN:
-        if(stateHandler.getEjectionStatus() == EjectionStatus.REVERSE){
-          CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorOutPercentOut);
-        }
-        else{
-        if(shooterSubsystem.getAcceptableRPMState()){
-          CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
-        }else{
           CONVEYOR_SUBSYSTEM.setConveyor(conveyorPercentOut);
-        }
-
-      }
           break;
         case ONE_BALL_FAR_BROKEN:
-          if(shooterSubsystem.getAcceptableRPMState()){
+          if(shooterSubsystem.getAcceptableRPMState()) {
             CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
-          }else{
+          } else{
             CONVEYOR_SUBSYSTEM.stop();
           }
           break;
         case ONE_BALL_NONE_BROKEN:
-          if(shooterSubsystem.getAcceptableRPMState()){
+          if(shooterSubsystem.getAcceptableRPMState()) {
             CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
-          }else{
+          } else{
             CONVEYOR_SUBSYSTEM.stop();
-          } 
-          break;
-        case TWO_BALLS_ONE_BROKEN:
-        if(stateHandler.getEjectionStatus() == EjectionStatus.REVERSE){
-          CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorOutPercentOut);
-        }
-        else{
-        if(shooterSubsystem.getAcceptableRPMState()){
-          CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
-        }else{
-          CONVEYOR_SUBSYSTEM.setConveyor(conveyorPercentOut);
-        }
-
-      }
+          }
           break;
         case TWO_BALLS_BOTH_BROKEN:
-          if(shooterSubsystem.getAcceptableRPMState()){
+          if(shooterSubsystem.getAcceptableRPMState()) {
             CONVEYOR_SUBSYSTEM.setConveyor(ConveyorConstants.conveyorShootPercentOut);
-          }else{
+          } else{
             CONVEYOR_SUBSYSTEM.stop();
           }
           break;
