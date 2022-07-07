@@ -26,14 +26,14 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new DeployArms(CLIMB_SUBSYSTEM).withTimeout(.5),
-      new ArmsToPosition(CLIMB_SUBSYSTEM, 80),
+      new ArmsToPosition(CLIMB_SUBSYSTEM, 76.5),
       new WaitForButton(commit),
       new ParallelRaceGroup(
         new SequentialCommandGroup(
           new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
           new HoodApplyVoltage(HOOD_SUBSYSTEM, .1)
         ),
-        new ArmsToPosition(CLIMB_SUBSYSTEM, -80)
+        new ArmsToPosition(CLIMB_SUBSYSTEM, -76.5)
       ),
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
@@ -41,10 +41,10 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
       // new ArmsToPosition(CLIMB_SUBSYSTEM, 30), MERGED WITH BELOW
       new ParallelRaceGroup(
         new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
-        new ArmsToPosition(CLIMB_SUBSYSTEM, 80) // MERGING WAS PREV. 50
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 76.5) // MERGING WAS PREV. 50
       ),
       new ParallelRaceGroup(
-        new ArmsToPosition(CLIMB_SUBSYSTEM, -80),
+        new ArmsToPosition(CLIMB_SUBSYSTEM, -76.5),
         new SequentialCommandGroup(
           new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
           new HoodApplyVoltage(HOOD_SUBSYSTEM, 0.1)
@@ -56,10 +56,10 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
       //new ArmsToPosition(CLIMB_SUBSYSTEM, 30), MERGING WITH BELOW
       new ParallelRaceGroup(
         new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
-        new ArmsToPosition(CLIMB_SUBSYSTEM, 80) // WAS ORGINALLY 50
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 76.5) // WAS ORGINALLY 50
       ),
       new ParallelRaceGroup(
-        new ArmsToPosition(CLIMB_SUBSYSTEM, -80),
+        new ArmsToPosition(CLIMB_SUBSYSTEM, -76.5),
         new SequentialCommandGroup(
           new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
           new HoodApplyVoltage(HOOD_SUBSYSTEM, 0.1)

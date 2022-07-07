@@ -88,7 +88,7 @@ public class RobotContainer {
         CONVEYOR_SUBSYSTEM, 
         SHOOTER_SUBSYSTEM, 
         stateHandler, 
-        () -> SHOOTER_SUBSYSTEM.leftShooterMotor.getStatorCurrent() > 25));
+        () -> SHOOTER_SUBSYSTEM.leftShooterMotor.getStatorCurrent() > 100));
 
     HOOD_SUBSYSTEM.setDefaultCommand(new DefaultHoodCommand(HOOD_SUBSYSTEM));    
 
