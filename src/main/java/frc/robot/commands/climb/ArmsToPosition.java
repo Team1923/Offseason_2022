@@ -35,8 +35,6 @@ public class ArmsToPosition extends CommandBase {
   @Override
   public void execute() {
     CLIMB_SUBSYSTEM.setPID(goal);
-
-    System.out.println("CORRECT???");
   }
 
   // Called once the command ends or is interrupted.
@@ -49,7 +47,6 @@ public class ArmsToPosition extends CommandBase {
   @Override
   public boolean isFinished() {
     if(Math.abs(CLIMB_SUBSYSTEM.getLeftClimbEncoderPosition()-goal) < rotationThreshold) {
-      System.out.println("INSIDE GOAL!!");
       loopsInsideAllowableError++;
     } else {
       loopsInsideAllowableError = 0;

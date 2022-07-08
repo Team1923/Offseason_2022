@@ -51,7 +51,6 @@ public class HoodSingleSetpointCommand extends CommandBase {
   public void end(boolean interrupted) {
     HOOD_SUBSYSTEM.setShootConstants();
     HOOD_SUBSYSTEM.stop();
-    System.out.println("EXIT!!");
 
   }
 
@@ -61,7 +60,6 @@ public class HoodSingleSetpointCommand extends CommandBase {
     // This will check if the ERROR of the Motion Magic is within our acceptable error threshold (ticks).;If so, add one to the counter of how many loops we have been 
     // within this threshold. Otherwise, reset the counter.
     if(Math.abs(HOOD_SUBSYSTEM.getPosition()-goal) < tickThreshold) {
-      System.out.println("INSIDE GOAL!!");
       loopsInsideAllowableError++;
     } else {
       loopsInsideAllowableError = 0;

@@ -70,7 +70,6 @@ public class FollowTrajectory extends SequentialCommandGroup {
     // Allow the robot to realize the wheels can spin in a full circle, allowing for jumps from max and min bounds
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-    System.out.println(loaded_trajectory);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());

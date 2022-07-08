@@ -51,7 +51,6 @@ public class AutoShooterCommand extends CommandBase {
     if (Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(goal_rpm)) < ShooterConstants.shooterRPMThreshold) {
       threshold_timer.start();
     } else {
-      System.out.println("FUCK YOU");
       threshold_timer.reset();
       threshold_timer.stop();
     }

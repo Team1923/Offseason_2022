@@ -28,14 +28,12 @@ public class ResetArms extends CommandBase {
   @Override
   public void execute() {
     CLIMB_SUBSYSTEM.set(.2);
-    System.out.println("IN!!!!");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     CLIMB_SUBSYSTEM.stop();
-    System.out.println("OUT!!!!");
   }
 
   // Returns true when the command should end.

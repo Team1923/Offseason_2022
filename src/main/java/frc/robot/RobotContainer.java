@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
+import frc.robot.MKILib.MKISpeaker;
 import frc.robot.autonomous.AutoChooser;
 import frc.robot.autonomous.DeuxBall;
 import frc.robot.commands.scoring.ShootCommandGroup;
@@ -52,9 +53,10 @@ public class RobotContainer {
   private final HoodSubsystem HOOD_SUBSYSTEM = new HoodSubsystem();
   private final ShooterSubsystem SHOOTER_SUBSYSTEM = new ShooterSubsystem();
   
+  private final MKISpeaker speaker = new MKISpeaker();
 
   // Singleton State Handler
-  StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM);  
+  StateHandler stateHandler = new StateHandler(SHOOTER_SUBSYSTEM, INTAKE_SUBSYSTEM, CONVEYOR_SUBSYSTEM, speaker);  
   DesiredClimb climb = new DesiredClimb();
 
   private final ClimbSubsystem CLIMB_SUBSYSTEM = new ClimbSubsystem(operatorJoystick, climb, HOOD_SUBSYSTEM, driverJoystick);
@@ -130,7 +132,6 @@ public class RobotContainer {
   }
 
   public Command initializeAuto(AutoChooser selector) {
-    System.out.println("REACHED");
     return selector.startMode(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM);
   } 
 

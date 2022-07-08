@@ -50,7 +50,6 @@ public class RunTrajectory extends SequentialCommandGroup {
                 config
             );
 
-            System.out.println(exampleTrajectory.toString());
 
 
         var thetaController =
