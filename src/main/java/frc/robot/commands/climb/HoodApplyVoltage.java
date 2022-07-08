@@ -24,7 +24,6 @@ public class HoodApplyVoltage extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("SAAGAR");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,7 +36,6 @@ public class HoodApplyVoltage extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     HOOD_SUBSYSTEM.stop();
-    System.out.println("STOP STOP STOP");
   }
 
   // Returns true when the command should end.

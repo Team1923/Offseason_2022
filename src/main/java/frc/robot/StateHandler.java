@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.MKILib.MKISpeaker;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -33,16 +34,18 @@ public class StateHandler {
     private ShooterSubsystem SHOOTER_SUBSYSTEM;
     private IntakeSubsystem INTAKE_SUBSYSTEM;
     private ConveyorSubsystem CONVEYOR_SUBSYSTEM;
-
+    private MKISpeaker speaker;
     
 
     // Define all of the variables required to track the state of the robot.
-    public StateHandler(ShooterSubsystem shooter, IntakeSubsystem intake, ConveyorSubsystem conveyor) {
+    public StateHandler(ShooterSubsystem shooter, IntakeSubsystem intake, ConveyorSubsystem conveyor, MKISpeaker s) {
         this.currentRobotState = States.NO_BALLS;
 
         this.SHOOTER_SUBSYSTEM = shooter;
         this.INTAKE_SUBSYSTEM = intake;
         this.CONVEYOR_SUBSYSTEM = conveyor;
+
+        this.speaker = s;
 
         this.acceptableRPM = false;
         this.intake_reverse = false;
@@ -85,6 +88,7 @@ public class StateHandler {
             case ONE_BALL_FAR_BROKEN:
                 if(!this.backBeamBreak && this.acceptableRPM) {
                     this.currentRobotState = States.NO_BALLS;
+                    speaker.playSound(1);
                 }
 
                 if(!this.backBeamBreak && this.intake_reverse) {
@@ -97,10 +101,12 @@ public class StateHandler {
             case TWO_BALLS_BOTH_BROKEN:
                 if(!this.frontBeamBreak && this.backBeamBreak && this.acceptableRPM) {
                     this.currentRobotState = States.ONE_BALL_FAR_BROKEN;
+                    speaker.playSound(1);
                 }
 
                 if(!this.frontBeamBreak && !this.backBeamBreak && this.acceptableRPM) {
                     this.currentRobotState = States.ONE_BALL_NONE_BROKEN;
+                    speaker.playSound(1);
                 }
 
                 if(this.frontBeamBreak && !this.backBeamBreak && intake_reverse) {
@@ -116,6 +122,8 @@ public class StateHandler {
         }
 
         SmartDashboard.putString("Current Robot State: ", currentRobotState.toString());
+
+        speaker.printTriggers();
     }
 
     public void updateBooleans() {

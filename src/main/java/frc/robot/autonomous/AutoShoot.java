@@ -50,13 +50,11 @@ public class AutoShoot extends CommandBase {
     if (Math.abs(Math.abs(shooter.getShooterRPM())-Math.abs(shooterVel)) < ShooterConstants.shooterRPMThreshold) {
       threshold_timer.start();
     } else {
-      System.out.println("FUCK YOU");
       threshold_timer.reset();
       threshold_timer.stop();
     }
 
     if(Math.abs(hood.getPosition()-hoodSetpoint) < 200) {
-      System.out.println("INSIDE GOAL!!");
       loopsInsideAllowableError++;
     } else {
       loopsInsideAllowableError = 0;

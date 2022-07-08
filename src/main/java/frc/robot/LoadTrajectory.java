@@ -51,9 +51,6 @@ public class LoadTrajectory {
             e.printStackTrace();
         } 
 
-        for(Double[] x : trajectoryData){
-            System.out.print(x);
-        }
         
     }
 

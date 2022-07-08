@@ -81,7 +81,6 @@ public class PIDRotate extends CommandBase {
   @Override
   public boolean isFinished() {
     if(Math.abs(goalAngle - SWERVE_SUBSYSTEM.getRawHeading()) < 10) {
-      System.out.println("INSIDE GOAL!!");
       loopsInsideAllowableError++;
     } else {
       loopsInsideAllowableError = 0;
