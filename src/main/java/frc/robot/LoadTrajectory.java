@@ -47,7 +47,6 @@ public class LoadTrajectory {
                 trajectoryData.add(doubleValues);
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } 
 
