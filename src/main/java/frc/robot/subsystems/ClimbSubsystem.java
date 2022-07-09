@@ -32,44 +32,35 @@ public class ClimbSubsystem extends SubsystemBase {
     leftClimber.configFactoryDefault();
     rightClimber.configFactoryDefault();
 
-    leftClimber.follow(rightClimber);
+    rightClimber.follow(leftClimber);
 
     rightClimber.setInverted(InvertType.OpposeMaster);
 
     leftClimber.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.timeoutMs);
-    
     leftClimber.configNominalOutputForward(0.0, Constants.timeoutMs);
     leftClimber.configNominalOutputReverse(0.0, Constants.timeoutMs);
     leftClimber.configPeakOutputForward(1.0, Constants.timeoutMs);
     leftClimber.configPeakOutputReverse(-1.0, Constants.timeoutMs);
-
     leftClimber.configAllowableClosedloopError(0, 1);
-
+    leftClimber.configMotionCruiseVelocity(7500);
+    leftClimber.configMotionAcceleration(15000);
     leftClimber.config_kP(0, ClimbConstants.arm_kP, Constants.timeoutMs);
     leftClimber.config_kI(0, ClimbConstants.arm_kI, Constants.timeoutMs);
     leftClimber.config_kD(0, ClimbConstants.arm_kD, Constants.timeoutMs);
     leftClimber.config_kF(0, ClimbConstants.arm_kF, Constants.timeoutMs);
-
-    leftClimber.configMotionCruiseVelocity(7500);
-    leftClimber.configMotionAcceleration(15000);
-
-
-    rightClimber.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.timeoutMs);
     
+    rightClimber.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.timeoutMs);
     rightClimber.configNominalOutputForward(0.0, Constants.timeoutMs);
     rightClimber.configNominalOutputReverse(0.0, Constants.timeoutMs);
     rightClimber.configPeakOutputForward(1.0, Constants.timeoutMs);
     rightClimber.configPeakOutputReverse(-1.0, Constants.timeoutMs);
-
     rightClimber.configAllowableClosedloopError(0, 1);
-    
-    leftClimber.config_kP(0, ClimbConstants.arm_kP, Constants.timeoutMs);
-    leftClimber.config_kI(0, ClimbConstants.arm_kI, Constants.timeoutMs);
-    leftClimber.config_kD(0, ClimbConstants.arm_kD, Constants.timeoutMs);
-    leftClimber.config_kF(0, ClimbConstants.arm_kF, Constants.timeoutMs);
-
     rightClimber.configMotionCruiseVelocity(7500);
     rightClimber.configMotionAcceleration(15000);
+    rightClimber.config_kP(0, ClimbConstants.arm_kP, Constants.timeoutMs);
+    rightClimber.config_kI(0, ClimbConstants.arm_kI, Constants.timeoutMs);
+    rightClimber.config_kD(0, ClimbConstants.arm_kD, Constants.timeoutMs);
+    rightClimber.config_kF(0, ClimbConstants.arm_kF, Constants.timeoutMs);
 
     this.operatorJoystick = oJoystick;
     this.desiredClimb = d;
@@ -102,14 +93,14 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void setPID(double setpoint) {
-    rightClimber.set(ControlMode.MotionMagic, setpoint);
+    leftClimber.set(ControlMode.MotionMagic, setpoint);
   }
   public void stop() {
     leftClimber.set(ControlMode.PercentOutput, 0);
   }
 
   public void set(double output) {
-    rightClimber.set(ControlMode.PercentOutput, output);
+    leftClimber.set(ControlMode.PercentOutput, output);
   }
 
 }
