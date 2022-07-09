@@ -17,20 +17,28 @@ public class MKISpeaker {
     private DigitalOutput sound_four;
 
     public MKISpeaker() {
-        sound_one = new DigitalOutput(1);
-        sound_two = new DigitalOutput(2);
-        sound_three = new DigitalOutput(3);
-        sound_four = new DigitalOutput(4);
+        sound_one = new DigitalOutput(7);
+        sound_two = new DigitalOutput(8);
+        sound_three = new DigitalOutput(9);
+        sound_four = new DigitalOutput(10);
+
+        sound_one.set(false);
+        sound_two.set(false);
+        sound_three.set(false);
+        sound_four.set(false);
     }
 
     // Send a 10ms 5v pulse to the digital output 
     public void playSound(int id) {
+        System.out.println("TEST 1");
         switch(id) {
             case 1:
+            System.out.println("TEST 2");
                 new Thread(() -> {
                     try {
+                        System.out.println("TEST 3");
                         sound_one.set(true);
-                        Thread.sleep(10);
+                        Thread.sleep(200);
                         sound_one.set(false);
                     } catch (Exception e) {}
                   }).start();
@@ -39,7 +47,7 @@ public class MKISpeaker {
                 new Thread(() -> {
                     try {
                         sound_two.set(true);
-                        Thread.sleep(10);
+                        Thread.sleep(200);
                         sound_two.set(false);
                     } catch (Exception e) {}
                 }).start();
@@ -48,7 +56,7 @@ public class MKISpeaker {
                 new Thread(() -> {
                     try {
                         sound_three.set(true);
-                        Thread.sleep(10);
+                        Thread.sleep(20);
                         sound_three.set(false);
                     } catch (Exception e) {}
                 }).start();
@@ -57,7 +65,7 @@ public class MKISpeaker {
                 new Thread(() -> {
                     try {
                         sound_four.set(true);
-                        Thread.sleep(10);
+                        Thread.sleep(20);
                         sound_four.set(false);
                     } catch (Exception e) {}
                 }).start();

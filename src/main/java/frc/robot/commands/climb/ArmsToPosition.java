@@ -19,7 +19,7 @@ public class ArmsToPosition extends CommandBase {
   /** Creates a new ArmsToPosition. */
   public ArmsToPosition(ClimbSubsystem climb, double setpoint) {
     this.CLIMB_SUBSYSTEM = climb;
-    this.goal = -setpoint;
+    this.goal = setpoint;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(CLIMB_SUBSYSTEM);
   }

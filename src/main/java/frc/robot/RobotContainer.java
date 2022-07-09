@@ -13,6 +13,7 @@ import frc.robot.MKILib.MKISpeaker;
 import frc.robot.autonomous.AutoChooser;
 import frc.robot.autonomous.DeuxBall;
 import frc.robot.commands.scoring.ShootCommandGroup;
+import frc.robot.commands.climb.ClimbApplyVoltage;
 import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.climb.ScheduleClimb;
 import frc.robot.commands.drive.SwerveDriveCommand;
@@ -123,6 +124,8 @@ public class RobotContainer {
         () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
         () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis), 
         LIMELIGHT_SUBSYSTEM, HOOD_SUBSYSTEM, shooterData));
+
+    new JoystickButton(driverJoystick, OIConstants.kDriverYButton).whileHeld(new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.2));
 
   }
 

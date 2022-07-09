@@ -27,7 +27,7 @@ public class DeployArms extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    CLIMB_SUBSYSTEM.set(-.1);
+    CLIMB_SUBSYSTEM.set(.1);
   }
 
   // Called once the command ends or is interrupted.

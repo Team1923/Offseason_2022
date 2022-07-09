@@ -15,7 +15,7 @@ public class ClimbApplyVoltage extends CommandBase {
   /** Creates a new ClimbApplyVoltage. */
   public ClimbApplyVoltage(ClimbSubsystem climb, double goal) {
     this.CLIMB_SUBSYSTEM = climb;
-    this.output = -goal;
+    this.output = goal;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(CLIMB_SUBSYSTEM);
   }

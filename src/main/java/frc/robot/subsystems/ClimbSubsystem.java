@@ -4,28 +4,21 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.DesiredClimb;
 import frc.robot.Constants.ClimbConstants;
 public class ClimbSubsystem extends SubsystemBase {
 
-  private CANSparkMax leftClimber;
-  private CANSparkMax rightClimber;
-
-  private RelativeEncoder leftClimbEncoder;
-  private RelativeEncoder rightClimbEncoder;
-
-  private SparkMaxPIDController leftClimbPIDController;
-  private SparkMaxPIDController rightClimbPIDController;
+  private TalonFX leftClimber;
+  private TalonFX rightClimber;
 
   private DesiredClimb desiredClimb;
   private Joystick operatorJoystick;
@@ -33,49 +26,50 @@ public class ClimbSubsystem extends SubsystemBase {
   /** Creates a new ClimbSubsystem. */
   public ClimbSubsystem(Joystick oJoystick, DesiredClimb d, HoodSubsystem hood, Joystick driver) {
     
-    leftClimber = new CANSparkMax(17, MotorType.kBrushless);
-    rightClimber = new CANSparkMax(18, MotorType.kBrushless);
+    leftClimber = new TalonFX(17);
+    rightClimber = new TalonFX(18);
 
-    leftClimber.restoreFactoryDefaults();
-    rightClimber.restoreFactoryDefaults();
+    leftClimber.configFactoryDefault();
+    rightClimber.configFactoryDefault();
+
+    leftClimber.follow(rightClimber);
+
+    rightClimber.setInverted(InvertType.InvertMotorOutput);
+
+    leftClimber.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.timeoutMs);
     
-    rightClimber.follow(leftClimber, true);
+    leftClimber.configNominalOutputForward(0.0, Constants.timeoutMs);
+    leftClimber.configNominalOutputReverse(0.0, Constants.timeoutMs);
+    leftClimber.configPeakOutputForward(1.0, Constants.timeoutMs);
+    leftClimber.configPeakOutputReverse(-1.0, Constants.timeoutMs);
 
-    leftClimbEncoder = leftClimber.getEncoder();
-    rightClimbEncoder = rightClimber.getEncoder();
+    leftClimber.configAllowableClosedloopError(0, 1);
 
-    leftClimbPIDController = leftClimber.getPIDController();
-    rightClimbPIDController = rightClimber.getPIDController();
+    leftClimber.config_kP(0, ClimbConstants.arm_kP, Constants.timeoutMs);
+    leftClimber.config_kI(0, ClimbConstants.arm_kI, Constants.timeoutMs);
+    leftClimber.config_kD(0, ClimbConstants.arm_kD, Constants.timeoutMs);
+    leftClimber.config_kF(0, ClimbConstants.arm_kF, Constants.timeoutMs);
 
-    // leftClimber.setSmartCurrentLimit(60);
-    // rightClimber.setSmartCurrentLimit(60);
+    leftClimber.configMotionCruiseVelocity(7500);
+    leftClimber.configMotionAcceleration(15000);
 
-    leftClimbPIDController.setP(ClimbConstants.arm_kP);
-    leftClimbPIDController.setI(ClimbConstants.arm_kI);
-    leftClimbPIDController.setD(ClimbConstants.arm_kD);
-    leftClimbPIDController.setIZone(ClimbConstants.arm_kIz);
-    leftClimbPIDController.setFF(ClimbConstants.arm_kFF);
-    leftClimbPIDController.setOutputRange(ClimbConstants.arm_minOutput, ClimbConstants.arm_maxOutput);
 
-    rightClimbPIDController.setP(ClimbConstants.arm_kP);
-    rightClimbPIDController.setI(ClimbConstants.arm_kI);
-    rightClimbPIDController.setD(ClimbConstants.arm_kD);
-    rightClimbPIDController.setIZone(ClimbConstants.arm_kIz);
-    rightClimbPIDController.setFF(ClimbConstants.arm_kFF);
-    rightClimbPIDController.setOutputRange(ClimbConstants.arm_minOutput, ClimbConstants.arm_maxOutput);
+    rightClimber.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.timeoutMs);
+    
+    rightClimber.configNominalOutputForward(0.0, Constants.timeoutMs);
+    rightClimber.configNominalOutputReverse(0.0, Constants.timeoutMs);
+    rightClimber.configPeakOutputForward(1.0, Constants.timeoutMs);
+    rightClimber.configPeakOutputReverse(-1.0, Constants.timeoutMs);
 
-    leftClimbPIDController.setSmartMotionMaxVelocity(ClimbConstants.arm_maxVel, 0);
-    leftClimbPIDController.setSmartMotionMinOutputVelocity(ClimbConstants.arm_minVel, 0);
-    leftClimbPIDController.setSmartMotionMaxAccel(ClimbConstants.arm_maxAcc, 0);
-    leftClimbPIDController.setSmartMotionAllowedClosedLoopError(ClimbConstants.arm_allowedErr, 0);
+    rightClimber.configAllowableClosedloopError(0, 1);
+    
+    leftClimber.config_kP(0, ClimbConstants.arm_kP, Constants.timeoutMs);
+    leftClimber.config_kI(0, ClimbConstants.arm_kI, Constants.timeoutMs);
+    leftClimber.config_kD(0, ClimbConstants.arm_kD, Constants.timeoutMs);
+    leftClimber.config_kF(0, ClimbConstants.arm_kF, Constants.timeoutMs);
 
-    rightClimbPIDController.setSmartMotionMaxVelocity(ClimbConstants.arm_maxVel, 0);
-    rightClimbPIDController.setSmartMotionMinOutputVelocity(ClimbConstants.arm_minVel, 0);
-    rightClimbPIDController.setSmartMotionMaxAccel(ClimbConstants.arm_maxAcc, 0);
-    rightClimbPIDController.setSmartMotionAllowedClosedLoopError(ClimbConstants.arm_allowedErr, 0);
-
-    leftClimber.setIdleMode(IdleMode.kBrake);
-    rightClimber.setIdleMode(IdleMode.kBrake);
+    rightClimber.configMotionCruiseVelocity(7500);
+    rightClimber.configMotionAcceleration(15000);
 
     this.operatorJoystick = oJoystick;
     this.desiredClimb = d;
@@ -88,67 +82,35 @@ public class ClimbSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Left Climb Encoder Position: ", getLeftClimbEncoderPosition());
     SmartDashboard.putNumber("Right Climb Encoder Position: ", getRightClimbEncoderPosition());
-
-    SmartDashboard.putNumber("Left Climber Current Draw: ", getLeftClimbCurrentDraw());
-    SmartDashboard.putNumber("Right Climber Current Draw: ", getRightClimbCurrentDraw());
-
-    SmartDashboard.putNumber("Left Climber Output: ", leftClimber.getAppliedOutput());
-    SmartDashboard.putNumber("Right Climber Output: ", rightClimber.getAppliedOutput());
     
     desiredClimb.updateCurrentClimb(operatorJoystick);
     SmartDashboard.putString("CURRENT CLIMB SEQUENCE", desiredClimb.getCurrentClimb().toString());
-
-    // switch(desiredClimb.getCurrentClimb()){
-    //   case FULL_TRAVERSAL:
-    //     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new FullTraversalClimbSequence(HOOD_SUBSYSTEM, this, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
-    //     break;
-    //   case TRAVERSAL_ARMS_EXTENDED:
-    //     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new TraversalArmsExtended(HOOD_SUBSYSTEM, this, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
-    //     break;
-    //   case LEVEL_THREE:
-    //     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new LevelThreeClimb(HOOD_SUBSYSTEM, this, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
-    //     break;
-    //   case LEVEL_TWO:
-    //     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).toggleWhenPressed(new LevelTwoClimb(HOOD_SUBSYSTEM, this, () -> driverJoystick.getRawButton(5), stateHandler, colorSensor));
-    //     break;
-    //   default:
-    //     break;
-    // }
     
   }
 
   public void resetEncoders() {
-    leftClimbEncoder.setPosition(0);
-    rightClimbEncoder.setPosition(0);
+    leftClimber.setSelectedSensorPosition(0);
+    rightClimber.setSelectedSensorPosition(0);
   }
 
   public double getLeftClimbEncoderPosition() {
-    return leftClimbEncoder.getPosition();
+    return leftClimber.getSelectedSensorPosition();
   } 
 
   public double getRightClimbEncoderPosition() {
-    return rightClimbEncoder.getPosition();
+    return rightClimber.getSelectedSensorPosition();
   }
 
   public void setPID(double setpoint) {
-    leftClimbPIDController.setReference(setpoint, ControlType.kSmartMotion);
+    rightClimber.set(ControlMode.MotionMagic, setpoint);
   }
-
-  public double getLeftClimbCurrentDraw() {
-    return leftClimber.getOutputCurrent();
-  }
-
-  public double getRightClimbCurrentDraw() {
-    return rightClimber.getOutputCurrent();
-  }
-
   public void stop() {
-    rightClimber.set(0);
-    leftClimber.set(0);
+    leftClimber.set(ControlMode.PercentOutput, 0);
+    rightClimber.set(ControlMode.PercentOutput, 0);
   }
 
   public void set(double output) {
-    leftClimber.set(output);
+    rightClimber.set(ControlMode.PercentOutput, output);
   }
 
 }
