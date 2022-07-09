@@ -34,7 +34,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
     leftClimber.follow(rightClimber);
 
-    rightClimber.setInverted(InvertType.InvertMotorOutput);
+    rightClimber.setInverted(InvertType.OpposeMaster);
 
     leftClimber.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.timeoutMs);
     
@@ -106,7 +106,6 @@ public class ClimbSubsystem extends SubsystemBase {
   }
   public void stop() {
     leftClimber.set(ControlMode.PercentOutput, 0);
-    rightClimber.set(ControlMode.PercentOutput, 0);
   }
 
   public void set(double output) {
