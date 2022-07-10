@@ -6,9 +6,11 @@ package frc.robot.commands.climb;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.ClimbConstants;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
@@ -26,25 +28,26 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new DeployArms(CLIMB_SUBSYSTEM).withTimeout(.5),
-      new ArmsToPosition(CLIMB_SUBSYSTEM, 76.5),
+      new InstantCommand(() -> CLIMB_SUBSYSTEM.resetEncoders()),
+      new ArmsToPosition(CLIMB_SUBSYSTEM, ClimbConstants.maxArmPositionTicks),
       new WaitForButton(commit),
       new ParallelRaceGroup(
         new SequentialCommandGroup(
           new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
           new HoodApplyVoltage(HOOD_SUBSYSTEM, .1)
         ),
-        new ArmsToPosition(CLIMB_SUBSYSTEM, -76.5)
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 0)
       ),
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
-        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
+        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, .3)),
       // new ArmsToPosition(CLIMB_SUBSYSTEM, 30), MERGED WITH BELOW
       new ParallelRaceGroup(
         new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
-        new ArmsToPosition(CLIMB_SUBSYSTEM, 76.5) // MERGING WAS PREV. 50
+        new ArmsToPosition(CLIMB_SUBSYSTEM, ClimbConstants.maxArmPositionTicks) // MERGING WAS PREV. 50
       ),
       new ParallelRaceGroup(
-        new ArmsToPosition(CLIMB_SUBSYSTEM, -76.5),
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 0),
         new SequentialCommandGroup(
           new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
           new HoodApplyVoltage(HOOD_SUBSYSTEM, 0.1)
@@ -52,14 +55,14 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
       ),
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
-        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
+        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, .3)),
       //new ArmsToPosition(CLIMB_SUBSYSTEM, 30), MERGING WITH BELOW
       new ParallelRaceGroup(
         new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
-        new ArmsToPosition(CLIMB_SUBSYSTEM, 76.5) // WAS ORGINALLY 50
+        new ArmsToPosition(CLIMB_SUBSYSTEM, ClimbConstants.maxArmPositionTicks) // WAS ORGINALLY 50
       ),
       new ParallelRaceGroup(
-        new ArmsToPosition(CLIMB_SUBSYSTEM, -76.5),
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 0),
         new SequentialCommandGroup(
           new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
           new HoodApplyVoltage(HOOD_SUBSYSTEM, 0.1)
@@ -67,9 +70,9 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
       ),
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
-        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3)),
+        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, .3)),
       new ParallelCommandGroup(
-        new ArmsToPosition(CLIMB_SUBSYSTEM, 30),
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 30000),
         new HoodHoldPosition(HOOD_SUBSYSTEM, 36000)
       )
       

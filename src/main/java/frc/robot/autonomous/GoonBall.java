@@ -33,17 +33,17 @@ public class GoonBall extends SequentialCommandGroup {
       new PIDRotate(swerve, -180),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
       new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(27.5), 3300).withTimeout(2),
-      new PIDRotate(swerve, -90),
-      new ParallelCommandGroup(
-        new RunIntakeCommand(intake, false),
-        new SequentialCommandGroup(
-          new RunTrajectory(swerve, "idk", false),
-          new PIDRotate(swerve, -180),
-          new RunTrajectory(swerve, "idk", false),
-          new PIDRotate(swerve, 90)
-        )
-        
-      )
+      new RunTrajectory(swerve, "acquireFirstGoon.csv", false)
+      // new PIDRotate(swerve, -90),
+      // new ParallelCommandGroup(
+      //   new RunIntakeCommand(intake, false),
+      //   new SequentialCommandGroup(
+      //     new RunTrajectory(swerve, "idk", false),
+      //     new PIDRotate(swerve, -180),
+      //     new RunTrajectory(swerve, "idk", false),
+      //     new PIDRotate(swerve, 90)
+      //   )
+      //)
 
         
     );

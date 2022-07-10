@@ -145,7 +145,9 @@ public final class Constants {
         public static final double arm_kP = .3;
         public static final double arm_kI = 0;
         public static final double arm_kD = 0;
-        public static final double arm_kF = 0;;
+        public static final double arm_kF = 0;
+        public static final double maxArmPositionTicksReal = -158000;
+        public static final double maxArmPositionTicks = -maxArmPositionTicksReal;
     }
 
     
