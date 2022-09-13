@@ -29,12 +29,17 @@ public class OneBallGetOut extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new RunTrajectory(swerve, "oneBallGetOut", true),
         new SequentialCommandGroup(
-          new WaitCommand(0.5),
+          new WaitCommand(1.5),
           new RunIntakeCommand(intake, false)
         )
       ).withTimeout(4),
-      new PIDRotate(swerve, -90).withTimeout(2),
-      new AutoShoot(shooter, conveyor, hood, 25000, 5000)
+      new ParallelCommandGroup(
+        new PIDRotate(swerve, -90).withTimeout(2),
+        new SequentialCommandGroup(
+          new WaitCommand(.5),
+          new AutoShoot(shooter, conveyor, hood, 25000, 5000).withTimeout(3)
+        )
+      )
     );
   }
 }

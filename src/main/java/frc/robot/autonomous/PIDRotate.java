@@ -31,7 +31,7 @@ public class PIDRotate extends CommandBase {
 
     this.goalAngle = goalAngle;
     
-    thetaController = new PIDController(.13, 0, 0.001);
+    thetaController = new PIDController(.12, 0, 0.001);
 
     loopsInsideAllowableError = 0;
     // Require the swerve subsystem to allow for it to be a default command

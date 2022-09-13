@@ -6,7 +6,9 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.UnitConversion;
 import frc.robot.commands.scoring.independent.RunIntakeCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -33,7 +35,17 @@ public class GoonBall extends SequentialCommandGroup {
       new PIDRotate(swerve, -180),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
       new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(27.5), 3300).withTimeout(2),
-      new RunTrajectory(swerve, "acquireFirstGoon.csv", false)
+      new ParallelCommandGroup(
+        new RunIntakeCommand(intake, false),
+        new RunTrajectory(swerve, "acquireFirstGoon", true)
+      ).withTimeout(2),
+      new ParallelCommandGroup(
+        new SequentialCommandGroup(
+          new WaitCommand(.5),
+          new RunIntakeCommand(intake, false)
+        ),
+        new RunTrajectory(swerve, "acquireSecondGoon", true)
+      ).withTimeout(2)
       // new PIDRotate(swerve, -90),
       // new ParallelCommandGroup(
       //   new RunIntakeCommand(intake, false),
