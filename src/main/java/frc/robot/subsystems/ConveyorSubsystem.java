@@ -1,10 +1,16 @@
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -16,6 +22,28 @@ public class ConveyorSubsystem extends SubsystemBase {
 
   private DigitalInput beamBreakOne;
   private DigitalInput beamBreakTwo;
+
+  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+
+  ShuffleboardLayout conveyorLayout = coachTab.getLayout("Conveyor", "List Layout").withPosition(1, 0).withSize(1, 3);
+
+  private NetworkTableEntry beamBreak1 = conveyorLayout.add("Beam Break 1", false)
+  .withSize(1, 1)
+  .withPosition(0, 4)
+  .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+  .getEntry();
+
+  private NetworkTableEntry beamBreak2 = conveyorLayout.add("Beam Break 2", false)
+  .withSize(1, 1)
+  .withPosition(0, 4)
+  .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+  .getEntry();
+
+  private NetworkTableEntry isConveyorRunning = conveyorLayout.add("Conveyor Running", false)
+  .withSize(1, 1)
+  .withPosition(0, 4)
+  .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+  .getEntry();
   
   public ConveyorSubsystem() { 
     
@@ -48,6 +76,8 @@ public class ConveyorSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("BEAM BREAK TWO: ", getBackBeamBreak());
 
     SmartDashboard.putNumber("Running Conveyor?", conveyorMotor.get());
+
+    isConveyorRunning.setBoolean(Math.abs(conveyorMotor.get()) > 0);
     //SmartDashboard.putNumber("System Time", System.currentTimeMillis());
   }
 
@@ -60,10 +90,12 @@ public class ConveyorSubsystem extends SubsystemBase {
   }
 
   public boolean getFrontBeamBreak() {
+    beamBreak1.setBoolean(!beamBreakOne.get());
     return !beamBreakOne.get();
   }
 
   public boolean getBackBeamBreak() {
+    beamBreak2.setBoolean(!beamBreakTwo.get());
     return !beamBreakTwo.get();
   }
 

@@ -10,7 +10,11 @@ import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,6 +29,12 @@ public class ClimbSubsystem extends SubsystemBase {
 
   private DesiredClimb desiredClimb;
   private Joystick operatorJoystick;
+
+  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+
+  ShuffleboardLayout climbLayout = coachTab.getLayout("Climb", "List Layout").withPosition(5, 0).withSize(1, 1);
+
+  NetworkTableEntry currentState = climbLayout.add("Current Climb", "FULL_TRAVERSAL").getEntry();
 
   /** Creates a new ClimbSubsystem. */
   public ClimbSubsystem(Joystick oJoystick, DesiredClimb d, HoodSubsystem hood, Joystick driver) {
@@ -100,6 +110,8 @@ public class ClimbSubsystem extends SubsystemBase {
     
     SmartDashboard.putNumber("Left Error", leftClimber.getClosedLoopError());
     SmartDashboard.putNumber("Right Error", rightClimber.getClosedLoopError());
+
+    currentState.setString(desiredClimb.getCurrentClimb().toString());
   }
 
   public void resetEncoders() {
