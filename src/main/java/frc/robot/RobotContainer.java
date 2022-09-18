@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -20,6 +21,7 @@ import frc.robot.commands.climb.ArmsToPositionPID;
 import frc.robot.commands.climb.ClimbApplyVoltage;
 import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.climb.ScheduleClimb;
+import frc.robot.commands.drive.GoalCentricCommand;
 import frc.robot.commands.drive.SwerveDriveCommand;
 import frc.robot.commands.scoring.DefaultHoodCommand;
 import frc.robot.commands.scoring.RunShooterCommand;
@@ -122,6 +124,8 @@ public class RobotContainer {
     new JoystickButton(operatorJoystick, OIConstants.kOperatorTriangleButton).whileHeld(new RunShooterCommand(SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, shooterData, LIMELIGHT_SUBSYSTEM));
 
     // Hub-centric driving command
+
+
     new Trigger(() -> driverJoystick.getRawAxis(3) > .1).whileActiveContinuous(new ShootCommandGroup(
         SWERVE_SUBSYSTEM, 
         () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
@@ -129,10 +133,10 @@ public class RobotContainer {
         () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis), 
         LIMELIGHT_SUBSYSTEM, HOOD_SUBSYSTEM, shooterData));
 
-    new JoystickButton(driverJoystick, OIConstants.kDriverYButton).whileHeld(new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.2));
-    new JoystickButton(driverJoystick, OIConstants.kDriverXButton).toggleWhenPressed(new ArmsToPositionPID(CLIMB_SUBSYSTEM, 0));
+    // new JoystickButton(driverJoystick, OIConstants.kDriverYButton).whileHeld(new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.2));
+    // new JoystickButton(driverJoystick, OIConstants.kDriverXButton).toggleWhenPressed(new ArmsToPositionPID(CLIMB_SUBSYSTEM, 0));
     
-    new JoystickButton(driverJoystick, OIConstants.kDriverAButton).toggleWhenPressed(new ArmsToPositionPID(CLIMB_SUBSYSTEM, ClimbConstants.maxArmPositionTicks));
+    // new JoystickButton(driverJoystick, OIConstants.kDriverAButton).toggleWhenPressed(new ArmsToPositionPID(CLIMB_SUBSYSTEM, ClimbConstants.maxArmPositionTicks));
 
   }
 

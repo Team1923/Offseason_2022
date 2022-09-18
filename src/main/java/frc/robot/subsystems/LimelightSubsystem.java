@@ -25,7 +25,7 @@ public class LimelightSubsystem extends SubsystemBase {
     //SmartDashboard.putNumber("y angle:", getY());
     //SmartDashboard.putNumber("area: ", getArea());
 
-    SmartDashboard.putNumber("Distance", getDistance());
+    SmartDashboard.putNumber("LIMELIGHT RECORDED Distance", getDistance());
 
   }
 
