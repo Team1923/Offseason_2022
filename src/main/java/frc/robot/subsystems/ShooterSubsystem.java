@@ -4,11 +4,17 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,6 +28,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private boolean acceptableRPM;
   private boolean shooterStalling;
+
+  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+
+  ShuffleboardLayout shooterLayout = coachTab.getLayout("Shooter", "List Layout").withPosition(3, 0).withSize(1, 2);
+
+  private NetworkTableEntry isWithinRange = shooterLayout.add("RPM GOAL:", false)
+  .withSize(1, 1)
+  .withPosition(0, 4)
+  .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+  .getEntry();
+
+  private NetworkTableEntry currentShooterRPM = shooterLayout.add("SHOOTER RPM", 0).getEntry();
 
   public ShooterSubsystem() {
     
@@ -80,6 +98,9 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter RPM: ", getShooterRPM());
     SmartDashboard.putBoolean("boolean acceptable thing", acceptableRPM);
+
+    isWithinRange.setBoolean(acceptableRPM);
+    currentShooterRPM.setDouble(getShooterRPM());
   }
 
   public double getShooterRPM() {

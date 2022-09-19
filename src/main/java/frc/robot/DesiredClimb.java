@@ -1,6 +1,10 @@
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DesiredClimb {
@@ -14,10 +18,14 @@ public class DesiredClimb {
 
     private Climbs climb = Climbs.FULL_TRAVERSAL;
 
+
+
     //idk these IDs we need to fix them
     public void updateCurrentClimb(Joystick joystick){
 
         SmartDashboard.putNumber("Operator DPAD Value: ", joystick.getPOV());
+
+        
 
         //full traversal
         if(joystick.getPOV() == 0){
@@ -32,6 +40,7 @@ public class DesiredClimb {
         else if(joystick.getPOV() == 180){
             climb = Climbs.LEVEL_TWO;
         }
+
     }
 
     public Climbs getCurrentClimb(){

@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.MKILib.MKISpeaker;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -35,6 +39,12 @@ public class StateHandler {
     private IntakeSubsystem INTAKE_SUBSYSTEM;
     private ConveyorSubsystem CONVEYOR_SUBSYSTEM;
     private MKISpeaker speaker;
+
+    ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+
+    ShuffleboardLayout stateLayout = coachTab.getLayout("State", "List Layout").withPosition(2, 0).withSize(1, 1);
+
+    NetworkTableEntry currentState = stateLayout.add("State", States.NO_BALLS.toString()).getEntry();
     
 
     // Define all of the variables required to track the state of the robot.
@@ -50,6 +60,8 @@ public class StateHandler {
         this.acceptableRPM = false;
         this.intake_reverse = false;
     }
+
+
 
     // Run the logic we determine to figure out the current state of the robot. 
     public void updateStates() {
@@ -122,6 +134,8 @@ public class StateHandler {
         }
 
         SmartDashboard.putString("Current Robot State: ", currentRobotState.toString());
+
+        currentState.setString(currentRobotState.toString());
 
         speaker.printTriggers();
     }
