@@ -133,11 +133,12 @@ public class RobotContainer {
         () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis), 
         LIMELIGHT_SUBSYSTEM, HOOD_SUBSYSTEM, shooterData));
 
-    //new JoystickButton(driverJoystick, OIConstants.kDriverYButton).whileHeld(new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.2));
-    //new JoystickButton(driverJoystick, OIConstants.kDriverXButton).toggleWhenPressed(new ArmsToPositionPID(CLIMB_SUBSYSTEM, 0));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whenPressed(new ScheduleClimb(desiredClimb, HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, SHOOTER_SUBSYSTEM, SWERVE_SUBSYSTEM));
     
-    //new JoystickButton(driverJoystick, OIConstants.kDriverAButton).toggleWhenPressed(new ArmsToPositionPID(CLIMB_SUBSYSTEM, ClimbConstants.maxArmPositionTicks));
+    new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
 
+    //new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whileHeld(new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.25));
+    //new JoystickButton(operatorJoystick, OIConstants.kOperatorCircleButton).whenPressed(() -> CLIMB_SUBSYSTEM.resetEncoders());
   }
 
   public Command getAutonomousCommand() {

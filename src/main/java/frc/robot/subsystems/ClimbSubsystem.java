@@ -25,7 +25,7 @@ public class ClimbSubsystem extends SubsystemBase {
   private TalonFX leftClimber;
   private TalonFX rightClimber;
   
-  public StatorCurrentLimitConfiguration STATOR_CURRENT_LIMIT = new StatorCurrentLimitConfiguration(true, 60, 60, .2);
+  public StatorCurrentLimitConfiguration STATOR_CURRENT_LIMIT = new StatorCurrentLimitConfiguration(true, 60, 60, 12);
 
   private DesiredClimb desiredClimb;
   private Joystick operatorJoystick;
@@ -50,15 +50,14 @@ public class ClimbSubsystem extends SubsystemBase {
     rightClimber.setInverted(InvertType.OpposeMaster);
 
     leftClimber.configStatorCurrentLimit(STATOR_CURRENT_LIMIT);
-    leftClimber.configClosedloopRamp(.2);
     leftClimber.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.timeoutMs);
     leftClimber.configNominalOutputForward(0, Constants.timeoutMs);
     leftClimber.configNominalOutputReverse(0, Constants.timeoutMs);
     leftClimber.configPeakOutputForward(1, Constants.timeoutMs);
     leftClimber.configPeakOutputReverse(-1, Constants.timeoutMs);
     leftClimber.configAllowableClosedloopError(0, 1);
-    leftClimber.configMotionCruiseVelocity(10000); //45000
-    leftClimber.configMotionAcceleration(20000); // 60000
+    leftClimber.configMotionCruiseVelocity(30000); //45000
+    leftClimber.configMotionAcceleration(30000); // 60000
     leftClimber.config_kP(0, ClimbConstants.arm_kP, Constants.timeoutMs);
     leftClimber.config_kI(0, ClimbConstants.arm_kI, Constants.timeoutMs);
     leftClimber.config_kD(0, ClimbConstants.arm_kD, Constants.timeoutMs);
@@ -72,15 +71,14 @@ public class ClimbSubsystem extends SubsystemBase {
     rightClimber.enableVoltageCompensation(true);
 
     rightClimber.configStatorCurrentLimit(STATOR_CURRENT_LIMIT);
-    rightClimber.configClosedloopRamp(.2);
     rightClimber.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, Constants.timeoutMs);
     rightClimber.configNominalOutputForward(0.0, Constants.timeoutMs);
     rightClimber.configNominalOutputReverse(0.0, Constants.timeoutMs);
     rightClimber.configPeakOutputForward(1, Constants.timeoutMs);
     rightClimber.configPeakOutputReverse(-1, Constants.timeoutMs);
     rightClimber.configAllowableClosedloopError(0, 1);
-    rightClimber.configMotionCruiseVelocity(10000);
-    rightClimber.configMotionAcceleration(20000);
+    rightClimber.configMotionCruiseVelocity(30000);
+    rightClimber.configMotionAcceleration(30000);
     rightClimber.config_kP(0, ClimbConstants.arm_kP, Constants.timeoutMs);
     rightClimber.config_kI(0, ClimbConstants.arm_kI, Constants.timeoutMs);
     rightClimber.config_kD(0, ClimbConstants.arm_kD, Constants.timeoutMs);
@@ -98,18 +96,18 @@ public class ClimbSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Left Climb Encoder Position: ", getLeftClimbEncoderPosition());
     SmartDashboard.putNumber("Right Climb Encoder Position: ", getRightClimbEncoderPosition());
     
-    SmartDashboard.putNumber("Left Climb Current Draw: ", leftClimber.getStatorCurrent());
-    SmartDashboard.putNumber("Right Climb Current Draw: ", rightClimber.getSupplyCurrent());
+    // SmartDashboard.putNumber("Left Climb Current Draw: ", leftClimber.getStatorCurrent());
+    // SmartDashboard.putNumber("Right Climb Current Draw: ", rightClimber.getSupplyCurrent());
     
     desiredClimb.updateCurrentClimb(operatorJoystick);
-    SmartDashboard.putString("CURRENT CLIMB SEQUENCE", desiredClimb.getCurrentClimb().toString());
+    // SmartDashboard.putString("CURRENT CLIMB SEQUENCE", desiredClimb.getCurrentClimb().toString());
     
-    SmartDashboard.putNumber("Left Output", leftClimber.getMotorOutputPercent());
-    SmartDashboard.putNumber("Right Output", rightClimber.getMotorOutputPercent());
+    // SmartDashboard.putNumber("Left Output", leftClimber.getMotorOutputPercent());
+    // SmartDashboard.putNumber("Right Output", rightClimber.getMotorOutputPercent());
 
     
-    SmartDashboard.putNumber("Left Error", leftClimber.getClosedLoopError());
-    SmartDashboard.putNumber("Right Error", rightClimber.getClosedLoopError());
+    // SmartDashboard.putNumber("Left Error", leftClimber.getClosedLoopError());
+    // SmartDashboard.putNumber("Right Error", rightClimber.getClosedLoopError());
 
     currentState.setString(desiredClimb.getCurrentClimb().toString());
   }
