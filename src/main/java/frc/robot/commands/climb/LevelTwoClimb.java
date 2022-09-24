@@ -6,9 +6,11 @@ package frc.robot.commands.climb;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.ClimbConstants;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
 
@@ -22,18 +24,19 @@ public class LevelTwoClimb extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new DeployArms(CLIMB_SUBSYSTEM).withTimeout(.5),
-      new ArmsToPosition(CLIMB_SUBSYSTEM, 80),
+      new InstantCommand(() -> CLIMB_SUBSYSTEM.resetEncoders()),
+      new ArmsToPosition(CLIMB_SUBSYSTEM, ClimbConstants.maxArmPositionTicks),
       new WaitForButton(commit),
       new ParallelRaceGroup(
         new SequentialCommandGroup(
           new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 40100),
           new HoodApplyVoltage(HOOD_SUBSYSTEM, .1)
         ),
-        new ArmsToPosition(CLIMB_SUBSYSTEM, -80)
+        new ArmsToPosition(CLIMB_SUBSYSTEM, 0)
       ),
         new ParallelCommandGroup(
             new SequentialCommandGroup(
-              new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.3).withTimeout(1),
+              new ClimbApplyVoltage(CLIMB_SUBSYSTEM, .3).withTimeout(1),
               new ArmsToPosition(CLIMB_SUBSYSTEM, 10)
             ),
             new HoodHoldPosition(HOOD_SUBSYSTEM, 36000)

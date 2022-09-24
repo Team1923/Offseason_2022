@@ -40,7 +40,7 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
       ),
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
-        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, .3)),
+        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, .5)),
       // new ArmsToPosition(CLIMB_SUBSYSTEM, 30), MERGED WITH BELOW
       new ParallelRaceGroup(
         new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
@@ -55,7 +55,7 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
       ),
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
-        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, .3)),
+        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, 0.5)),
       //new ArmsToPosition(CLIMB_SUBSYSTEM, 30), MERGING WITH BELOW
       new ParallelRaceGroup(
         new HoodHoldPosition(HOOD_SUBSYSTEM, 9000),
@@ -70,7 +70,7 @@ public class FullTraversalClimbSequence extends SequentialCommandGroup {
       ),
       new ParallelRaceGroup(
         new HoodSingleSetpointCommand(HOOD_SUBSYSTEM, 36000),
-        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, .3)),
+        new ClimbApplyVoltage(CLIMB_SUBSYSTEM, 0.5)),
       new ParallelCommandGroup(
         new ArmsToPosition(CLIMB_SUBSYSTEM, 60000),
         new HoodHoldPosition(HOOD_SUBSYSTEM, 36000)
