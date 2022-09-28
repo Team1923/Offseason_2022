@@ -4,6 +4,7 @@
 
 package frc.robot.commands.climb;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimbSubsystem;
 
@@ -27,6 +28,7 @@ public class ArmsToPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putBoolean("Arms to Position Running?", true);
     loopsInsideAllowableError = 0;
   }
 
@@ -39,6 +41,7 @@ public class ArmsToPosition extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    SmartDashboard.putBoolean("Arms to Position Running?", false);
     CLIMB_SUBSYSTEM.stop();
   }
 
