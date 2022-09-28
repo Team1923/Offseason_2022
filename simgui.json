@@ -105,6 +105,7 @@
       "/LiveWindow/Ungrouped/Talon FX [7]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [8]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [9]": "Motor Controller",
+      "/Shuffleboard/Coach Dashboard/Auto Setup/SendableChooser[0]": "String Chooser",
       "/Shuffleboard/Driver Dashboard/Auto Setup/SendableChooser[0]": "String Chooser"
     }
   },

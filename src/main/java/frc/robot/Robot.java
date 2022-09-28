@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   private AutoChooser selector;
 
-  ShuffleboardTab driverDashboard = Shuffleboard.getTab("Driver Dashboard");
+  ShuffleboardTab driverDashboard = Shuffleboard.getTab("Coach Dashboard");
 
   /**
    * This function is run when the robot is first started up and should be used for any

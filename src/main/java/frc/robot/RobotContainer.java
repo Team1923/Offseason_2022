@@ -142,9 +142,10 @@ public class RobotContainer {
     //new JoystickButton(operatorJoystick, OIConstants.kOperatorCircleButton).whenPressed(() -> CLIMB_SUBSYSTEM.resetEncoders());
   }
 
-  public Command getAutonomousCommand() {
-    return new UnoBall(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM);
-  }
+  // public Command getAutonomousCommand() {
+  //   return new UnoBall(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM);
+    
+  // }
 
   public Command initializeAuto(AutoChooser selector) {
     return selector.startMode(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM);
