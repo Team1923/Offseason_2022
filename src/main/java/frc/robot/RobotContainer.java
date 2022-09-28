@@ -15,6 +15,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.MKILib.MKISpeaker;
 import frc.robot.autonomous.AutoChooser;
 import frc.robot.autonomous.DeuxBall;
+import frc.robot.autonomous.UnoBall;
 import frc.robot.commands.scoring.ShootCommandGroup;
 import frc.robot.commands.climb.ArmsToPosition;
 import frc.robot.commands.climb.ArmsToPositionPID;
@@ -142,8 +143,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    //return new ShittyAutoCommand(SWERVE_SUBSYSTEM);
-    return new DeuxBall(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM);
+    return new UnoBall(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM);
   }
 
   public Command initializeAuto(AutoChooser selector) {

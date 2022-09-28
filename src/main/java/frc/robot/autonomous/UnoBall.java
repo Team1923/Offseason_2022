@@ -4,6 +4,7 @@
 
 package frc.robot.autonomous;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
@@ -20,6 +21,13 @@ public class UnoBall extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+
+      /*
+        Things to TEST:
+          - Is the shot good? (shooter was re-tuned, not sure if this is a viable fender shot)
+          - Does the oneBallPath cross the tarmac line?
+    */
+      new InstantCommand(() -> swerve.zeroHeading()),
       new AutoShoot(shooter, conveyor, hood, 3200, 2900).withTimeout(1.5),
       new RunTrajectory(swerve, "oneBallPath", true)
     );

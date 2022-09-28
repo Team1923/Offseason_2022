@@ -27,6 +27,21 @@ public class GoonBall extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      /*
+        Notes/Test Items:
+          - TwoBallPath shouldn't require changing. If anything, just make it move forward less/more depending on where it ends up. 
+          - The timeouts in the parallel command groups don't really matter. 
+          - Try to optimize PIDRotate so VisionTrack doesn't have to do as much work. 
+          - If PIDRotate is buggy, don't waste time on it. Just get it to rotate as best as possible and let VisionTrack do the rest
+          - Refer to the new tuning chart for the exact angle and ticks we need. 
+          - AcquireFirstGoon is going to require a LOT of empirical testing. I tried my best to approximate but I'm not too sure about the path. 
+          - The ParallelCommandGroup with a WaitCommand of 0.5 seconds is intentional. 
+          - AcquireSecondGoon will also need a LOT of testing. Especially with the theta factor. 
+          - Goal at the end is to rotate towards the "hangar" zone (**find out where it is on the new field**)
+          - Eject balls using shooter (similar to oneBallGetOut - just copy the same value)
+
+      */
+
       new InstantCommand(()-> swerve.zeroHeading()),
       new ParallelCommandGroup(
         new RunIntakeCommand(intake, false),
@@ -45,8 +60,9 @@ public class GoonBall extends SequentialCommandGroup {
           new RunIntakeCommand(intake, false)
         ),
         new RunTrajectory(swerve, "acquireSecondGoon", true)
-      ).withTimeout(2)
-      // new PIDRotate(swerve, -90),
+      ).withTimeout(2),
+      new PIDRotate(swerve, -90),
+      new AutoShoot(shooter, conveyor, hood, 25000, 5000)
       // new ParallelCommandGroup(
       //   new RunIntakeCommand(intake, false),
       //   new SequentialCommandGroup(

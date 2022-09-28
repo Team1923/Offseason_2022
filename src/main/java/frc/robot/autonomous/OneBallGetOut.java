@@ -24,6 +24,14 @@ public class OneBallGetOut extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+
+    /*
+      Things to test/notes:
+        - OneBallGetOut should only shoot one ball and acquire an enemy ball. The enemy ball should be randomly shot out. 
+        - Path looks fine, but the final waypoint will need adjusting based on new measurements. Angle will also need adjusting. 
+        - Ensure the PIDRotate command works as expected (don't spend too much time debugging; just get it do turn and shoot somewhere else)
+        - Ideally we get the shot to face the hangar zone (but for this first comp the hangar zone isn't even in the right spot, doesn't matter)
+    */
       new InstantCommand(() -> swerve.zeroHeading()),
       new AutoShoot(shooter, conveyor, hood, 0, 3000).withTimeout(1.5),
       new ParallelCommandGroup(
