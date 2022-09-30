@@ -25,14 +25,13 @@ public class DeuxBall extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(()-> swerve.zeroHeading()),
       new ParallelCommandGroup(
         new RunIntakeCommand(intake, false),
         new RunTrajectory(swerve, "twoBallPath", false)
       ).withTimeout(2),
       new PIDRotate(swerve, -180),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(1),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(27.5), 3300)
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5)
         
     );
   }

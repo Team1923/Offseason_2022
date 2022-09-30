@@ -86,7 +86,7 @@ public final class Constants {
         public static final boolean kBackRightDriveReversed = false;
         public static final boolean kBackRightTurningReversed = false;
         public static final int kBackRightDriveAbsoluteEncoderPort = 2;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 2.44;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 4.49;
         public static final boolean kBackRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Left Module
@@ -134,7 +134,7 @@ public final class Constants {
         public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 2;
         public static final double kPXController = 0.15;
         public static final double kPYController = 0.15;
-        public static final double kPThetaController = 15;
+        public static final double kPThetaController = 10;
 
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
             new TrapezoidProfile.Constraints(kMaxAngularSpeedRadiansPerSecond, 

@@ -42,7 +42,6 @@ public class GoonBall extends SequentialCommandGroup {
 
       */
 
-      new InstantCommand(()-> swerve.zeroHeading()),
       new ParallelCommandGroup(
         new RunIntakeCommand(intake, false),
         new RunTrajectory(swerve, "twoBallPath", false)

@@ -27,7 +27,6 @@ public class UnoBall extends SequentialCommandGroup {
           - Is the shot good? (shooter was re-tuned, not sure if this is a viable fender shot)
           - Does the oneBallPath cross the tarmac line?
     */
-      new InstantCommand(() -> swerve.zeroHeading()),
       new AutoShoot(shooter, conveyor, hood, 3200, 2900).withTimeout(1.5),
       new RunTrajectory(swerve, "oneBallPath", true)
     );
