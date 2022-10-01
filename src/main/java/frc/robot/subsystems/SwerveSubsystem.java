@@ -124,6 +124,10 @@ public class SwerveSubsystem extends SubsystemBase {
     return -Math.IEEEremainder(gyro.getYaw(), 360);
   }
 
+  public double getHeading(double offset) {
+    return -Math.IEEEremainder(gyro.getYaw() + offset, 360);
+  }
+  
   public double getRawHeading() {
     return -gyro.getYaw();
   }

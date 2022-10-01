@@ -29,14 +29,14 @@ public class PIDRotate extends CommandBase {
     // Set instance variables equal to what was passed in
     this.SWERVE_SUBSYSTEM = swerve;
 
-    this.goalAngle = goalAngle;
+    this.goalAngle = swerve.getHeading(goalAngle);
     
     thetaController = new PIDController(.12, 0, 0.001);
 
     loopsInsideAllowableError = 0;
     // Require the swerve subsystem to allow for it to be a default command
     addRequirements(SWERVE_SUBSYSTEM);
-
+    
   }
 
   // Called when the command is initially scheduled.
@@ -44,6 +44,8 @@ public class PIDRotate extends CommandBase {
   public void initialize() {
     loopsInsideAllowableError = 0;
   }
+
+
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
