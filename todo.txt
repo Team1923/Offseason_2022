@@ -1,0 +1,13 @@
+List of things to do before pushing this new code at MRM DAY 2:
+
+- Confirm that AXIS 3 of the operator controller is the right trigger, as well as .2 being a good number, plus make sure 
+direction is good for hood travel
+- Go over module resetting with mentors to confirm we want to run it
+- Change the new manual hood zeroing button to be -50
+- Investigate why PIDRotate uses getRawHeading instead of get heading. I think its because PID is hard to loop, but we can make
+it continuous or we should convert our goal angle to a raw angle. Maybe it works I just don't understand it
+- Add graph of getRawHeading and getHeading to shuffleboard, plus record the screen for our match. We need a video of this 
+to figure out why we are not correctly zero'd
+- Ask if we can run a single auto test on the field, maybe 2M calibration (1.5 is fine, etc)???
+- Moved the hood to 0 command at the beginning of auto into the drive and intake parallel group, to save time for three ball.
+- Test two new auto commands and check directionality. The system is hard to understand so I anticipate this to be a problem.

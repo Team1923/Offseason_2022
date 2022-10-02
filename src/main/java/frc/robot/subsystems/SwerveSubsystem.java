@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -84,29 +85,22 @@ public class SwerveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
    // Prints out robot heading for debug purposes
-   SmartDashboard.putNumber("Robot Heading: ", getRawHeading());
-   //SmartDashboard.putString("Robot Location: ", getPose().getTranslation().toString());
-   //SmartDashboard.putString("Robot Orientation: ", getPose().getRotation().toString());
-
-   SmartDashboard.putNumber("Front Left", frontLeft.getAbsoluteEncoderRad());
-   SmartDashboard.putNumber("Front Right", frontRight.getAbsoluteEncoderRad());
-   SmartDashboard.putNumber("Back Left", backLeft.getAbsoluteEncoderRad());
-   SmartDashboard.putNumber("Back Right", backRight.getAbsoluteEncoderRad());
    
-   // SmartDashboard.putNumber("Gyro Velocity Value: ", MKIMath.magnitude(getVelocityMagnitude()));
+
+    SmartDashboard.putNumber("Front Left", frontLeft.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Front Right", frontRight.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Back Left", backLeft.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Back Right", backRight.getAbsoluteEncoderRad());
+    
 
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
 
-
-
     SmartDashboard.putString("Odometer Position", odometer.getPoseMeters().toString());
 
-    //SmartDashboard.putNumber("Front Right Position", frontRight.getTurningPositionRads());
-    //SmartDashboard.putNumber("Front Left Position", frontLeft.getTurningPositionRads());
-    //SmartDashboard.putNumber("Back Right Position", backRight.getTurningPositionRads());
-    //SmartDashboard.putNumber("Back Left Position", backLeft.getTurningPositionRads());
-
-
+    frontLeft.configOnReset();
+    frontRight.configOnReset();
+    backLeft.configOnReset();
+    backRight.configOnReset();
 
   }
 

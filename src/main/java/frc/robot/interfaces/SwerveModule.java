@@ -32,6 +32,9 @@ public class SwerveModule {
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
 
+    private final boolean driveMotorR;
+    private final boolean turningMotorR;
+
     // Constructor to instantiate a new Swerve Module. A bunch of inputs that looks messy but Zero to Autonomous did it 
     // and I have faith in them, so lets roll with it
     public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed, 
@@ -41,31 +44,17 @@ public class SwerveModule {
         this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
         this.absoluteEncoderReversed = absoluteEncoderReversed;
         absoluteEncoder = new AnalogInput(absoluteEncoderId);
+        
+        this.driveMotorR = driveMotorReversed;
+        this.turningMotorR = turningMotorReversed;
 
         // Initialize both motors of the module
         driveMotor = new WPI_TalonFX(driveMotorId, "Default Name");
         turningMotor = new WPI_TalonFX(turningMotorId, "Default Name");
 
-        // Reset all previously set settings on these motors
-        driveMotor.configFactoryDefault();
-        turningMotor.configFactoryDefault();
-
-        // Set the motors to either brake mode so the robot stops moving when its disabled or when the sticks are let go
-        driveMotor.setNeutralMode(NeutralMode.Brake);
-        turningMotor.setNeutralMode(NeutralMode.Brake);
-
-        // Sets each of the motors to be reversed based on their respective inputs in the constructor
-        if(driveMotorReversed) {
-            driveMotor.setInverted(InvertType.InvertMotorOutput);
-        } else {
-            driveMotor.setInverted(InvertType.None);
-        }
-
-        if(turningMotorReversed) {
-            turningMotor.setInverted(InvertType.InvertMotorOutput);
-        } else {
-            turningMotor.setInverted(InvertType.None);
-        }
+        configDriveMotor();
+        configSteerMotor();
+       
         
         // Instantiating PID controller for the steering motor, I think that a kP value will be 
         // enough to get the wheel to it's heading (pending testing)
@@ -114,10 +103,18 @@ public class SwerveModule {
     // ? Resets the encoders to their starting position, turning motor has to be put to the position that the absolute encoder measures.
     // This is done with some wonky conversions from the offset radians -> rotations of turning gear -> rotations of motor shaft -> ticks. Needs to be tested
     // and verified that the math and logic works.
-    public void resetEncoders() {
+    public void resetDriveEncoder() {
         driveMotor.setSelectedSensorPosition(0);
+    }
+
+    public void resetTurningEncoder() {
         double ticks_from_radians = ((getAbsoluteEncoderRad() / (2 * Math.PI)) / ModuleConstants.kTurningGearRatio) * ModuleConstants.kTicksPerRotation;
         turningMotor.setSelectedSensorPosition(ticks_from_radians);
+    }
+
+    public void resetEncoders() {
+        resetDriveEncoder();
+        resetTurningEncoder();
     }
 
     // ? A way to visualize the current state of the module. WPILib requires this format for a lot of the actual swerve drive code.
@@ -159,6 +156,39 @@ public class SwerveModule {
 
         // Recommended debug printout for swerve state
         //SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "]", state.toString());
+    }
+
+    // Configs Drive Motor
+    public void configDriveMotor() {
+        driveMotor.configFactoryDefault();
+        driveMotor.setNeutralMode(NeutralMode.Brake);
+        if(this.driveMotorR) {
+            driveMotor.setInverted(InvertType.InvertMotorOutput);
+        } else {
+            driveMotor.setInverted(InvertType.None);
+        }
+    }
+
+    // Configs Steer Motor
+    public void configSteerMotor() {
+        turningMotor.configFactoryDefault();
+        turningMotor.setNeutralMode(NeutralMode.Brake);
+        if(turningMotorR) {
+            turningMotor.setInverted(InvertType.InvertMotorOutput);
+        } else {
+            turningMotor.setInverted(InvertType.None);
+        }   
+    }
+
+    public void configOnReset() {
+        if(driveMotor.hasResetOccurred()) {
+            configDriveMotor();
+        }
+
+        if(turningMotor.hasResetOccurred()) {
+            configSteerMotor();
+            resetTurningEncoder();
+        }
     }
 
     // Stop function 
