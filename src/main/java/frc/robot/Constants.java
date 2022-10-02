@@ -65,28 +65,28 @@ public final class Constants {
         // Front Left Module
         public static final int kFrontLeftDriveMotorPort = 0;
         public static final int kFrontLeftTurningMotorPort = 1;
-        public static final boolean kFrontLeftDriveReversed = true;
+        public static final boolean kFrontLeftDriveReversed = false;
         public static final boolean kFrontLeftTurningReversed = false;
         public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 3.71;
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0.77;
         public static final boolean kFrontLeftDriveAbsoluteEncoderOffsetReversed = true;
 
         // Front Right Module
         public static final int kFrontRightDriveMotorPort = 2;
         public static final int kFrontRightTurningMotorPort = 3;
-        public static final boolean kFrontRightDriveReversed = true;
+        public static final boolean kFrontRightDriveReversed = false;
         public static final boolean kFrontRightTurningReversed = false;
         public static final int kFrontRightDriveAbsoluteEncoderPort = 1;
-        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 3.90;
+        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 0.56;
         public static final boolean kFrontRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Right Module
-        public static final int kBackRightDriveMotorPort = 4;
+        public static final int kBackRightDriveMotorPort = 4;  //prioritize
         public static final int kBackRightTurningMotorPort = 5;
         public static final boolean kBackRightDriveReversed = false;
         public static final boolean kBackRightTurningReversed = false;
         public static final int kBackRightDriveAbsoluteEncoderPort = 2;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 4.49;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 0.21;
         public static final boolean kBackRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Left Module
@@ -95,7 +95,7 @@ public final class Constants {
         public static final boolean kBackLeftDriveReversed = true;
         public static final boolean kBackLeftTurningReversed = false;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.62;//5.97;//3.62;
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.71;//5.97;//3.62;
         public static final boolean kBackLeftDriveAbsoluteEncoderOffsetReversed = true;
 
     }
@@ -154,7 +154,7 @@ public final class Constants {
     public static final class IntakeConstants {
         public static final int leftIntakeMotorID = 8; //will need to be changed
         public static final int rightIntakemotorID = 9; //will need to be changed
-        public static final double intakePercentOut = 0.5; //change this
+        public static final double intakePercentOut = 0.9; //change this
         public static final double intakeOutPercentOut = -0.9;
         public static final int currentLimit = 30; //still needs to be set
         public static final int thresholdLimit = 40; //still needs to be set I just guessed

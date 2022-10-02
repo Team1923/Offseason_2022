@@ -7,6 +7,7 @@ package frc.robot.autonomous;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.StateHandler;
 import frc.robot.UnitConversion;
 import frc.robot.commands.climb.HoodSingleSetpointCommand;
 import frc.robot.commands.scoring.independent.RunIntakeCommand;
@@ -22,18 +23,19 @@ import frc.robot.subsystems.SwerveSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DeuxBall extends SequentialCommandGroup {
   /** Creates a new DeuxBall. */
-  public DeuxBall(SwerveSubsystem swerve, ShooterSubsystem shooter, ConveyorSubsystem conveyor, IntakeSubsystem intake, HoodSubsystem hood, LimelightSubsystem limelight) {
+  public DeuxBall(SwerveSubsystem swerve, ShooterSubsystem shooter, ConveyorSubsystem conveyor, IntakeSubsystem intake, HoodSubsystem hood, LimelightSubsystem limelight, StateHandler stateHandler) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new HoodSingleSetpointCommand(hood, 0),
+      new HoodSingleSetpointCommand(hood, 0).withTimeout(1.5),
       new ParallelCommandGroup(
         new RunIntakeCommand(intake, false),
         new RunTrajectory(swerve, "twoBallPath", false)
       ).withTimeout(2),
-      new PIDRotate(swerve, -180),
+      new PIDRotate(swerve, -180).withTimeout(2),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5)
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5),
+      new InstantCommand(() -> stateHandler.resetState())
         
     );
   }

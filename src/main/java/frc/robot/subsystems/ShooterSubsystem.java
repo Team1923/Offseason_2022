@@ -108,6 +108,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setShooterWheelsRPM(double vel) {
+    // ADD MULTIPLIER HERE IN EMERGENCY. MULTIPLY VEL BY CONSTANT. MAYBE 5% or 10% ADDITIONAL
     leftShooterMotor.set(ControlMode.Velocity, UnitConversion.RPMtoNativeUnits(vel));
   }
 

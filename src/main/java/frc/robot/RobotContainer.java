@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -118,6 +119,8 @@ public class RobotContainer {
 
     // Hub-centric driving command
 
+    new JoystickButton(driverJoystick, OIConstants.kDriverXButton).whenPressed(() -> HOOD_SUBSYSTEM.hoodAbort());
+
 
     new Trigger(() -> driverJoystick.getRawAxis(3) > .1).whileActiveContinuous(new ShootCommandGroup(
         SWERVE_SUBSYSTEM, 
@@ -140,7 +143,7 @@ public class RobotContainer {
   // }
 
   public Command initializeAuto(AutoChooser selector) {
-    return selector.startMode(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM);
+    return selector.startMode(SWERVE_SUBSYSTEM, SHOOTER_SUBSYSTEM, CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, HOOD_SUBSYSTEM, LIMELIGHT_SUBSYSTEM, stateHandler);
   } 
 
   public void playSound() {

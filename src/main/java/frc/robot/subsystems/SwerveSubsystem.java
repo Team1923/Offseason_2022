@@ -84,7 +84,8 @@ public class SwerveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
    // Prints out robot heading for debug purposes
-   SmartDashboard.putNumber("Robot Heading: ", getRawHeading());
+   SmartDashboard.putNumber("Robot RAW Heading: ", getRawHeading());
+   SmartDashboard.putNumber("Robot Heading: ", getHeading());
    //SmartDashboard.putString("Robot Location: ", getPose().getTranslation().toString());
    //SmartDashboard.putString("Robot Orientation: ", getPose().getRotation().toString());
 

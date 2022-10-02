@@ -1,10 +1,12 @@
 package frc.robot.autonomous;
 
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.StateHandler;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -41,22 +43,23 @@ public class AutoChooser {
         ConveyorSubsystem conveyor, 
         IntakeSubsystem intake, 
         HoodSubsystem hood, 
-        LimelightSubsystem limelight
+        LimelightSubsystem limelight,
+        StateHandler stateHandler
     ){
         AutoMode mode = (AutoMode)(chooser.getSelected());
         switch(mode){
             case ONE_BALL:
-                return new UnoBall(swerve, shooter, conveyor, intake, hood);
+                return new UnoBall(swerve, shooter, conveyor, intake, hood, stateHandler);
             case ONE_BALL_GET_OUT:
                 return new OneBallGetOut(swerve, shooter, conveyor, intake, hood);
             case TWO_BALL:
-                return new DeuxBall(swerve, shooter, conveyor, intake, hood, limelight);
+                return new DeuxBall(swerve, shooter, conveyor, intake, hood, limelight, stateHandler);
             case GOON_BALL:
                 return new GoonBall(swerve, shooter, conveyor, intake, hood, limelight);
             case FOUR_BALL:
                 return new SiBall(swerve, shooter, conveyor, intake, hood, limelight);
             default:
-                return new UnoBall(swerve, shooter, conveyor, intake, hood);
+                return new DeuxBall(swerve, shooter, conveyor, intake, hood, limelight, stateHandler);
         }
     }
 }

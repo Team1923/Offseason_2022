@@ -30,13 +30,13 @@ public class MKISpeaker {
 
     // Send a 10ms 5v pulse to the digital output 
     public void playSound(int id) {
-        System.out.println("TEST 1");
+        //System.out.println("TEST 1");
         switch(id) {
             case 1:
-            System.out.println("TEST 2");
+            //System.out.println("TEST 2");
                 new Thread(() -> {
                     try {
-                        System.out.println("TEST 3");
+                        //System.out.println("TEST 3");
                         sound_one.set(true);
                         Thread.sleep(200);
                         sound_one.set(false);

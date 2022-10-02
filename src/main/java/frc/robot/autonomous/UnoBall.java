@@ -7,6 +7,7 @@ package frc.robot.autonomous;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.StateHandler;
 import frc.robot.commands.climb.HoodSingleSetpointCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
@@ -19,7 +20,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class UnoBall extends SequentialCommandGroup {
   /** Creates a new UnoBall. */
-  public UnoBall(SwerveSubsystem swerve, ShooterSubsystem shooter, ConveyorSubsystem conveyor, IntakeSubsystem intake, HoodSubsystem hood) {
+  public UnoBall(SwerveSubsystem swerve, ShooterSubsystem shooter, ConveyorSubsystem conveyor, IntakeSubsystem intake, HoodSubsystem hood, StateHandler stateHandler) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -31,7 +32,8 @@ public class UnoBall extends SequentialCommandGroup {
     */
       new HoodSingleSetpointCommand(hood, 0),
       new AutoShoot(shooter, conveyor, hood, 0, 2750).withTimeout(1.5),
-      new RunTrajectory(swerve, "oneBallPath", true)
+      new RunTrajectory(swerve, "oneBallPath", true),
+      new InstantCommand(() -> stateHandler.resetState())
     );
   }
 }

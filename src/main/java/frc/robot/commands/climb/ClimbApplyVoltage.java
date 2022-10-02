@@ -28,7 +28,6 @@ public class ClimbApplyVoltage extends CommandBase {
   @Override
   public void execute() {
     CLIMB_SUBSYSTEM.set(output);
-    System.out.println("test!");
   }
 
   // Called once the command ends or is interrupted.

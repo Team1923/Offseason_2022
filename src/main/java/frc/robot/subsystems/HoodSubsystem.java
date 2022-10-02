@@ -91,6 +91,10 @@ public class HoodSubsystem extends SubsystemBase {
     hoodMotor.setSelectedSensorPosition(HoodConstants.zeroPosition);
   }
 
+  public void hoodAbort(){
+    hoodMotor.setSelectedSensorPosition(-50);
+  }
+
   public double getPosition() {
     return hoodMotor.getSelectedSensorPosition();
   }
