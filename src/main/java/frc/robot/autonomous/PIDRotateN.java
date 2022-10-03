@@ -23,7 +23,7 @@ public class PIDRotateN extends CommandBase {
   // .1 was too fast, .01 was a little too slow, maybe try .02.
   PIDController thetaController;
 
-  /** Creates a new GoalCentricCommand where the robot follows the goal rotationally as it translates in field-oriented mode. */
+  // Boolean will det
   public PIDRotateN(SwerveSubsystem swerve, double goal, boolean absolute) {
 
     // Set instance variables equal to what was passed in
