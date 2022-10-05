@@ -1,6 +1,5 @@
 package frc.robot.autonomous;
 
-import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;

@@ -4,13 +4,11 @@
 
 package frc.robot.subsystems;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -180,13 +178,11 @@ public class SwerveSubsystem extends SubsystemBase {
     backLeft.resetState();
   }
 
-  public List<Double> getVelocityMagnitude() {
-   // gyro.getAccumGyro(gyroArray);
-    //System.out.println(gyroArray);
-
-    // return Arrays.asList(gyroArray[0] * Constants.gyroToMPS, gyroArray[1] * Constants.gyroToMPS);
-
-    return Arrays.asList(1.0,1.0);
+  public ChassisSpeeds getChassisSpeed() {
+    return DriveConstants.kDriveKinematics.toChassisSpeeds(
+        frontLeft.getState(), 
+        frontRight.getState(),
+        backLeft.getState(),
+        backRight.getState());
   }
-
 }
