@@ -32,7 +32,7 @@ public class HoodResetHold extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     HOOD_SUBSYSTEM.stop();
-    HOOD_SUBSYSTEM.resetEncoder(); // CHANGE THIS TO THE NEW "HOOD OFFSET ZERO METHOD"
+    HOOD_SUBSYSTEM.hoodAbort(); // CHANGE THIS TO THE NEW "HOOD OFFSET ZERO METHOD"
   }
 
   // Returns true when the command should end.

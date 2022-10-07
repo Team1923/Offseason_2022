@@ -55,8 +55,8 @@ public class FollowTrajectory extends SequentialCommandGroup {
       config
   );
     
-    SmartDashboard.putString("Start Pose", trajectoryLoader.getInitialPose().toString());
-    SmartDashboard.putString("End Pose", trajectoryLoader.getFinalPose().toString());
+   // SmartDashboar.putString("Start Pose", trajectoryLoader.getInitialPose().toString());
+   // SmartDashboar.putString("End Pose", trajectoryLoader.getFinalPose().toString());
     // Instantiate the x and y PID controllers. They operate indepentently (Holomonic system)
     PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
     PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);

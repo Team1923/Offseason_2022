@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
    * that you want ran during disabled, autonomous, teleoperated and test.
    *
    * <p>This runs after the mode specific periodic functions, but before LiveWindow and
-   * SmartDashboard integrated updating.
+   * SmartDashboar integrated updating.
    */
   @Override
   public void robotPeriodic() {

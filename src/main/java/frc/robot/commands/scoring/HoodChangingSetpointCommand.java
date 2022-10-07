@@ -44,7 +44,7 @@ public class HoodChangingSetpointCommand extends CommandBase {
 
     double tickGoal = UnitConversion.angleToTicks(arr[0]-13);
 
-    SmartDashboard.putNumber("ANGLE", arr[0]-13);
+   // SmartDashboar.putNumber("ANGLE", arr[0]-13);
 
     // Adjust the generated angle by a scale factor. If the new angle is greater than the max
     // allowed angle, then cap it to the max allowed angle.

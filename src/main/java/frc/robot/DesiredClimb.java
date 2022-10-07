@@ -19,7 +19,7 @@ public class DesiredClimb {
     //idk these IDs we need to fix them
     public void updateCurrentClimb(Joystick joystick){
 
-        SmartDashboard.putNumber("Operator DPAD Value: ", joystick.getPOV());
+       // SmartDashboar.putNumber("Operator DPAD Value: ", joystick.getPOV());
 
         
 

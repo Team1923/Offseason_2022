@@ -52,7 +52,7 @@ public class PIDRotate extends CommandBase {
   public void execute() {
 
 
-    SmartDashboard.putNumber("Error Angle thing", goalAngle-SWERVE_SUBSYSTEM.getRawHeading());
+   // SmartDashboar.putNumber("Error Angle thing", goalAngle-SWERVE_SUBSYSTEM.getRawHeading());
     // Instead of turning based off an axis value, lets use the horizontal angle to the 
     // target measured by the limelight times some value to make it fit within the scope of robot control
     //double turningSpeed = (goalAngle - SWERVE_SUBSYSTEM.getHeading()) * kP;

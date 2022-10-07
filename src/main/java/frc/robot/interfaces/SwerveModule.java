@@ -181,9 +181,9 @@ public class SwerveModule {
     }
 
     public void configOnReset() {
-        if(driveMotor.hasResetOccurred()) {
-            configDriveMotor();
-        }
+        // if(driveMotor.hasResetOccurred()) {
+        //     configDriveMotor();
+        // }
 
         if(turningMotor.hasResetOccurred()) {
             configSteerMotor();

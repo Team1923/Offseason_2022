@@ -72,7 +72,7 @@ public class ShooterData {
 
         public double[] getData(double distance){
         int lBound = lowerBound(distance);
-        SmartDashboard.putNumber("LBOUND", lBound);
+       // SmartDashboar.putNumber("LBOUND", lBound);
         if(lBound == shooterData.get(0).length-1){
             double[] temp = {shooterData.get(1)[shooterData.get(0).length-1], shooterData.get(2)[shooterData.get(0).length-1]};
             return temp;

@@ -85,10 +85,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("SOLENOID 1", solenoid1.get());
-    SmartDashboard.putBoolean("SOLENOID 2", solenoid2.get());
-    SmartDashboard.putBoolean("SOLENOID 3", solenoid3.get());
-    SmartDashboard.putBoolean("SOLENOID 4", solenoid4.get());
+   // SmartDashboar.putBoolean("SOLENOID 1", solenoid1.get());
+   // SmartDashboar.putBoolean("SOLENOID 2", solenoid2.get());
+   // SmartDashboar.putBoolean("SOLENOID 3", solenoid3.get());
+   // SmartDashboar.putBoolean("SOLENOID 4", solenoid4.get());
     
   }
 

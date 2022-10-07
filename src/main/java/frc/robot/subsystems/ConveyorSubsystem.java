@@ -72,10 +72,10 @@ public class ConveyorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("BEAM BREAK ONE: ", getFrontBeamBreak());
-    SmartDashboard.putBoolean("BEAM BREAK TWO: ", getBackBeamBreak());
+   // SmartDashboar.putBoolean("BEAM BREAK ONE: ", getFrontBeamBreak());
+   // SmartDashboar.putBoolean("BEAM BREAK TWO: ", getBackBeamBreak());
 
-    SmartDashboard.putNumber("Running Conveyor?", conveyorMotor.get());
+   // SmartDashboar.putNumber("Running Conveyor?", conveyorMotor.get());
 
     isConveyorRunning.setBoolean(Math.abs(conveyorMotor.get()) > 0);
     //SmartDashboard.putNumber("System Time", System.currentTimeMillis());

@@ -47,12 +47,12 @@ public class ArmsToPositionPID extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("FF", kFF);
+   // SmartDashboar.putNumber("FF", kFF);
     double output = controller.calculate(climb.getLeftClimbEncoderPosition(), goal_ticks) + kFF;
     if(output > 1) {
       output = 1;
     }
-    SmartDashboard.putNumber("Climber Output", output);
+   // SmartDashboar.putNumber("Climber Output", output);
     climb.set(output);
   }
 

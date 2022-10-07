@@ -60,11 +60,11 @@ public class RunShooterCommand extends CommandBase {
       goal_rpm = -2750;
     }
     
-    SmartDashboard.putNumber("GOAL RPM", goal_rpm);
+   // SmartDashboar.putNumber("GOAL RPM", goal_rpm);
 
     SHOOTER_SUBSYSTEM.setShooterWheelsRPM(goal_rpm);
     double error = Math.abs(Math.abs(SHOOTER_SUBSYSTEM.getShooterRPM())-Math.abs(goal_rpm));
-    SmartDashboard.putNumber("Shooter Error: ", error);
+   // SmartDashboar.putNumber("Shooter Error: ", error);
     // If we are within a certain bound of RPM from the RPM goal, start at timer. Otherwise, reset and stop the timer.
     if (error < ShooterConstants.shooterRPMThreshold) {
       threshold_timer.start();

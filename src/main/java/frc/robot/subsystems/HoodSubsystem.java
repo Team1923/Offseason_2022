@@ -48,9 +48,9 @@ public class HoodSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Hood Encoder Position: ", getPosition());
+   // SmartDashboar.putNumber("Hood Encoder Position: ", getPosition());
     //SmartDashboard.putNumber("Hood Supply Current: ", hoodMotor.getSupplyCurrent());
-    SmartDashboard.putNumber("Hood Output Current: ", hoodMotor.getStatorCurrent());
+   // SmartDashboar.putNumber("Hood Output Current: ", hoodMotor.getStatorCurrent());
   }
 
   public void setClimbConstants() {
@@ -92,7 +92,7 @@ public class HoodSubsystem extends SubsystemBase {
   }
 
   public void hoodAbort(){
-    hoodMotor.setSelectedSensorPosition(-50);
+    hoodMotor.setSelectedSensorPosition(-300);
   }
 
   public double getPosition() {

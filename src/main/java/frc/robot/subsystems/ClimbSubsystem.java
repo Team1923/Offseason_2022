@@ -93,21 +93,21 @@ public class ClimbSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left Climb Encoder Position: ", getLeftClimbEncoderPosition());
-    SmartDashboard.putNumber("Right Climb Encoder Position: ", getRightClimbEncoderPosition());
+   // SmartDashboar.putNumber("Left Climb Encoder Position: ", getLeftClimbEncoderPosition());
+   // SmartDashboar.putNumber("Right Climb Encoder Position: ", getRightClimbEncoderPosition());
     
-    // SmartDashboard.putNumber("Left Climb Current Draw: ", leftClimber.getStatorCurrent());
-    // SmartDashboard.putNumber("Right Climb Current Draw: ", rightClimber.getSupplyCurrent());
+    //// SmartDashboar.putNumber("Left Climb Current Draw: ", leftClimber.getStatorCurrent());
+    //// SmartDashboar.putNumber("Right Climb Current Draw: ", rightClimber.getSupplyCurrent());
     
     desiredClimb.updateCurrentClimb(operatorJoystick);
-    // SmartDashboard.putString("CURRENT CLIMB SEQUENCE", desiredClimb.getCurrentClimb().toString());
+    //// SmartDashboar.putString("CURRENT CLIMB SEQUENCE", desiredClimb.getCurrentClimb().toString());
     
-    // SmartDashboard.putNumber("Left Output", leftClimber.getMotorOutputPercent());
-    // SmartDashboard.putNumber("Right Output", rightClimber.getMotorOutputPercent());
+    //// SmartDashboar.putNumber("Left Output", leftClimber.getMotorOutputPercent());
+    //// SmartDashboar.putNumber("Right Output", rightClimber.getMotorOutputPercent());
 
     
-    // SmartDashboard.putNumber("Left Error", leftClimber.getClosedLoopError());
-    // SmartDashboard.putNumber("Right Error", rightClimber.getClosedLoopError());
+    //// SmartDashboar.putNumber("Left Error", leftClimber.getClosedLoopError());
+    //// SmartDashboar.putNumber("Right Error", rightClimber.getClosedLoopError());
 
     currentState.setString(desiredClimb.getCurrentClimb().toString());
   }

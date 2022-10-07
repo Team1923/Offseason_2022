@@ -78,9 +78,9 @@ public class MKISpeaker {
 
     // Print out the values of each digital output. Used for debug purposes.
     public void printTriggers() {
-        SmartDashboard.putBoolean("Track 1: ", sound_one.get());
-        SmartDashboard.putBoolean("Track 2: ", sound_two.get());
-        SmartDashboard.putBoolean("Track 3: ", sound_three.get());
-        SmartDashboard.putBoolean("Track 4: ", sound_four.get());
+       // SmartDashboar.putBoolean("Track 1: ", sound_one.get());
+       // SmartDashboar.putBoolean("Track 2: ", sound_two.get());
+       // SmartDashboar.putBoolean("Track 3: ", sound_three.get());
+       // SmartDashboar.putBoolean("Track 4: ", sound_four.get());
     }
 }

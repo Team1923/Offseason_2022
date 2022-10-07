@@ -12,7 +12,7 @@ public class ArmsToPosition extends CommandBase {
 
   private ClimbSubsystem CLIMB_SUBSYSTEM;
   private double goal;
-  private double tickThreshold = 1024;
+  private double tickThreshold = 2048;
 
   private int loopsInsideAllowableError;
   private int loopsThreshold = 5;

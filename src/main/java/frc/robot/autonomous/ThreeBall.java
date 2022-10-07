@@ -34,12 +34,14 @@ public class ThreeBall extends SequentialCommandGroup {
       new PIDRotate(swerve, -180),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
       new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5),
+      new PIDRotate(swerve, -135),
       new ParallelCommandGroup(
         new RunIntakeCommand(intake, false),
-        new RunTrajectory(swerve, "thirdBall", true)
+        new RunTrajectory(swerve, "thirdBall", false)
       ).withTimeout(2.5),
-      new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5)
+      new PIDRotate(swerve, -310),
+      new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5)
+      // new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5)
     );
   }
 

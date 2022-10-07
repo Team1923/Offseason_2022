@@ -44,24 +44,24 @@ public class ScheduleClimb extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("CURRENT CLIMB PRE GO: ", desiredClimb.getCurrentClimb().toString());
+   // SmartDashboar.putString("CURRENT CLIMB PRE GO: ", desiredClimb.getCurrentClimb().toString());
 
     switch(desiredClimb.getCurrentClimb()) {
       case FULL_TRAVERSAL:
-        SmartDashboard.putNumber("CLIMB VALUE: ", 1);
+       // SmartDashboar.putNumber("CLIMB VALUE: ", 1);
         CommandScheduler.getInstance().schedule(new FullTraversalClimbSequence(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, commit, conveyor, shooter, swerve, intake));
         break;
       case LEVEL_THREE:
-      SmartDashboard.putNumber("CLIMB VALUE: ", 2);
+     // SmartDashboar.putNumber("CLIMB VALUE: ", 2);
         CommandScheduler.getInstance().schedule(new LevelThreeClimb(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, commit));
         break;
       case LEVEL_TWO:
-      SmartDashboard.putNumber("CLIMB VALUE: ", 3);
+     // SmartDashboar.putNumber("CLIMB VALUE: ", 3);
 
         CommandScheduler.getInstance().schedule(new LevelTwoClimb(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, commit));
         break;
       case TRAVERSAL_ARMS_EXTENDED:
-      SmartDashboard.putNumber("CLIMB VALUE: ", 4);
+     // SmartDashboar.putNumber("CLIMB VALUE: ", 4);
 
         CommandScheduler.getInstance().schedule(new TraversalArmsExtended(HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, commit));
         break;
