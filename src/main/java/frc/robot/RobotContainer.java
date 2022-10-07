@@ -18,6 +18,7 @@ import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.climb.ScheduleClimb;
 import frc.robot.commands.drive.SwerveDriveCommand;
 import frc.robot.commands.scoring.DefaultHoodCommand;
+import frc.robot.commands.scoring.HoodResetHold;
 import frc.robot.commands.scoring.RunShooterCommand;
 import frc.robot.commands.scoring.ShooterAvoidStallCommand;
 import frc.robot.commands.scoring.StateManagedConveyorCommand;
@@ -121,6 +122,8 @@ public class RobotContainer {
 
     new JoystickButton(driverJoystick, OIConstants.kDriverXButton).whenPressed(() -> HOOD_SUBSYSTEM.hoodAbort());
 
+    // CONFIRM AXIS 3 IS THE CORRECT RIGHT TRIGGER FOR OPERATOR
+    //new Trigger(() -> operatorJoystick.getRawAxis(3) > .2).whenActive(new HoodResetHold(HOOD_SUBSYSTEM), false);
 
     new Trigger(() -> driverJoystick.getRawAxis(3) > .1).whileActiveContinuous(new ShootCommandGroup(
         SWERVE_SUBSYSTEM, 
