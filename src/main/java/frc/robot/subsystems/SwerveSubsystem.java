@@ -129,6 +129,10 @@ public class SwerveSubsystem extends SubsystemBase {
     return -gyro.getYaw();
   }
 
+  public double getPitch(){
+    return -Math.IEEEremainder(gyro.getPitch(), 360);
+  }
+
   public void resetEncoders(){
     backLeft.resetEncoders();
     backRight.resetEncoders();

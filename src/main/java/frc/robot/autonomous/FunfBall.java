@@ -6,6 +6,7 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.StateHandler;
 import frc.robot.UnitConversion;
@@ -33,10 +34,10 @@ public class FunfBall extends SequentialCommandGroup {
       new PIDRotateN(swerve, -180, false).withTimeout(2),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
       new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5),
-      new ParallelCommandGroup(
+      new ParallelRaceGroup(
         new RunIntakeCommand(intake, false),
         new RunTrajectory(swerve, "getThirdBall", false)
-      ).withTimeout(2),
+      ),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
       new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1),
 
