@@ -83,19 +83,19 @@ public final class Constants {
         // Back Right Module
         public static final int kBackRightDriveMotorPort = 4;  //prioritize
         public static final int kBackRightTurningMotorPort = 5;
-        public static final boolean kBackRightDriveReversed = true;
+        public static final boolean kBackRightDriveReversed = false;
         public static final boolean kBackRightTurningReversed = false;
         public static final int kBackRightDriveAbsoluteEncoderPort = 2;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 5.60; //0.46
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 5.41; //0.46
         public static final boolean kBackRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Left Module
         public static final int kBackLeftDriveMotorPort  = 6;
         public static final int kBackLeftTurningMotorPort = 7;
-        public static final boolean kBackLeftDriveReversed = true;
+        public static final boolean kBackLeftDriveReversed = false;
         public static final boolean kBackLeftTurningReversed = false;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.62; //3.71
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0.35; //3.71
         public static final boolean kBackLeftDriveAbsoluteEncoderOffsetReversed = true;
 
     }
@@ -112,6 +112,7 @@ public final class Constants {
         public static final int kDriverBButton = 2;
         public static final int kDriverXButton = 3;
         public static final int kDriverYButton = 4;
+        public static final int kDriverLeftBumper = 5;
 
         public static final int kOperatorControllerPort = 1;
         public static final int kOperatorLeftYAxis = 1;
@@ -201,7 +202,7 @@ public final class Constants {
     public static final class HoodConstants {
         public static final int hoodMotorID = 13; //change
 
-        public static final double zeroPosition = 40094;
+        public static final double zeroPosition = 0;
 
         public static final int hCurrentLimit = 30;
         public static final int hThresholdLimit = 40;

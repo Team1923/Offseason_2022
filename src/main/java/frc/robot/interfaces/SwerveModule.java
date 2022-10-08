@@ -100,6 +100,11 @@ public class SwerveModule {
         return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
     }
 
+    public double getAbsoluteEncoderRadZero() {
+        double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
+        angle *= 2.0 * Math.PI;
+        return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
+    }
     // ? Resets the encoders to their starting position, turning motor has to be put to the position that the absolute encoder measures.
     // This is done with some wonky conversions from the offset radians -> rotations of turning gear -> rotations of motor shaft -> ticks. Needs to be tested
     // and verified that the math and logic works.

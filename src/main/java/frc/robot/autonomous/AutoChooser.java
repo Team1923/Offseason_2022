@@ -21,7 +21,8 @@ public class AutoChooser {
         GOON_BALL,
         FOUR_BALL,
         THREE_BALL,
-        THREE_BALL_ONE_GOON
+        THREE_BALL_ONE_GOON, 
+        FIVE_BALL
     }
 
     private SendableChooser<AutoMode> chooser;
@@ -37,6 +38,7 @@ public class AutoChooser {
         chooser.addOption("FOUR BALL", AutoMode.FOUR_BALL);
         chooser.addOption("THREE BALL", AutoMode.THREE_BALL);
         chooser.addOption("THREE BALL ONE GOON", AutoMode.THREE_BALL_ONE_GOON);
+        chooser.addOption("FIVE BALL", AutoMode.FIVE_BALL);
         auto.add(chooser);
     }
 
@@ -65,6 +67,8 @@ public class AutoChooser {
                 return new ThreeBall(swerve, shooter, conveyor, intake, hood, limelight);
             case THREE_BALL_ONE_GOON:
                 return new ThreeBallOneGoon(swerve, shooter, conveyor, intake, hood, limelight);
+            case FIVE_BALL:
+                return new FunfBall(swerve, hood, conveyor, intake, shooter, limelight, stateHandler);
             default:
                 return new DeuxBall(swerve, shooter, conveyor, intake, hood, limelight, stateHandler);
         }

@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 import frc.robot.MKILib.MKISpeaker;
 import frc.robot.autonomous.AutoChooser;
+import frc.robot.autonomous.PIDRotateN;
+import frc.robot.autonomous.RunTrajectory;
 import frc.robot.commands.scoring.ShootCommandGroup;
 import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.climb.ScheduleClimb;
@@ -134,6 +136,8 @@ public class RobotContainer {
     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whenPressed(new ScheduleClimb(desiredClimb, HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, SHOOTER_SUBSYSTEM, SWERVE_SUBSYSTEM));
     
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
+
+    new JoystickButton(driverJoystick, OIConstants.kDriverLeftBumper).toggleWhenPressed(new RunTrajectory(SWERVE_SUBSYSTEM, "getThirdBall", false));
 
     //new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whileHeld(new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.25));
     //new JoystickButton(operatorJoystick, OIConstants.kOperatorCircleButton).whenPressed(() -> CLIMB_SUBSYSTEM.resetEncoders());

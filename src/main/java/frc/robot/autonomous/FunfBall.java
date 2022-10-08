@@ -21,11 +21,9 @@ import frc.robot.subsystems.SwerveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DeuxBall extends SequentialCommandGroup {
-  /** Creates a new DeuxBall. */
-  public DeuxBall(SwerveSubsystem swerve, ShooterSubsystem shooter, ConveyorSubsystem conveyor, IntakeSubsystem intake, HoodSubsystem hood, LimelightSubsystem limelight, StateHandler stateHandler) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+public class FunfBall extends SequentialCommandGroup {
+  /** Creates a new FunfBall. */
+  public FunfBall(SwerveSubsystem swerve, HoodSubsystem hood, ConveyorSubsystem conveyor, IntakeSubsystem intake, ShooterSubsystem shooter, LimelightSubsystem limelight, StateHandler stateHandler) {
     addCommands(
       new ParallelCommandGroup(
         new HoodSingleSetpointCommand(hood, 0),
@@ -35,8 +33,15 @@ public class DeuxBall extends SequentialCommandGroup {
       new PIDRotateN(swerve, -180, false).withTimeout(2),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
       new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5),
+      new ParallelCommandGroup(
+        new RunIntakeCommand(intake, false),
+        new RunTrajectory(swerve, "getThirdBall", false)
+      ).withTimeout(2),
+      new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1),
+
       new InstantCommand(() -> stateHandler.resetState())
-        
+
     );
   }
 

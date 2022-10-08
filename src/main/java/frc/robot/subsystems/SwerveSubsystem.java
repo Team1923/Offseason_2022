@@ -90,6 +90,10 @@ public class SwerveSubsystem extends SubsystemBase {
    SmartDashboard.putNumber("Back Left", backLeft.getAbsoluteEncoderRad());
    SmartDashboard.putNumber("Back Right", backRight.getAbsoluteEncoderRad());
     
+   SmartDashboard.putNumber("0Front Left", frontLeft.getAbsoluteEncoderRadZero());
+   SmartDashboard.putNumber("0Front Right", frontRight.getAbsoluteEncoderRadZero());
+   SmartDashboard.putNumber("0Back Left", backLeft.getAbsoluteEncoderRadZero());
+   SmartDashboard.putNumber("0Back Right", backRight.getAbsoluteEncoderRadZero());
 
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
 
@@ -100,6 +104,7 @@ public class SwerveSubsystem extends SubsystemBase {
     backLeft.configOnReset();
     backRight.configOnReset();
 
+    SmartDashboard.putNumber("Heading", this.getHeading());
   }
 
   // Zeros the heading of the gyro
