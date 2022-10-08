@@ -11,10 +11,12 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterAvoidStallCommand extends CommandBase {
 
   private ShooterSubsystem SHOOTER_SUBSYSTEM;
+  private double speed;
 
   /** Creates a new ShooterAvoidStallCommand. */
-  public ShooterAvoidStallCommand(ShooterSubsystem shooter) {
+  public ShooterAvoidStallCommand(ShooterSubsystem shooter, double speed) {
     this.SHOOTER_SUBSYSTEM = shooter;
+    this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(SHOOTER_SUBSYSTEM);
   }
@@ -27,7 +29,7 @@ public class ShooterAvoidStallCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SHOOTER_SUBSYSTEM.set(-ShooterConstants.avoidStallSpeed); 
+    SHOOTER_SUBSYSTEM.set(-speed); 
   }
 
   // Called once the command ends or is interrupted.

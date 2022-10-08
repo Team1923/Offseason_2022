@@ -51,7 +51,6 @@ public class RunTrajectory extends SequentialCommandGroup {
             );
 
 
-
         var thetaController =
             new ProfiledPIDController(
                 AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);

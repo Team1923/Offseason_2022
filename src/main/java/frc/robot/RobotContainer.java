@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.MKILib.MKISpeaker;
 import frc.robot.autonomous.AutoChooser;
 import frc.robot.autonomous.PIDRotateN;
@@ -88,7 +89,7 @@ public class RobotContainer {
         () -> !driverJoystick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); // Field oriented control vs robot oriented. By default, since "!" is included, field oriented is default
 
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
-    SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM));
+    SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, ShooterConstants.avoidStallSpeed));
     CONVEYOR_SUBSYSTEM.setDefaultCommand(new StateManagedConveyorCommand(
         CONVEYOR_SUBSYSTEM, 
         SHOOTER_SUBSYSTEM, 
@@ -137,7 +138,6 @@ public class RobotContainer {
     
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
 
-    new JoystickButton(driverJoystick, OIConstants.kDriverLeftBumper).toggleWhenPressed(new RunTrajectory(SWERVE_SUBSYSTEM, "getThirdBall", false));
 
     //new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whileHeld(new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.25));
     //new JoystickButton(operatorJoystick, OIConstants.kOperatorCircleButton).whenPressed(() -> CLIMB_SUBSYSTEM.resetEncoders());
