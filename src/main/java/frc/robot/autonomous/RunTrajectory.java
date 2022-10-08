@@ -1,34 +1,21 @@
 package frc.robot.autonomous;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import frc.robot.LoadTrajectory;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class RunTrajectory extends SequentialCommandGroup {
 
-    private LoadTrajectory trajectoryLoader;
-
     public RunTrajectory(SwerveSubsystem s_Swerve, String path, boolean reverse){
-        trajectoryLoader = new LoadTrajectory("/routines/" + path + ".csv");
-        
-        TrajectoryConfig config =
-            new TrajectoryConfig(
-                    AutoConstants.kMaxSpeedMetersPerSecond,
-                    AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-                .setKinematics(DriveConstants.kDriveKinematics);
-        config.setStartVelocity(trajectoryLoader.getInitialVelocity());
-        config.setEndVelocity(trajectoryLoader.getFinalVelocity());
-        config.setReversed(reverse);
         
 
        // An example trajectory to follow.  All units in meters.
@@ -42,24 +29,17 @@ public class RunTrajectory extends SequentialCommandGroup {
         //         new Pose2d(2, 0, new Rotation2d(Math.PI/2)),
         //         config);
 
-        Trajectory exampleTrajectory =
-            TrajectoryGenerator.generateTrajectory(
-                trajectoryLoader.getInitialPose(),
-                trajectoryLoader.getTranslations(),
-                trajectoryLoader.getFinalPose(),
-                config
-            );
+        PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("New Path", AutoConstants.kMaxSpeedMetersPerSecond, 
+                                                                                   AutoConstants.kMaxAccelerationMetersPerSecondSquared);
 
 
 
-        var thetaController =
-            new ProfiledPIDController(
-                AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
+        var thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         
-        SwerveControllerCommand swerveControllerCommand =
-            new SwerveControllerCommand(
+        PPSwerveControllerCommand swerveControllerCommand =
+            new PPSwerveControllerCommand(
                 exampleTrajectory,
                 s_Swerve::getPose,
                 DriveConstants.kDriveKinematics,
