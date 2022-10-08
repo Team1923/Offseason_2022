@@ -56,7 +56,7 @@ public final class Constants {
                 new Translation2d(-kWheelBase / 2, kTrackWidth / 2));  // - +
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5.18;                   // ? Guess number, better throw something better in here eventually
-        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 64.89; // ? Guess number, better throw something better in here eventually
+        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2*Math.PI; // Using this number from 1706
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
@@ -129,13 +129,13 @@ public final class Constants {
     }
 
     public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 1.75 * DriveConstants.kPhysicalMaxSpeedMetersPerSecond / 2;
+        public static final double kMaxSpeedMetersPerSecond = 1.5 * DriveConstants.kPhysicalMaxSpeedMetersPerSecond / 2;
         public static final double kMaxAngularSpeedRadiansPerSecond = DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI;
-        public static final double kPXController = 0.15;
-        public static final double kPYController = 0.15;
-        public static final double kPThetaController = 10;
+        public static final double kPXController = 3; //.15 Changed to line up with 1706 code
+        public static final double kPYController = 3; //.15
+        public static final double kPThetaController = 3; //10
 
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
             new TrapezoidProfile.Constraints(kMaxAngularSpeedRadiansPerSecond, 
