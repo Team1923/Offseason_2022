@@ -5,11 +5,11 @@
 package frc.robot.commands.scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.StateHandler;
 import frc.robot.Constants.ConveyorConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.utilities.StateHandler;
 
 public class StateManagedIntakeCommand extends CommandBase {
   private IntakeSubsystem intake;

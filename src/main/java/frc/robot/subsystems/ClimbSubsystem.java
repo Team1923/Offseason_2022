@@ -15,11 +15,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.DesiredClimb;
 import frc.robot.Constants.ClimbConstants;
+import frc.robot.utilities.DesiredClimb;
 public class ClimbSubsystem extends SubsystemBase {
 
   private TalonFX leftClimber;

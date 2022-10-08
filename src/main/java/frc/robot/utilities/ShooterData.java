@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.utilities;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,7 +8,6 @@ import java.util.LinkedList;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterData {
 

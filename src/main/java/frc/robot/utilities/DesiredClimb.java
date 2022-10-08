@@ -1,7 +1,6 @@
-package frc.robot;
+package frc.robot.utilities;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DesiredClimb {
 

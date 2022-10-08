@@ -12,15 +12,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.MKILib.MKISpeaker;
-import frc.robot.autonomous.AutoChooser;
-import frc.robot.autonomous.PIDRotateN;
-import frc.robot.autonomous.RunTrajectory;
+import frc.robot.autonomous.routines.AutoChooser;
 import frc.robot.commands.scoring.ShootCommandGroup;
 import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.climb.ScheduleClimb;
 import frc.robot.commands.drive.SwerveDriveCommand;
 import frc.robot.commands.scoring.DefaultHoodCommand;
-import frc.robot.commands.scoring.HoodResetHold;
 import frc.robot.commands.scoring.RunShooterCommand;
 import frc.robot.commands.scoring.ShooterAvoidStallCommand;
 import frc.robot.commands.scoring.StateManagedConveyorCommand;
@@ -33,6 +30,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.utilities.DesiredClimb;
+import frc.robot.utilities.ShooterData;
+import frc.robot.utilities.StateHandler;
 
 // Added in the line below because subsystems not being accessed in this class
 // does not mean that they are actually not being used. When defined, the

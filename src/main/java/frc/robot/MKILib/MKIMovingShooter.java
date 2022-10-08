@@ -11,8 +11,8 @@ public class MKIMovingShooter {
     // we call the direction to the hub north.
     public double calculateRotationOffset(double vx, double vy, double distance_to_goal, double angle_to_goal) {
 
-        double hub_relative_x = vx*(Math.cos(Math.toRadians(angle_to_goal))) - vy*(Math.sin(Math.toRadians(angle_to_goal)));
-        double ball_velocity = 3; // Guess until we can generate a function
+        //double hub_relative_x = vx*(Math.cos(Math.toRadians(angle_to_goal))) - vy*(Math.sin(Math.toRadians(angle_to_goal)));
+        //double ball_velocity = 3; // Guess until we can generate a function
         
 
         return 1;

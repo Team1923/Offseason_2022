@@ -4,13 +4,12 @@
 
 package frc.robot.commands.scoring;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.ShooterData;
-import frc.robot.UnitConversion;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.utilities.ShooterData;
+import frc.robot.utilities.UnitConversion;
 
 public class HoodChangingSetpointCommand extends CommandBase {
 
