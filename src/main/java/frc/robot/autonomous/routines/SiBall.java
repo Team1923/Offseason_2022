@@ -4,11 +4,15 @@
 
 package frc.robot.autonomous.routines;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.autonomous.autocommands.AutoShoot;
 import frc.robot.autonomous.autocommands.PIDRotate;
+import frc.robot.autonomous.autocommands.PIDRotateN;
 import frc.robot.autonomous.autocommands.RunTrajectory;
 import frc.robot.autonomous.autocommands.VisionTrack;
 import frc.robot.commands.scoring.independent.RunIntakeCommand;
@@ -29,29 +33,23 @@ public class SiBall extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(()-> swerve.zeroHeading()),
       new ParallelCommandGroup(
+        new InstantCommand(() -> SmartDashboard.putBoolean("AUTO DONE", false)),
         new RunIntakeCommand(intake, false),
         new RunTrajectory(swerve, "twoBallPath", false)
       ).withTimeout(2),
-      new PIDRotate(swerve, -180),
+      new PIDRotateN(swerve, -180, false).withTimeout(1.5),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(27.5), 3300).withTimeout(2),
-      new ParallelCommandGroup(
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5),
+      new ParallelRaceGroup(
         new RunIntakeCommand(intake, false),
-        new SequentialCommandGroup(
-          new PIDRotate(swerve, 110), //idk the angle it's probably wrong
-          new RunTrajectory(swerve, "idk", false), //you could probably get this to work 
-          //with just one trajectory and a lot of intermediate waypoints
-          new PIDRotate(swerve, -340), //again, angle is probably stupid and needs to be fixed
-          new RunTrajectory(swerve, "idk", false),
-          new PIDRotate(swerve, -45).withTimeout(2),
-          new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-          new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(27.5), 3300).withTimeout(2) //check the RPM and angle based on distance read by the LL
-          
-        )
-      )
-        
+        new RunTrajectory(swerve, "getTwoMore", true)
+      ),
+      new RunIntakeCommand(intake, false).withTimeout(1.5),
+      new RunTrajectory(swerve, "getTwoMore", true),
+      new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5),
+      new InstantCommand(() -> SmartDashboard.putBoolean("AUTO DONE", true))  
     );
   }
 

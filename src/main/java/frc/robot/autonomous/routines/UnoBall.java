@@ -33,8 +33,7 @@ public class UnoBall extends SequentialCommandGroup {
     */
       new HoodSingleSetpointCommand(hood, 0),
       new AutoShoot(shooter, conveyor, hood, 0, 2750).withTimeout(1.5),
-      new RunTrajectory(swerve, "oneBallPath", true),
-      new InstantCommand(() -> stateHandler.resetState())
+      new RunTrajectory(swerve, "oneBallPath", true)
     );
   }
 }

@@ -4,13 +4,18 @@
 
 package frc.robot.autonomous.routines;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.autonomous.autocommands.AutoShoot;
-import frc.robot.autonomous.autocommands.PIDRotate;
+import frc.robot.autonomous.autocommands.PIDRotateN;
 import frc.robot.autonomous.autocommands.RunTrajectory;
 import frc.robot.autonomous.autocommands.VisionTrack;
+import frc.robot.commands.climb.HoodSingleSetpointCommand;
+import frc.robot.commands.scoring.independent.RunConveyorCommand;
 import frc.robot.commands.scoring.independent.RunIntakeCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
@@ -18,6 +23,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.utilities.StateHandler;
 import frc.robot.utilities.UnitConversion;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -25,55 +31,34 @@ import frc.robot.utilities.UnitConversion;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class GoonBall extends SequentialCommandGroup {
   /** Creates a new DeuxBall. */
-  public GoonBall(SwerveSubsystem swerve, ShooterSubsystem shooter, ConveyorSubsystem conveyor, IntakeSubsystem intake, HoodSubsystem hood, LimelightSubsystem limelight) {
+  public GoonBall(SwerveSubsystem swerve, ShooterSubsystem shooter, ConveyorSubsystem conveyor, IntakeSubsystem intake, HoodSubsystem hood, LimelightSubsystem limelight, StateHandler stateHandler) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      /*
-        Notes/Test Items:
-          - TwoBallPath shouldn't require changing. If anything, just make it move forward less/more depending on where it ends up. 
-          - The timeouts in the parallel command groups don't really matter. 
-          - Try to optimize PIDRotate so VisionTrack doesn't have to do as much work. 
-          - If PIDRotate is buggy, don't waste time on it. Just get it to rotate as best as possible and let VisionTrack do the rest
-          - Refer to the new tuning chart for the exact angle and ticks we need. 
-          - AcquireFirstGoon is going to require a LOT of empirical testing. I tried my best to approximate but I'm not too sure about the path. 
-          - The ParallelCommandGroup with a WaitCommand of 0.5 seconds is intentional. 
-          - AcquireSecondGoon will also need a LOT of testing. Especially with the theta factor. 
-          - Goal at the end is to rotate towards the "hangar" zone (**find out where it is on the new field**)
-          - Eject balls using shooter (similar to oneBallGetOut - just copy the same value)
-
-      */
-
       new ParallelCommandGroup(
+        new InstantCommand(() -> SmartDashboard.putBoolean("AUTO DONE", false)),
+        new HoodSingleSetpointCommand(hood, 0),
         new RunIntakeCommand(intake, false),
         new RunTrajectory(swerve, "twoBallPath", false)
-      ).withTimeout(1.5),
-      new PIDRotate(swerve, -180),
+      ).withTimeout(2),
+      new PIDRotateN(swerve, -180, false).withTimeout(1.5),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(27.5), 3300).withTimeout(2),
-      new ParallelCommandGroup(
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5),
+      new PIDRotateN(swerve, 81, false).withTimeout(1.5),
+      new ParallelRaceGroup(
         new RunIntakeCommand(intake, false),
-        new RunTrajectory(swerve, "acquireFirstGoon", true)
-      ).withTimeout(2),
-      new ParallelCommandGroup(
-        new SequentialCommandGroup(
-          new WaitCommand(.5),
-          new RunIntakeCommand(intake, false)
-        ),
-        new RunTrajectory(swerve, "acquireSecondGoon", true)
-      ).withTimeout(2),
-      new PIDRotate(swerve, -90),
-      new AutoShoot(shooter, conveyor, hood, 25000, 5000)
-      // new ParallelCommandGroup(
-      //   new RunIntakeCommand(intake, false),
-      //   new SequentialCommandGroup(
-      //     new RunTrajectory(swerve, "idk", false),
-      //     new PIDRotate(swerve, -180),
-      //     new RunTrajectory(swerve, "idk", false),
-      //     new PIDRotate(swerve, 90)
-      //   )
-      //)
-
+        new RunTrajectory(swerve, "getFirstGoon", false)
+      ),
+      new PIDRotateN(swerve, -159, false).withTimeout(1.5),
+      new ParallelRaceGroup(
+        new RunIntakeCommand(intake, false),
+        new RunTrajectory(swerve, "getSecondGoon", false)
+      ),
+      new PIDRotateN(swerve, 110, false).withTimeout(1.5),
+      new AutoShoot(shooter, conveyor, hood, 40100, 2000).withTimeout(2),
+      new InstantCommand(() -> SmartDashboard.putBoolean("AUTO DONE", true))
+      
+      
         
     );
   }

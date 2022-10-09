@@ -81,7 +81,6 @@ public class AutoShoot extends CommandBase {
   public void end(boolean interrupted) {
     hood.stop();
     conveyor.stop();
-    shooter.stop();
   }
 
   // Returns true when the command should end.

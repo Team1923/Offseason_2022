@@ -155,4 +155,13 @@ public class RobotContainer {
   public void playSound() {
     speaker.playSound(1);
   }
+
+  public void updateShooterRPM(boolean isTeleop){
+    if(isTeleop){
+      SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, ShooterConstants.avoidStallSpeed));
+    }
+    else{
+      SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, 2500));
+    }
+  }
 }
