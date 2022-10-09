@@ -98,6 +98,13 @@ public final class Constants {
         public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0.35; //3.71
         public static final boolean kBackLeftDriveAbsoluteEncoderOffsetReversed = true;
 
+        public static final double kMinRotationCommand = DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond
+        * Math.pow(.1, 2);
+        // Minimum allowable tranlsation command (in m/s) assuming user input is squared
+        // using quadraticTransform, this value is always positive and should be
+        // compared agaisnt the absolute value of the drive command
+        public static final double kMinTranslationCommand = DriveConstants.kTeleDriveMaxSpeedMetersPerSecond
+        * Math.pow(.1, 2);
     }
     
     // Input constants

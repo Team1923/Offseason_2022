@@ -12,8 +12,6 @@ public class RunIntakeCommand extends CommandBase {
 
   private IntakeSubsystem INTAKE_SUBSYSTEM;
   private boolean reverse_intake;
-  private double percent;
-
   /** Creates a new ExtendIntakeCommand. */
   public RunIntakeCommand(IntakeSubsystem intake, boolean reverse) {
     this.INTAKE_SUBSYSTEM = intake;

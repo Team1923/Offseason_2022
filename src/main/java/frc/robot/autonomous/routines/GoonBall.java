@@ -4,7 +4,6 @@
 
 package frc.robot.autonomous.routines;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -15,7 +14,6 @@ import frc.robot.autonomous.autocommands.PIDRotateN;
 import frc.robot.autonomous.autocommands.RunTrajectory;
 import frc.robot.autonomous.autocommands.VisionTrack;
 import frc.robot.commands.climb.HoodSingleSetpointCommand;
-import frc.robot.commands.scoring.independent.RunConveyorCommand;
 import frc.robot.commands.scoring.independent.RunIntakeCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.HoodSubsystem;

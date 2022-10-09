@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.autonomous.autocommands.AutoShoot;
-import frc.robot.autonomous.autocommands.FollowTrajectory;
 import frc.robot.autonomous.autocommands.PIDRotateN;
 import frc.robot.autonomous.autocommands.RunTrajectory;
 import frc.robot.autonomous.autocommands.VisionTrack;

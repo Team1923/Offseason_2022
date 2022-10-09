@@ -4,7 +4,6 @@
 
 package frc.robot.autonomous.routines;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.autonomous.autocommands.AutoShoot;
 import frc.robot.autonomous.autocommands.RunTrajectory;

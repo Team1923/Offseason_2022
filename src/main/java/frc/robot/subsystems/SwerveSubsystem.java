@@ -6,12 +6,15 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -60,7 +63,18 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // ? Code is using a Pigeon 1 for testing, we will be upgrading to a Pigeon 2 so make sure that this gets updated to reflect that!
   private Pigeon2 gyro = new Pigeon2(Constants.kPigeonCANID, "Default Name");
-  private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
+  private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, getRotation2d());
+  private final SwerveDriveOdometry auto_odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, getRotation2d());
+
+  private double keepAngle = 0.0; // Double to store the current target keepAngle in radians
+  private double timeSinceRot = 0.0; // Double to store the time since last rotation command
+  private double lastRotTime = 0.0; // Double to store the time of the last rotation command
+  private double timeSinceDrive = 0.0; // Double to store the time since last translation command
+  private double lastDriveTime = 0.0; // Double to store the time of the last translation command
+
+  private final Timer keepAngleTimer = new Timer(); // Creates timer used in the perform keep angle function
+
+  private final PIDController m_keepAnglePID = new PIDController(.5,0,0);
 
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem(LimelightInterface lInterface) {
@@ -94,7 +108,7 @@ public class SwerveSubsystem extends SubsystemBase {
    SmartDashboard.putNumber("0Back Left", backLeft.getAbsoluteEncoderRadZero());
    SmartDashboard.putNumber("0Back Right", backRight.getAbsoluteEncoderRadZero());
 
-    odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
+  odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
 
    // SmartDashboar.putString("Odometer Position", odometer.getPoseMeters().toString());
 
@@ -147,8 +161,18 @@ public class SwerveSubsystem extends SubsystemBase {
     return odometer.getPoseMeters();
   }
 
+  public Pose2d getAutoPose() {
+    auto_odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
+    Pose2d pose = auto_odometer.getPoseMeters();
+    Translation2d position = pose.getTranslation();
+    SmartDashboard.putNumber("Auto X", position.getX());
+    SmartDashboard.putNumber("Auto Y", position.getY());
+    return auto_odometer.getPoseMeters();
+  }
+
   public void resetOdometry(Pose2d pose) {
     odometer.resetPosition(pose, getRotation2d());
+    auto_odometer.resetPosition(pose, getRotation2d());
   }
 
   // Stop all of the modules
@@ -185,5 +209,37 @@ public class SwerveSubsystem extends SubsystemBase {
         frontRight.getState(),
         backLeft.getState(),
         backRight.getState());
+  }
+
+  // PID controller to avoid rotational drifting that we experience during a match. From 1706's Github. Thanks for the help
+  public double performKeepAngle(double xSpeed, double ySpeed, double rot) {
+    double output = rot; // Output shouold be set to the input rot command unless the Keep Angle PID is
+                         // called
+    if (Math.abs(rot) >= DriveConstants.kMinRotationCommand) { // If the driver commands the robot to rotate set the
+                                                               // last rotate time to the current time
+      lastRotTime = keepAngleTimer.get();
+    }
+    if (Math.abs(xSpeed) >= DriveConstants.kMinTranslationCommand
+        || Math.abs(ySpeed) >= DriveConstants.kMinTranslationCommand) { // if driver commands robot to translate set the
+                                                                        // last drive time to the current time
+      lastDriveTime = keepAngleTimer.get();
+    }
+    timeSinceRot = keepAngleTimer.get() - lastRotTime; // update variable to the current time - the last rotate time
+    timeSinceDrive = keepAngleTimer.get() - lastDriveTime; // update variable to the current time - the last drive time
+    if (timeSinceRot < 0.5) { // Update keepAngle up until 0.5s after rotate command stops to allow rotation
+                              // move to finish
+      keepAngle = getRotation2d().getRadians();
+    } else if (Math.abs(rot) < DriveConstants.kMinRotationCommand && timeSinceDrive < 0.25) { // Run Keep angle pid
+                                                                                              // until 0.75s after drive
+                                                                                              // command stops to combat
+                                                                                              // decel drift
+      output = m_keepAnglePID.calculate(getRotation2d().getRadians(), keepAngle); // Set output command to the result of the
+                                                                            // Keep Angle PID
+    }
+    return output;
+  }
+
+  public void updateKeepAngle() {
+    keepAngle = getRotation2d().getRadians();
   }
 }

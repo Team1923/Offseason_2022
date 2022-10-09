@@ -91,22 +91,8 @@ public class ClimbSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-   // SmartDashboar.putNumber("Left Climb Encoder Position: ", getLeftClimbEncoderPosition());
-   // SmartDashboar.putNumber("Right Climb Encoder Position: ", getRightClimbEncoderPosition());
-    
-    //// SmartDashboar.putNumber("Left Climb Current Draw: ", leftClimber.getStatorCurrent());
-    //// SmartDashboar.putNumber("Right Climb Current Draw: ", rightClimber.getSupplyCurrent());
     
     desiredClimb.updateCurrentClimb(operatorJoystick);
-    //// SmartDashboar.putString("CURRENT CLIMB SEQUENCE", desiredClimb.getCurrentClimb().toString());
-    
-    //// SmartDashboar.putNumber("Left Output", leftClimber.getMotorOutputPercent());
-    //// SmartDashboar.putNumber("Right Output", rightClimber.getMotorOutputPercent());
-
-    
-    //// SmartDashboar.putNumber("Left Error", leftClimber.getClosedLoopError());
-    //// SmartDashboar.putNumber("Right Error", rightClimber.getClosedLoopError());
 
     currentState.setString(desiredClimb.getCurrentClimb().toString());
   }
