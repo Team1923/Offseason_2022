@@ -22,7 +22,8 @@ public class AutoChooser {
         FOUR_BALL,
         THREE_BALL,
         THREE_BALL_ONE_GOON, 
-        FIVE_BALL
+        FIVE_BALL,
+        TEST_PATH
     }
 
     private SendableChooser<AutoMode> chooser;
@@ -38,6 +39,7 @@ public class AutoChooser {
         chooser.addOption("FOUR BALL", AutoMode.FOUR_BALL);
         chooser.addOption("THREE BALL", AutoMode.THREE_BALL);
         chooser.addOption("FIVE BALL", AutoMode.FIVE_BALL);
+        chooser.addOption("TEST PATH", AutoMode.TEST_PATH);
         auto.add(chooser);
     }
 
@@ -66,6 +68,8 @@ public class AutoChooser {
                 return new ThreeBall(swerve, shooter, conveyor, intake, hood, limelight, stateHandler);
             case FIVE_BALL:
                 return new FunfBall(swerve, hood, conveyor, intake, shooter, limelight, stateHandler);
+            case TEST_PATH:
+                return new PathPlannerTestSequence(swerve);
             default:
                 return new DeuxBall(swerve, shooter, conveyor, intake, hood, limelight, stateHandler);
         }
