@@ -128,6 +128,10 @@ public class SwerveModule {
         return new SwerveModuleState(getDriveVelocityMPS(), new Rotation2d(getTurningPositionRads()));
     }
 
+    public SwerveModuleState getAutoState() {
+        return new SwerveModuleState(-getDriveVelocityMPS(), new Rotation2d(getTurningPositionRads()));
+    }
+
     public void resetState() {
         
         SwerveModuleState reset_state = new SwerveModuleState(0, new Rotation2d(0));
