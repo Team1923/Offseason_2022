@@ -85,6 +85,8 @@ public class ShooterSubsystem extends SubsystemBase {
     rightShooterMotor.config_kD(0, ShooterConstants.shooterkD, Constants.timeoutMs);
     rightShooterMotor.config_kF(0, ShooterConstants.shooterkFF, Constants.timeoutMs);
 
+    
+
     acceptableRPM = false;
 
     resetEncoders();

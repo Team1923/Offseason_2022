@@ -53,7 +53,7 @@ public class RunTrajectory extends SequentialCommandGroup {
 
         var thetaController =
             new ProfiledPIDController(
-                AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
+                AutoConstants.kPThetaController, 0, 0.001, AutoConstants.kThetaControllerConstraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         

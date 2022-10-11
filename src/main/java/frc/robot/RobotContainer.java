@@ -139,7 +139,7 @@ public class RobotContainer {
     
     new JoystickButton(operatorJoystick, OIConstants.kOperatorRightBumper).whileHeld(new ResetArms(CLIMB_SUBSYSTEM));
 
-    new JoystickButton(driverJoystick, OIConstants.kDriverLeftBumper).toggleWhenPressed(new PathPlannerTestSequence(SWERVE_SUBSYSTEM));
+    //new JoystickButton(driverJoystick, OIConstants.kDriverLeftBumper).toggleWhenPressed(new PathPlannerTestSequence(SWERVE_SUBSYSTEM));
     //new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whileHeld(new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.25));
     //new JoystickButton(operatorJoystick, OIConstants.kOperatorCircleButton).whenPressed(() -> CLIMB_SUBSYSTEM.resetEncoders());
   }
@@ -162,7 +162,7 @@ public class RobotContainer {
       SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, ShooterConstants.avoidStallSpeed));
     }
     else{
-      SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, 2500));
+      SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, 2000));
     }
   }
 }

@@ -86,7 +86,7 @@ public final class Constants {
         public static final boolean kBackRightDriveReversed = false;
         public static final boolean kBackRightTurningReversed = false;
         public static final int kBackRightDriveAbsoluteEncoderPort = 2;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = .66; //0.46
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 5.27; //0.46
         public static final boolean kBackRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Left Module
@@ -140,9 +140,9 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI;
-        public static final double kPXController = 3; //.15 Changed to line up with 1706 code
-        public static final double kPYController = 3; //.15
-        public static final double kPThetaController = 3; //10
+        public static final double kPXController = .15; //.15 Changed to line up with 1706 code
+        public static final double kPYController = .15; //.15
+        public static final double kPThetaController = 10; //10
 
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
             new TrapezoidProfile.Constraints(kMaxAngularSpeedRadiansPerSecond, 
@@ -209,7 +209,7 @@ public final class Constants {
     public static final class HoodConstants {
         public static final int hoodMotorID = 13; //change
 
-        public static final double zeroPosition = 0;
+        public static final double zeroPosition = 10;
 
         public static final int hCurrentLimit = 30;
         public static final int hThresholdLimit = 40;

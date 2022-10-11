@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.HoodConstants;
 import frc.robot.autonomous.autocommands.AutoShoot;
 import frc.robot.autonomous.autocommands.PIDRotateN;
 import frc.robot.autonomous.autocommands.RunTrajectory;
@@ -35,21 +36,21 @@ public class ThreeBall extends SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(
         new InstantCommand(() -> SmartDashboard.putBoolean("AUTO DONE", false)),
-        new HoodSingleSetpointCommand(hood, 0),
+        new HoodSingleSetpointCommand(hood, HoodConstants.zeroPosition),
         new RunIntakeCommand(intake, false),
         new RunTrajectory(swerve, "twoBallPath", false)
       ).withTimeout(2),
-      new PIDRotateN(swerve, -180, false).withTimeout(1.5),
+      new PIDRotateN(swerve, -177, false).withTimeout(1),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.25),
-      new PIDRotateN(swerve, 67.5, false).withTimeout(1.5),
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3100).withTimeout(1.5),
+      new PIDRotateN(swerve, 70, false).withTimeout(1.5),
       new ParallelRaceGroup(
         new RunTrajectory(swerve, "getThirdBall", false),
         new RunIntakeCommand(intake, false)
       ),
-      new PIDRotateN(swerve, -109, false).withTimeout(1.5),
+      new PIDRotateN(swerve, -109, false).withTimeout(1),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.25),
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3100).withTimeout(1.5),
       new InstantCommand(() -> SmartDashboard.putBoolean("AUTO DONE", true))
         
     );

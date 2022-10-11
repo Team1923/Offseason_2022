@@ -34,19 +34,19 @@ public class SiBall extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new InstantCommand(() -> SmartDashboard.putBoolean("AUTO DONE", false)),
         new RunIntakeCommand(intake, false),
-        new RunTrajectory(swerve, "twoBallPath", false)
+        new RunTrajectory(swerve, "getTwoFor4Ball", false)
       ).withTimeout(2),
-      new PIDRotateN(swerve, -180, false).withTimeout(1.5),
+      new PIDRotateN(swerve, -177, false).withTimeout(1.5),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5),
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3100).withTimeout(1.5),
       new ParallelRaceGroup(
         new RunIntakeCommand(intake, false),
         new RunTrajectory(swerve, "getTwoMore", true)
       ),
       new RunIntakeCommand(intake, false).withTimeout(1.5),
-      new RunTrajectory(swerve, "getTwoMore", true),
+      new RunTrajectory(swerve, "getBack", true),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5),
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3100).withTimeout(1.5),
       new InstantCommand(() -> SmartDashboard.putBoolean("AUTO DONE", true))  
     );
   }
