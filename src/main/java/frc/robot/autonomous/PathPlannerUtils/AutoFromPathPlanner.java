@@ -54,6 +54,6 @@ public class AutoFromPathPlanner extends SequentialCommandGroup {
   public Pose2d getInitialPose() {
     return new Pose2d(m_trajectory.getInitialState().poseMeters.getX(),
         m_trajectory.getInitialState().poseMeters.getY(),
-        m_trajectory.getInitialState().holonomicRotation.times(-1.0));
+        m_trajectory.getInitialState().holonomicRotation);//.times(1.0));
   }
 }
