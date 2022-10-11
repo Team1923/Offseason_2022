@@ -4,7 +4,6 @@ import static edu.wpi.first.wpilibj.util.ErrorMessages.requireNonNullParam;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -43,7 +42,7 @@ public class AutoSwerveController extends CommandBase {
   private final PathPlannerTrajectory m_trajectory;
   private final Supplier<Pose2d> m_pose;
   private final SwerveDriveKinematics m_kinematics;
-  private final HolonomicDriveController m_controller;
+  private final MKIHolonomicController m_controller;
   private final Consumer<SwerveModuleState[]> m_outputModuleStates;
 
   /**
@@ -73,7 +72,6 @@ public class AutoSwerveController extends CommandBase {
    *                           controllers.
    * @param requirements       The subsystems to require.
    */
-  @SuppressWarnings("ParameterName")
   public AutoSwerveController(PathPlannerTrajectory trajectory, Supplier<Pose2d> pose, SwerveDriveKinematics kinematics,
       PIDController xController, PIDController yController, ProfiledPIDController thetaController,
       Supplier<Rotation2d> desiredRotation, Consumer<SwerveModuleState[]> outputModuleStates,
@@ -82,7 +80,7 @@ public class AutoSwerveController extends CommandBase {
     m_pose = requireNonNullParam(pose, "pose", "SwerveControllerCommand");
     m_kinematics = requireNonNullParam(kinematics, "kinematics", "SwerveControllerCommand");
 
-    m_controller = new HolonomicDriveController(
+    m_controller = new MKIHolonomicController(
         requireNonNullParam(xController, "xController", "SwerveControllerCommand"),
         requireNonNullParam(yController, "xController", "SwerveControllerCommand"),
         requireNonNullParam(thetaController, "thetaController", "SwerveControllerCommand"));
