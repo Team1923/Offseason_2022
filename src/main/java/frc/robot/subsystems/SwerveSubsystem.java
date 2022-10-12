@@ -108,7 +108,10 @@ public class SwerveSubsystem extends SubsystemBase {
    SmartDashboard.putNumber("0Back Left", backLeft.getAbsoluteEncoderRadZero());
    SmartDashboard.putNumber("0Back Right", backRight.getAbsoluteEncoderRadZero());
 
-  odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
+    SmartDashboard.putNumber("Odom X: ", odometer.getPoseMeters().getX());
+    SmartDashboard.putNumber("Odom Y: ", odometer.getPoseMeters().getY());
+
+    odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
 
    // SmartDashboar.putString("Odometer Position", odometer.getPoseMeters().toString());
 

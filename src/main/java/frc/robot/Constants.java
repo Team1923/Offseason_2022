@@ -56,7 +56,7 @@ public final class Constants {
                 new Translation2d(-kWheelBase / 2, kTrackWidth / 2));  // - +
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5.18;                   // ? Guess number, better throw something better in here eventually
-        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2*Math.PI; // Using this number from 1706
+        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 61; // Using this number from 1706
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
@@ -86,7 +86,7 @@ public final class Constants {
         public static final boolean kBackRightDriveReversed = false;
         public static final boolean kBackRightTurningReversed = false;
         public static final int kBackRightDriveAbsoluteEncoderPort = 2;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 5.27; //0.46
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 6.10; //0.46
         public static final boolean kBackRightDriveAbsoluteEncoderOffsetReversed = true;
 
         // Back Left Module
@@ -140,9 +140,9 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI;
-        public static final double kPXController = .15; //.15 Changed to line up with 1706 code
-        public static final double kPYController = .15; //.15
-        public static final double kPThetaController = 10; //10
+        public static final double kPXController = 1; //.15 Changed to line up with 1706 code
+        public static final double kPYController = 1.5; //.15
+        public static final double kPThetaController = .5; //10
 
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = 
             new TrapezoidProfile.Constraints(kMaxAngularSpeedRadiansPerSecond, 

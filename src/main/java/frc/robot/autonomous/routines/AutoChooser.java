@@ -69,7 +69,7 @@ public class AutoChooser {
             case FIVE_BALL:
                 return new FunfBall(swerve, hood, conveyor, intake, shooter, limelight, stateHandler);
             case TEST_PATH:
-                return new PathPlannerTestSequence(swerve);
+                return new PathPlannerTestSequence(swerve, intake);
             default:
                 return new DeuxBall(swerve, shooter, conveyor, intake, hood, limelight, stateHandler);
         }

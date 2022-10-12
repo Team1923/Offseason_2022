@@ -95,10 +95,9 @@ public class MKIHolonomicController {
     }
 
     // Calculate feedforward velocities (field-relative).
-    double xFF = -linearVelocityRefMeters * poseRef.getRotation().getCos();
-    double yFF = -linearVelocityRefMeters * poseRef.getRotation().getSin();
-    double thetaFF =
-        m_thetaController.calculate(currentPose.getRotation().getRadians(), angleRef.getRadians());
+    double xFF = linearVelocityRefMeters * poseRef.getRotation().getCos();
+    double yFF = linearVelocityRefMeters * poseRef.getRotation().getSin();
+    double thetaFF = 0;// -m_thetaController.calculate(currentPose.getRotation().getRadians(), angleRef.getRadians());
 
     m_poseError = poseRef.relativeTo(currentPose);
     m_rotationError = angleRef.minus(currentPose.getRotation());
@@ -107,6 +106,7 @@ public class MKIHolonomicController {
     SmartDashboard.putNumber("Angle Ref: ", angleRef.getDegrees());
     SmartDashboard.putNumber("Theta Error: ", m_rotationError.getDegrees());
     SmartDashboard.putNumber("ThetaFF: ", thetaFF);
+    SmartDashboard.putNumber("xFF: ", xFF);
 
 
     if (!m_enabled) {
@@ -114,8 +114,8 @@ public class MKIHolonomicController {
     }
 
     // Calculate feedback velocities (based on position error).
-    double xFeedback = -m_xController.calculate(currentPose.getX(), poseRef.getX());
-    double yFeedback = -m_yController.calculate(currentPose.getY(), poseRef.getY());
+    double xFeedback = m_xController.calculate(currentPose.getX(), poseRef.getX());
+    double yFeedback = m_yController.calculate(currentPose.getY(), poseRef.getY());
 
     // Return next output.
     return ChassisSpeeds.fromFieldRelativeSpeeds(
