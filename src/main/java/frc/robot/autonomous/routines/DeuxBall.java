@@ -37,7 +37,7 @@ public class DeuxBall extends SequentialCommandGroup {
       ).withTimeout(2),
       new PIDRotateN(swerve, -180, false).withTimeout(1.5),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5)
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3100).withTimeout(1.5)
         
     );
   }

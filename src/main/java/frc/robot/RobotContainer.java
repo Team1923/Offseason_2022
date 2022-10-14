@@ -123,6 +123,8 @@ public class RobotContainer {
 
     // Hub-centric driving command
 
+
+    //ABORT HOOD IN CASE IT IS NOT IN ZERO POSITION (40100)
     new JoystickButton(driverJoystick, OIConstants.kDriverXButton).whenPressed(() -> HOOD_SUBSYSTEM.hoodAbort());
 
     // CONFIRM AXIS 3 IS THE CORRECT RIGHT TRIGGER FOR OPERATOR
