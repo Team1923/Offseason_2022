@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PathPlannerTrajectory extends Trajectory {
+
+    private boolean setInitialHeading = false;
+
     protected PathPlannerTrajectory(ArrayList<Waypoint> pathPoints, double maxVel, double maxAccel, boolean reversed) {
         super(generatePath(pathPoints, maxVel, maxAccel, reversed));
     }
@@ -60,6 +63,9 @@ public class PathPlannerTrajectory extends Trajectory {
     public PathPlannerState getInitialState() {
         return (PathPlannerState) getStates().get(0);
     }
+
+
+    
 
     /**
      * Get the end state of the path
@@ -312,7 +318,9 @@ public class PathPlannerTrajectory extends Trajectory {
 
             return lerpedState;
         }
+
     }
+
 
     protected static class Waypoint {
         private final Translation2d anchorPoint;

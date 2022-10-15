@@ -209,7 +209,7 @@ public final class Constants {
     public static final class HoodConstants {
         public static final int hoodMotorID = 13; //change
 
-        public static final double zeroPosition = 10;
+        public static final double zeroPosition = 40100;
 
         public static final int hCurrentLimit = 30;
         public static final int hThresholdLimit = 40;

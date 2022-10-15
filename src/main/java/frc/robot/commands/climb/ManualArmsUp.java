@@ -7,12 +7,12 @@ package frc.robot.commands.climb;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimbSubsystem;
 
-public class ResetArms extends CommandBase {
+public class ManualArmsUp extends CommandBase {
 
   ClimbSubsystem CLIMB_SUBSYSTEM;
 
   /** Creates a new DeployArms. */
-  public ResetArms(ClimbSubsystem climb) {
+  public ManualArmsUp(ClimbSubsystem climb) {
     this.CLIMB_SUBSYSTEM = climb;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,7 +27,7 @@ public class ResetArms extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    CLIMB_SUBSYSTEM.set(.45);
+    CLIMB_SUBSYSTEM.set(-.45);
   }
 
   // Called once the command ends or is interrupted.

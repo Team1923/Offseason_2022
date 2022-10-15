@@ -15,6 +15,7 @@ import frc.robot.MKILib.MKISpeaker;
 import frc.robot.autonomous.routines.AutoChooser;
 import frc.robot.autonomous.routines.PathPlannerTestSequence;
 import frc.robot.commands.scoring.ShootCommandGroup;
+import frc.robot.commands.climb.ManualArmsUp;
 import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.climb.ScheduleClimb;
 import frc.robot.commands.drive.SwerveDriveCommand;
@@ -129,6 +130,8 @@ public class RobotContainer {
 
     // CONFIRM AXIS 3 IS THE CORRECT RIGHT TRIGGER FOR OPERATOR
     //new Trigger(() -> operatorJoystick.getRawAxis(3) > .2).whenActive(new HoodResetHold(HOOD_SUBSYSTEM), false);
+
+    new Trigger(() -> operatorJoystick.getRawAxis(3) > .2).whenActive(new ManualArmsUp(CLIMB_SUBSYSTEM));
 
     new Trigger(() -> driverJoystick.getRawAxis(3) > .1).whileActiveContinuous(new ShootCommandGroup(
         SWERVE_SUBSYSTEM, 
