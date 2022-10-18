@@ -4,21 +4,45 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.HoodConstants;
 
 public class HoodSubsystem extends SubsystemBase {
 
+
   public WPI_TalonFX hoodMotor = new WPI_TalonFX(HoodConstants.hoodMotorID);
+
+  // ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+
+  // ShuffleboardLayout hoodLayout = coachTab.getLayout("HOOD", "List Layout").withPosition(0, 8).withSize(1, 1);
+
+  // private boolean isHoodDown;
+
+  // private NetworkTableEntry hoodDown = hoodLayout.add("Hood Abort?", false)
+  // .withSize(1, 1)
+  // .withPosition(0, 8)
+  // .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+  // .getEntry();
+
+  
 
 
   /** Creates a new HoodSubsystem. */
   public HoodSubsystem() {
+
+    // isHoodDown = false;
+
     
     hoodMotor.configFactoryDefault();
 
@@ -35,6 +59,8 @@ public class HoodSubsystem extends SubsystemBase {
     hoodMotor.configMotionCruiseVelocity(7500);
     hoodMotor.configMotionAcceleration(15000);
 
+    // hoodDown.setBoolean(false);
+
 
 
     //configure PID for hood
@@ -50,6 +76,8 @@ public class HoodSubsystem extends SubsystemBase {
    // SmartDashboar.putNumber("Hood Encoder Position: ", getPosition());
     //SmartDashboard.putNumber("Hood Supply Current: ", hoodMotor.getSupplyCurrent());
    // SmartDashboar.putNumber("Hood Output Current: ", hoodMotor.getStatorCurrent());
+
+  //  hoodDown.setBoolean(isHoodDown);
   }
 
   public void setClimbConstants() {
@@ -91,7 +119,8 @@ public class HoodSubsystem extends SubsystemBase {
   }
 
   public void hoodAbort(){
-    hoodMotor.setSelectedSensorPosition(-300);
+    // isHoodDown = true;
+    hoodMotor.setSelectedSensorPosition(-500);
   }
 
   public double getPosition() {

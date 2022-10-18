@@ -36,21 +36,21 @@ public class ThreeBall extends SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(
         new InstantCommand(() -> SmartDashboard.putBoolean("AUTO DONE", false)),
-        new HoodSingleSetpointCommand(hood, HoodConstants.zeroPosition),
+        new HoodSingleSetpointCommand(hood, 0),
         new RunIntakeCommand(intake, false),
         new RunTrajectory(swerve, "twoBallPath", false)
       ).withTimeout(2),
       new PIDRotateN(swerve, -177, false).withTimeout(1),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3100).withTimeout(1.5),
-      new PIDRotateN(swerve, 70, false).withTimeout(1.5),
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3015).withTimeout(1.5),
+      new PIDRotateN(swerve, 72.5, false).withTimeout(1.5),
       new ParallelRaceGroup(
         new RunTrajectory(swerve, "getThirdBall", false),
         new RunIntakeCommand(intake, false)
       ),
       new PIDRotateN(swerve, -109, false).withTimeout(1),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3100).withTimeout(1.5),
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3200).withTimeout(1.5),
       new InstantCommand(() -> SmartDashboard.putBoolean("AUTO DONE", true))
         
     );

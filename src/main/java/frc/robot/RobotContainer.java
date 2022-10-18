@@ -166,7 +166,7 @@ public class RobotContainer {
       SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, ShooterConstants.avoidStallSpeed));
     }
     else{
-      SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, 2000));
+      SHOOTER_SUBSYSTEM.setDefaultCommand(new ShooterAvoidStallCommand(SHOOTER_SUBSYSTEM, ShooterConstants.avoidStallSpeed));
     }
   }
 }
