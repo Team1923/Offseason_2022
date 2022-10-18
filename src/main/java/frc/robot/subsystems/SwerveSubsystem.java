@@ -120,7 +120,7 @@ public class SwerveSubsystem extends SubsystemBase {
     backLeft.configOnReset();
     backRight.configOnReset();
 
-    SmartDashboard.putNumber("Heading", this.getHeading());
+    SmartDashboard.putNumber("Heading", getHeading());
   }
 
   // Zeros the heading of the gyro
@@ -134,7 +134,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // Gets a gyro heading between 0 and 360 degrees
   public double getHeading() {
-    return -Math.IEEEremainder(gyro.getYaw(), 360);
+    return Math.IEEEremainder(gyro.getYaw(), 360);
   }
 
   public double getHeading(double offset) {

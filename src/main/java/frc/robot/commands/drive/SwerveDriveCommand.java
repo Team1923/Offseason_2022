@@ -74,7 +74,7 @@ public class SwerveDriveCommand extends CommandBase {
     ChassisSpeeds chassisSpeeds;
     if (fieldOrientedFunction.get()) {
       // Relative to field
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, SWERVE_SUBSYSTEM.getRotation2d());
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, SWERVE_SUBSYSTEM.getRotation2d().times(-1.0));
     } else {
       // Relative to robot
       chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
