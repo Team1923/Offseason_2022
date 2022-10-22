@@ -30,7 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
 
-  ShuffleboardLayout shooterLayout = coachTab.getLayout("Shooter", "List Layout").withPosition(3, 0).withSize(1, 2);
+  ShuffleboardLayout shooterLayout = coachTab.getLayout("Shooter", "List Layout").withPosition(0, 0).withSize(1, 2);
 
   private NetworkTableEntry isWithinRange = shooterLayout.add("RPM GOAL:", false)
   .withSize(1, 1)

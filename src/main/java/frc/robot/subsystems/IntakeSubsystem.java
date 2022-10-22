@@ -33,15 +33,15 @@ public class IntakeSubsystem extends SubsystemBase {
   
   public boolean intake_reverse;
 
-  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+  // ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
 
-  ShuffleboardLayout intakeLayout = coachTab.getLayout("Intake", "List Layout").withPosition(0, 0).withSize(1, 1);
+  // ShuffleboardLayout intakeLayout = coachTab.getLayout("Intake", "List Layout").withPosition(0, 0).withSize(1, 1);
 
-  private NetworkTableEntry intakeDown = intakeLayout.add("Intake Down", false)
-  .withSize(1, 1)
-  .withPosition(0, 4)
-  .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
-  .getEntry();
+  // private NetworkTableEntry intakeDown = intakeLayout.add("Intake Down", false)
+  // .withSize(1, 1)
+  // .withPosition(0, 4)
+  // .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+  // .getEntry();
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
@@ -97,7 +97,7 @@ public class IntakeSubsystem extends SubsystemBase {
     solenoid2.set(true);
     solenoid3.set(true);
     solenoid4.set(false);
-    intakeDown.setBoolean(true);
+    // intakeDown.setBoolean(true);
   }
 
   public void setLow() {
@@ -105,7 +105,7 @@ public class IntakeSubsystem extends SubsystemBase {
     solenoid2.set(false);  
     solenoid3.set(false);  
     solenoid4.set(true); 
-    intakeDown.setBoolean(false); 
+    // intakeDown.setBoolean(false); 
   }
 
   public void setIntake(double percentOut) {

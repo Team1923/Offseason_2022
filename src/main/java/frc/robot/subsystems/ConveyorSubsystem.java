@@ -22,27 +22,27 @@ public class ConveyorSubsystem extends SubsystemBase {
   private DigitalInput beamBreakOne;
   private DigitalInput beamBreakTwo;
 
-  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+  // ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
 
-  ShuffleboardLayout conveyorLayout = coachTab.getLayout("Conveyor", "List Layout").withPosition(1, 0).withSize(1, 3);
+  // ShuffleboardLayout conveyorLayout = coachTab.getLayout("Conveyor", "List Layout").withPosition(1, 0).withSize(1, 3);
 
-  private NetworkTableEntry beamBreak1 = conveyorLayout.add("Beam Break 1", false)
-  .withSize(1, 1)
-  .withPosition(0, 4)
-  .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
-  .getEntry();
+  // private NetworkTableEntry beamBreak1 = conveyorLayout.add("Beam Break 1", false)
+  // .withSize(1, 1)
+  // .withPosition(0, 4)
+  // .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+  // .getEntry();
 
-  private NetworkTableEntry beamBreak2 = conveyorLayout.add("Beam Break 2", false)
-  .withSize(1, 1)
-  .withPosition(0, 4)
-  .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
-  .getEntry();
+  // private NetworkTableEntry beamBreak2 = conveyorLayout.add("Beam Break 2", false)
+  // .withSize(1, 1)
+  // .withPosition(0, 4)
+  // .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+  // .getEntry();
 
-  private NetworkTableEntry isConveyorRunning = conveyorLayout.add("Conveyor Running", false)
-  .withSize(1, 1)
-  .withPosition(0, 4)
-  .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
-  .getEntry();
+  // private NetworkTableEntry isConveyorRunning = conveyorLayout.add("Conveyor Running", false)
+  // .withSize(1, 1)
+  // .withPosition(0, 4)
+  // .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+  // .getEntry();
   
   public ConveyorSubsystem() { 
     
@@ -76,7 +76,7 @@ public class ConveyorSubsystem extends SubsystemBase {
 
    // SmartDashboar.putNumber("Running Conveyor?", conveyorMotor.get());
 
-    isConveyorRunning.setBoolean(Math.abs(conveyorMotor.get()) > 0);
+    // isConveyorRunning.setBoolean(Math.abs(conveyorMotor.get()) > 0);
     //SmartDashboard.putNumber("System Time", System.currentTimeMillis());
   }
 
@@ -89,12 +89,12 @@ public class ConveyorSubsystem extends SubsystemBase {
   }
 
   public boolean getFrontBeamBreak() {
-    beamBreak1.setBoolean(!beamBreakOne.get());
+    // beamBreak1.setBoolean(!beamBreakOne.get());
     return !beamBreakOne.get();
   }
 
   public boolean getBackBeamBreak() {
-    beamBreak2.setBoolean(!beamBreakTwo.get());
+    // beamBreak2.setBoolean(!beamBreakTwo.get());
     return !beamBreakTwo.get();
   }
 
