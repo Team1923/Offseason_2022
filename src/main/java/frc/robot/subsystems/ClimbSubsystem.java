@@ -31,7 +31,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
 
-  ShuffleboardLayout climbLayout = coachTab.getLayout("Climb", "List Layout").withPosition(5, 0).withSize(1, 1);
+  ShuffleboardLayout climbLayout = coachTab.getLayout("Climb", "List Layout").withPosition(1, 2).withSize(1, 1);
 
   NetworkTableEntry currentState = climbLayout.add("Current Climb", "FULL_TRAVERSAL").getEntry();
 

@@ -21,7 +21,7 @@ public class LimelightSubsystem extends SubsystemBase {
 
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
 
-  ShuffleboardLayout limelightLayout = coachTab.getLayout("Limelight", "List Layout").withPosition(4, 0).withSize(1, 2);
+  ShuffleboardLayout limelightLayout = coachTab.getLayout("Limelight", "List Layout").withPosition(1, 0).withSize(1, 2);
 
   private NetworkTableEntry llhasTarget = limelightLayout.add("TARGET:", false)
   .withSize(1, 1)
