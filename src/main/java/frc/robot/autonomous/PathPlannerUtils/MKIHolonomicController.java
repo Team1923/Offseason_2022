@@ -97,7 +97,7 @@ public class MKIHolonomicController {
     // Calculate feedforward velocities (field-relative).
     double xFF = linearVelocityRefMeters * poseRef.getRotation().getCos();
     double yFF = linearVelocityRefMeters * poseRef.getRotation().getSin();
-    double thetaFF = 0;// -m_thetaController.calculate(currentPose.getRotation().getRadians(), angleRef.getRadians());
+    double thetaFF = m_thetaController.calculate(currentPose.getRotation().getRadians(), angleRef.getRadians());
 
     m_poseError = poseRef.relativeTo(currentPose);
     m_rotationError = angleRef.minus(currentPose.getRotation());
