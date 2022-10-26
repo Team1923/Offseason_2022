@@ -7,6 +7,7 @@ package frc.robot.interfaces;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -52,10 +53,20 @@ public class SwerveModule {
         driveMotor = new WPI_TalonFX(driveMotorId, "Default Name");
         turningMotor = new WPI_TalonFX(turningMotorId, "Default Name");
 
-        configDriveMotor();
-        configSteerMotor();
-       
+        // configDriveMotor();
+        // configSteerMotor();
+        turningMotor.configFactoryDefault();
+        driveMotor.configFactoryDefault();
+        driveMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
+        turningMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
+        turningMotor.setNeutralMode(NeutralMode.Brake);
+        driveMotor.setNeutralMode(NeutralMode.Brake);
+
+        driveMotor.setInverted(driveMotorReversed);
+        turningMotor.setInverted(turningMotorReversed);
         
+        
+
         // Instantiating PID controller for the steering motor, I think that a kP value will be 
         // enough to get the wheel to it's heading (pending testing)
         turningPidController = new PIDController(ModuleConstants.kPTurning, 0, ModuleConstants.kDTurning);
@@ -74,7 +85,7 @@ public class SwerveModule {
 
     // ? Multiplies the output of the turning motor in ticks by a constant that will generate radians traveled (Ticks to Radians)
     public double getTurningPositionRads() {
-        return turningMotor.getSelectedSensorPosition() * ModuleConstants.kturningEncoderTicks2Rad;
+        return -turningMotor.getSelectedSensorPosition() * ModuleConstants.kturningEncoderTicks2Rad;
     }
 
     // ? Returns hopefully a conversion of ticks per 100ms to meters per second of the drive wheel
@@ -84,12 +95,12 @@ public class SwerveModule {
 
     // ? Returns hopefully a conversion of ticks per 100ms to radians per second of the turning wheel
     public double getTurningVelocityRPS() {
-        return turningMotor.getSelectedSensorVelocity() * ModuleConstants.kTurningEncoderTicks2RadPerSec;
+        return -turningMotor.getSelectedSensorVelocity() * ModuleConstants.kTurningEncoderTicks2RadPerSec;
     }
 
     // Return encoder ticks of steering motor
     public double getTurningTicks() {
-        return turningMotor.getSelectedSensorPosition();
+        return -turningMotor.getSelectedSensorPosition();
     }
 
     // ? Getter method that returns the offset absolute encoder position in radians
@@ -161,7 +172,7 @@ public class SwerveModule {
         driveMotor.set(ControlMode.PercentOutput, (state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond));
 
         // ? Similar to above, might be better to do closed-loop velocity control and multiply this output by the max RPM of a falcon
-        turningMotor.set(ControlMode.PercentOutput, turningPidController.calculate(getTurningPositionRads(), state.angle.getRadians()));
+        turningMotor.set(ControlMode.PercentOutput, -turningPidController.calculate(getTurningPositionRads(), state.angle.getRadians()));
 
         // Recommended debug printout for swerve state
         //SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "]", state.toString());
@@ -182,7 +193,7 @@ public class SwerveModule {
     public void configSteerMotor() {
         turningMotor.configFactoryDefault();
         turningMotor.setNeutralMode(NeutralMode.Brake);
-        if(turningMotorR) {
+        if(this.turningMotorR) {
             turningMotor.setInverted(InvertType.InvertMotorOutput);
         } else {
             turningMotor.setInverted(InvertType.None);

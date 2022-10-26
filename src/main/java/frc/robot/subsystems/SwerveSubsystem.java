@@ -98,10 +98,11 @@ public class SwerveSubsystem extends SubsystemBase {
    // Prints out robot heading for debug purposes
    
 
-   SmartDashboard.putNumber("Front Left", frontLeft.getAbsoluteEncoderRad());
-   SmartDashboard.putNumber("Front Right", frontRight.getAbsoluteEncoderRad());
-   SmartDashboard.putNumber("Back Left", backLeft.getAbsoluteEncoderRad());
-   SmartDashboard.putNumber("Back Right", backRight.getAbsoluteEncoderRad());
+   SmartDashboard.putNumber("Front Left Turning Encoder", frontLeft.getTurningPositionRads());
+   SmartDashboard.putNumber("Front Right Turning Encoder", frontRight.getTurningPositionRads());
+   SmartDashboard.putNumber("Back Left Turning Encoder", backLeft.getTurningPositionRads());
+   SmartDashboard.putNumber("Back Right Turning Encoder", backRight.getTurningPositionRads());
+
     
    SmartDashboard.putNumber("0Front Left", frontLeft.getAbsoluteEncoderRadZero());
    SmartDashboard.putNumber("0Front Right", frontRight.getAbsoluteEncoderRadZero());
@@ -114,11 +115,6 @@ public class SwerveSubsystem extends SubsystemBase {
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
 
    // SmartDashboar.putString("Odometer Position", odometer.getPoseMeters().toString());
-
-    frontLeft.configOnReset();
-    frontRight.configOnReset();
-    backLeft.configOnReset();
-    backRight.configOnReset();
 
     SmartDashboard.putNumber("Heading", getHeading());
   }
@@ -195,8 +191,8 @@ public class SwerveSubsystem extends SubsystemBase {
     // Actually send the desired states to the respective swerve modules
     frontLeft.setDesiredState(desiredStates[0]);
     frontRight.setDesiredState(desiredStates[1]);
-    backRight.setDesiredState(desiredStates[3]);
     backLeft.setDesiredState(desiredStates[2]);
+    backRight.setDesiredState(desiredStates[3]);
   }
 
   public void resetStates() {
@@ -207,6 +203,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public ChassisSpeeds getChassisSpeed() {
+
     return DriveConstants.kDriveKinematics.toChassisSpeeds(
         frontLeft.getState(), 
         frontRight.getState(),

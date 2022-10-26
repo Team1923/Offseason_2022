@@ -68,13 +68,13 @@ public class SwerveDriveCommand extends CommandBase {
     turningSpeed = turningLimiter.calculate(turningSpeed) * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
     // COMMENT OUT THE LINE BELOW IF THE ROTATION COMPENSATION IS HURTING PERFORMANCE RATHER THAN HELPING IT.
-    turningSpeed = SWERVE_SUBSYSTEM.performKeepAngle(xSpeed, ySpeed, turningSpeed);
+    //turningSpeed = SWERVE_SUBSYSTEM.performKeepAngle(xSpeed, ySpeed, turningSpeed);
 
     // Handle field-oriented driving
     ChassisSpeeds chassisSpeeds;
     if (fieldOrientedFunction.get()) {
       // Relative to field
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, SWERVE_SUBSYSTEM.getRotation2d().times(-1.0));
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, SWERVE_SUBSYSTEM.getRotation2d());
     } else {
       // Relative to robot
       chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);

@@ -203,17 +203,17 @@ public class StateHandler {
     }
 
     public void rumbleControllers(){
-        driverJoystick.setRumble(RumbleType.kLeftRumble, 1);
-        driverJoystick.setRumble(RumbleType.kRightRumble, 1);
-        operatorJoystick.setRumble(RumbleType.kLeftRumble, 1);
-        operatorJoystick.setRumble(RumbleType.kRightRumble, 1);
+        // driverJoystick.setRumble(RumbleType.kLeftRumble, 1);
+        // driverJoystick.setRumble(RumbleType.kRightRumble, 1);
+        // operatorJoystick.setRumble(RumbleType.kLeftRumble, 1);
+        // operatorJoystick.setRumble(RumbleType.kRightRumble, 1);
     }
 
     public void stopRumble(){
-        driverJoystick.setRumble(RumbleType.kRightRumble, 0);
-        driverJoystick.setRumble(RumbleType.kLeftRumble, 0);
-        operatorJoystick.setRumble(RumbleType.kRightRumble, 0);
-        operatorJoystick.setRumble(RumbleType.kLeftRumble, 0);
+        // driverJoystick.setRumble(RumbleType.kRightRumble, 0);
+        // driverJoystick.setRumble(RumbleType.kLeftRumble, 0);
+        // operatorJoystick.setRumble(RumbleType.kRightRumble, 0);
+        // operatorJoystick.setRumble(RumbleType.kLeftRumble, 0);
     }
 
 }
