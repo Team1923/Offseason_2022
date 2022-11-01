@@ -14,7 +14,9 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 
@@ -36,6 +38,8 @@ public class SwerveModule {
     private final boolean driveMotorR;
     private final boolean turningMotorR;
 
+    private final double absoluteID;
+
     // Constructor to instantiate a new Swerve Module. A bunch of inputs that looks messy but Zero to Autonomous did it 
     // and I have faith in them, so lets roll with it
     public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed, 
@@ -45,7 +49,7 @@ public class SwerveModule {
         this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
         this.absoluteEncoderReversed = absoluteEncoderReversed;
         absoluteEncoder = new AnalogInput(absoluteEncoderId);
-        
+        this.absoluteID = absoluteEncoderId;
         this.driveMotorR = driveMotorReversed;
         this.turningMotorR = turningMotorReversed;
 
@@ -53,20 +57,9 @@ public class SwerveModule {
         driveMotor = new WPI_TalonFX(driveMotorId, "Default Name");
         turningMotor = new WPI_TalonFX(turningMotorId, "Default Name");
 
-        // configDriveMotor();
-        // configSteerMotor();
-        turningMotor.configFactoryDefault();
-        driveMotor.configFactoryDefault();
-        driveMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
-        turningMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
-        turningMotor.setNeutralMode(NeutralMode.Brake);
-        driveMotor.setNeutralMode(NeutralMode.Brake);
-
-        driveMotor.setInverted(driveMotorReversed);
-        turningMotor.setInverted(turningMotorReversed);
+        configDriveMotor();
+        configSteerMotor();
         
-        
-
         // Instantiating PID controller for the steering motor, I think that a kP value will be 
         // enough to get the wheel to it's heading (pending testing)
         turningPidController = new PIDController(ModuleConstants.kPTurning, 0, ModuleConstants.kDTurning);
@@ -85,7 +78,7 @@ public class SwerveModule {
 
     // ? Multiplies the output of the turning motor in ticks by a constant that will generate radians traveled (Ticks to Radians)
     public double getTurningPositionRads() {
-        return -turningMotor.getSelectedSensorPosition() * ModuleConstants.kturningEncoderTicks2Rad;
+        return turningMotor.getSelectedSensorPosition() * ModuleConstants.kturningEncoderTicks2Rad;
     }
 
     // ? Returns hopefully a conversion of ticks per 100ms to meters per second of the drive wheel
@@ -95,12 +88,12 @@ public class SwerveModule {
 
     // ? Returns hopefully a conversion of ticks per 100ms to radians per second of the turning wheel
     public double getTurningVelocityRPS() {
-        return -turningMotor.getSelectedSensorVelocity() * ModuleConstants.kTurningEncoderTicks2RadPerSec;
+        return turningMotor.getSelectedSensorVelocity() * ModuleConstants.kTurningEncoderTicks2RadPerSec;
     }
 
     // Return encoder ticks of steering motor
     public double getTurningTicks() {
-        return -turningMotor.getSelectedSensorPosition();
+        return turningMotor.getSelectedSensorPosition();
     }
 
     // ? Getter method that returns the offset absolute encoder position in radians
@@ -140,7 +133,7 @@ public class SwerveModule {
     }
 
     public SwerveModuleState getAutoState() {
-        return new SwerveModuleState(-getDriveVelocityMPS(), new Rotation2d(getTurningPositionRads()));
+        return new SwerveModuleState(getDriveVelocityMPS(), new Rotation2d(getTurningPositionRads()));
     }
 
     public void resetState() {
@@ -166,16 +159,18 @@ public class SwerveModule {
         }
 
         state = SwerveModuleState.optimize(state, getState().angle);
-        
+        System.out.println(state.speedMetersPerSecond);
         // ? Using percent output right now, but maybe we should do closed-loop velocity control and just multiply this fraction by 
         // the max RPM of a falcon motor. Might provide smoother results. Anyhow, percent output is a good start
         driveMotor.set(ControlMode.PercentOutput, (state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond));
 
         // ? Similar to above, might be better to do closed-loop velocity control and multiply this output by the max RPM of a falcon
-        turningMotor.set(ControlMode.PercentOutput, -turningPidController.calculate(getTurningPositionRads(), state.angle.getRadians()));
+        turningMotor.set(ControlMode.PercentOutput, turningPidController.calculate(getTurningPositionRads(), state.angle.getRadians()));
 
         // Recommended debug printout for swerve state
         //SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "]", state.toString());
+
+        
     }
 
     // Configs Drive Motor
@@ -200,20 +195,19 @@ public class SwerveModule {
         }   
     }
 
-    public void configOnReset() {
-        // if(driveMotor.hasResetOccurred()) {
-        //     configDriveMotor();
-        // }
-
-        if(turningMotor.hasResetOccurred()) {
-            configSteerMotor();
-            resetTurningEncoder();
-        }
-    }
-
     // Stop function 
     public void stop() {
         driveMotor.set(ControlMode.PercentOutput, 0);
         turningMotor.set(ControlMode.PercentOutput, 0);
     }
+
+    public void turningMotorPercentOut(){
+        turningMotor.set(ControlMode.PercentOutput, 0.1);
+    }
+
+    public double getPIDError(){
+        return turningPidController.getPositionError();
+    }
+
+    
 }

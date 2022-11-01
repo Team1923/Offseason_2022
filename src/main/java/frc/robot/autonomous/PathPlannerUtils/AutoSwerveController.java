@@ -42,6 +42,7 @@ public class AutoSwerveController extends CommandBase {
   private final Timer m_timer = new Timer();
   private final PathPlannerTrajectory m_trajectory;
   private final Supplier<Pose2d> m_pose;
+  private final Supplier<Rotation2d> m_rotation;
   private final SwerveDriveKinematics m_kinematics;
   private final MKIHolonomicController m_controller;
   private final Consumer<SwerveModuleState[]> m_outputModuleStates;
@@ -73,12 +74,13 @@ public class AutoSwerveController extends CommandBase {
    *                           controllers.
    * @param requirements       The subsystems to require.
    */
-  public AutoSwerveController(PathPlannerTrajectory trajectory, Supplier<Pose2d> pose, SwerveDriveKinematics kinematics,
+  public AutoSwerveController(PathPlannerTrajectory trajectory, Supplier<Pose2d> pose, Supplier<Rotation2d> rot, SwerveDriveKinematics kinematics,
       PIDController xController, PIDController yController, ProfiledPIDController thetaController,
       Supplier<Rotation2d> desiredRotation, Consumer<SwerveModuleState[]> outputModuleStates,
       Subsystem... requirements) {
     m_trajectory = requireNonNullParam(trajectory, "trajectory", "SwerveControllerCommand");
     m_pose = requireNonNullParam(pose, "pose", "SwerveControllerCommand");
+    m_rotation = requireNonNullParam(rot, "rot", "SwerveControllerCommand");
     m_kinematics = requireNonNullParam(kinematics, "kinematics", "SwerveControllerCommand");
 
     m_controller = new MKIHolonomicController(
@@ -128,6 +130,7 @@ public class AutoSwerveController extends CommandBase {
   public AutoSwerveController(
       PathPlannerTrajectory trajectory,
       Supplier<Pose2d> pose,
+      Supplier<Rotation2d> rot,
       SwerveDriveKinematics kinematics,
       PIDController xController,
       PIDController yController,
@@ -137,6 +140,7 @@ public class AutoSwerveController extends CommandBase {
     this(
         trajectory,
         pose,
+        rot,
         kinematics,
         xController,
         yController,
@@ -149,6 +153,7 @@ public class AutoSwerveController extends CommandBase {
   public void initialize() {
     m_timer.reset();
     m_timer.start();
+    SmartDashboard.putBoolean("DONE OR NOT ", false);
   }
 
   @Override
@@ -159,7 +164,11 @@ public class AutoSwerveController extends CommandBase {
 
     SmartDashboard.putNumber("Desired Auto Vel", desiredState.velocityMetersPerSecond);
 
-    var targetChassisSpeeds = m_controller.calculate(m_pose.get(), desiredState, desiredState.holonomicRotation);
+    var targetChassisSpeeds = m_controller.calculate(m_pose.get(), m_rotation.get(), desiredState, desiredState.holonomicRotation);
+    SmartDashboard.putNumber("Desired Rotation Speed", targetChassisSpeeds.omegaRadiansPerSecond);
+    SmartDashboard.putNumber("Desired X Speed", targetChassisSpeeds.vxMetersPerSecond);
+    SmartDashboard.putNumber("Desired Y Speed", targetChassisSpeeds.vyMetersPerSecond);
+
     var targetModuleStates = m_kinematics.toSwerveModuleStates(targetChassisSpeeds);
 
     SmartDashboard.putNumber("Auto Target Vx", targetChassisSpeeds.vxMetersPerSecond);
@@ -171,6 +180,7 @@ public class AutoSwerveController extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    SmartDashboard.putBoolean("DONE OR NOT ", true);
     m_timer.stop();
   }
 

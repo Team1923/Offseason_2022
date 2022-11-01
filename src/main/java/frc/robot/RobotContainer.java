@@ -19,6 +19,7 @@ import frc.robot.commands.climb.ManualArmsUp;
 import frc.robot.commands.climb.ResetArms;
 import frc.robot.commands.climb.ScheduleClimb;
 import frc.robot.commands.drive.SwerveDriveCommand;
+import frc.robot.commands.drive.TurningMotorPercentOutput;
 import frc.robot.commands.drive.WheelsToPosition;
 import frc.robot.commands.scoring.DefaultHoodCommand;
 import frc.robot.commands.scoring.RunShooterCommand;
@@ -86,9 +87,9 @@ public class RobotContainer {
     // understand because I am not fluent in Java, it was given to me by 0-2-Autonomous
     SWERVE_SUBSYSTEM.setDefaultCommand(new SwerveDriveCommand(
         SWERVE_SUBSYSTEM,
-        () -> driverJoystick.getRawAxis(OIConstants.kDriverYAxis), // Forward and Back
-        () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis), // Side to Side
-        () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis), // Rotation
+        () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis), // Forward and Back
+        () -> -driverJoystick.getRawAxis(OIConstants.kDriverXAxis), // Side to Side
+        () -> -driverJoystick.getRawAxis(OIConstants.kDriverRotAxis), // Rotation
         () -> !driverJoystick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); // Field oriented control vs robot oriented. By default, since "!" is included, field oriented is default
 
     // Sets the default command of the shooter to the mode where it trys to spin at a low speed to avoid a stall.
@@ -138,12 +139,12 @@ public class RobotContainer {
         SWERVE_SUBSYSTEM, 
         () -> driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
         () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
-        () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis), 
+        () -> -driverJoystick.getRawAxis(OIConstants.kDriverRotAxis), 
         LIMELIGHT_SUBSYSTEM, HOOD_SUBSYSTEM, shooterData));
 
     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whenPressed(new ScheduleClimb(desiredClimb, HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, SHOOTER_SUBSYSTEM, SWERVE_SUBSYSTEM));
     
-    new JoystickButton(driverJoystick, OIConstants.kDriverYButton).whileHeld(new WheelsToPosition(SWERVE_SUBSYSTEM));
+    new JoystickButton(driverJoystick, OIConstants.kDriverYButton).whileHeld(new TurningMotorPercentOutput(SWERVE_SUBSYSTEM));
 
     //new JoystickButton(driverJoystick, OIConstants.kDriverLeftBumper).toggleWhenPressed(new PathPlannerTestSequence(SWERVE_SUBSYSTEM));
     //new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whileHeld(new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.25));

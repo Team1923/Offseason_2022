@@ -9,7 +9,6 @@ import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -98,10 +97,10 @@ public class SwerveSubsystem extends SubsystemBase {
    // Prints out robot heading for debug purposes
    
 
-   SmartDashboard.putNumber("Front Left Turning Encoder", frontLeft.getTurningPositionRads());
-   SmartDashboard.putNumber("Front Right Turning Encoder", frontRight.getTurningPositionRads());
-   SmartDashboard.putNumber("Back Left Turning Encoder", backLeft.getTurningPositionRads());
-   SmartDashboard.putNumber("Back Right Turning Encoder", backRight.getTurningPositionRads());
+  //  SmartDashboard.putNumber("Front Left Turning Encoder", frontLeft.getTurningPositionRads());
+  //  SmartDashboard.putNumber("Front Right Turning Encoder", frontRight.getTurningPositionRads());
+  //  SmartDashboard.putNumber("Back Left Turning Encoder", backLeft.getTurningPositionRads());
+  //  SmartDashboard.putNumber("Back Right Turning Encoder", backRight.getTurningPositionRads());
 
     
    SmartDashboard.putNumber("0Front Left", frontLeft.getAbsoluteEncoderRadZero());
@@ -109,9 +108,14 @@ public class SwerveSubsystem extends SubsystemBase {
    SmartDashboard.putNumber("0Back Left", backLeft.getAbsoluteEncoderRadZero());
    SmartDashboard.putNumber("0Back Right", backRight.getAbsoluteEncoderRadZero());
 
+    SmartDashboard.putNumber("Front Left Absolute Encoder: ", frontLeft.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Front Left Encoder Value: ", frontLeft.getTurningPositionRads());
+
     SmartDashboard.putNumber("Odom X: ", odometer.getPoseMeters().getX());
     SmartDashboard.putNumber("Odom Y: ", odometer.getPoseMeters().getY());
 
+    //SmartDashboard.putNumber("PID ERROR", frontLeft.getPIDError());
+    
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
 
    // SmartDashboar.putString("Odometer Position", odometer.getPoseMeters().toString());
@@ -162,12 +166,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public Pose2d getAutoPose() {
     auto_odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
-    Pose2d pose = auto_odometer.getPoseMeters();
-    Translation2d position = pose.getTranslation();
-    SmartDashboard.putNumber("Auto X", position.getX());
-    SmartDashboard.putNumber("Auto Y", position.getY());
+    
     return auto_odometer.getPoseMeters();
   }
+  
 
   public void resetOdometry(Pose2d pose) {
     odometer.resetPosition(pose, getRotation2d());
@@ -187,7 +189,7 @@ public class SwerveSubsystem extends SubsystemBase {
     
     // Normalize the wheel speeds based on the physical max speed of the robot
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
-    
+
     // Actually send the desired states to the respective swerve modules
     frontLeft.setDesiredState(desiredStates[0]);
     frontRight.setDesiredState(desiredStates[1]);
@@ -242,4 +244,14 @@ public class SwerveSubsystem extends SubsystemBase {
   public void updateKeepAngle() {
     keepAngle = getRotation2d().getRadians();
   }
+
+  public void turningPercentOutput(){
+    frontLeft.turningMotorPercentOut();
+    frontRight.turningMotorPercentOut();
+    backLeft.turningMotorPercentOut();
+    backRight.turningMotorPercentOut();
+
+  }
+
+  
 }

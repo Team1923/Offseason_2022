@@ -25,6 +25,7 @@ public class AutoFromPathPlanner extends SequentialCommandGroup {
 
     AutoSwerveController swerveControllerCommand = new AutoSwerveController(m_trajectory, 
         swerve::getAutoPose,
+        swerve::getRotation2d,
         DriveConstants.kDriveKinematics,
         new PIDController(AutoConstants.kPXController, 0, 0), 
         new PIDController(AutoConstants.kPYController, 0, 0),
