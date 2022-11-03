@@ -44,14 +44,14 @@ public class PlayMusic extends CommandBase {
       talons.add(conveyor.conveyorMotor);
       talons.add(intake.leftIntakeMotor);
       talons.add(intake.rightIntakeMotor);
-      talons.add(swerve.backRight.turningMotor);
-      talons.add(swerve.backRight.driveMotor);
-      talons.add(swerve.frontRight.turningMotor);
-      talons.add(swerve.frontRight.driveMotor);
-      talons.add(swerve.backLeft.driveMotor);
-      talons.add(swerve.backLeft.turningMotor);
-      talons.add(swerve.frontLeft.turningMotor);
-      talons.add(swerve.frontLeft.driveMotor);
+      // talons.add(swerve.backRight.turningMotor);
+      // talons.add(swerve.backRight.driveMotor);
+      // talons.add(swerve.frontRight.turningMotor);
+      // talons.add(swerve.frontRight.driveMotor);
+      // talons.add(swerve.backLeft.driveMotor);
+      // talons.add(swerve.backLeft.turningMotor);
+      // talons.add(swerve.frontLeft.turningMotor);
+      // talons.add(swerve.frontLeft.driveMotor);
     }
       
 

@@ -139,12 +139,12 @@ public class RobotContainer {
         SWERVE_SUBSYSTEM, 
         () -> driverJoystick.getRawAxis(OIConstants.kDriverYAxis), 
         () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
-        () -> -driverJoystick.getRawAxis(OIConstants.kDriverRotAxis), 
+        () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis), 
         LIMELIGHT_SUBSYSTEM, HOOD_SUBSYSTEM, shooterData));
 
     new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whenPressed(new ScheduleClimb(desiredClimb, HOOD_SUBSYSTEM, CLIMB_SUBSYSTEM, () -> driverJoystick.getRawButton(5), CONVEYOR_SUBSYSTEM, INTAKE_SUBSYSTEM, SHOOTER_SUBSYSTEM, SWERVE_SUBSYSTEM));
     
-    new JoystickButton(driverJoystick, OIConstants.kDriverYButton).whileHeld(new TurningMotorPercentOutput(SWERVE_SUBSYSTEM));
+    new JoystickButton(driverJoystick, OIConstants.kDriverYButton).whileHeld(new WheelsToPosition(SWERVE_SUBSYSTEM));
 
     //new JoystickButton(driverJoystick, OIConstants.kDriverLeftBumper).toggleWhenPressed(new PathPlannerTestSequence(SWERVE_SUBSYSTEM));
     //new JoystickButton(operatorJoystick, OIConstants.kOperatorLeftBumper).whileHeld(new ClimbApplyVoltage(CLIMB_SUBSYSTEM, -.25));

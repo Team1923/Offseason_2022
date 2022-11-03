@@ -164,10 +164,10 @@ public class AutoSwerveController extends CommandBase {
 
     SmartDashboard.putNumber("Desired Auto Vel", desiredState.velocityMetersPerSecond);
 
-    var targetChassisSpeeds = m_controller.calculate(m_pose.get(), m_rotation.get(), desiredState, desiredState.holonomicRotation);
-    SmartDashboard.putNumber("Desired Rotation Speed", targetChassisSpeeds.omegaRadiansPerSecond);
-    SmartDashboard.putNumber("Desired X Speed", targetChassisSpeeds.vxMetersPerSecond);
-    SmartDashboard.putNumber("Desired Y Speed", targetChassisSpeeds.vyMetersPerSecond);
+    var targetChassisSpeeds = m_controller.calculate(m_pose.get(), desiredState, desiredState.holonomicRotation);
+
+    SmartDashboard.putString("Chassis Speeds", targetChassisSpeeds.toString());
+
 
     var targetModuleStates = m_kinematics.toSwerveModuleStates(targetChassisSpeeds);
 

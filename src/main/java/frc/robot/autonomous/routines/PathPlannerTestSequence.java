@@ -22,13 +22,12 @@ public class PathPlannerTestSequence extends SequentialCommandGroup {
 
   public PathPlannerTestSequence(SwerveSubsystem swerve, IntakeSubsystem intake) { 
     
-    final AutoFromPathPlanner testAuto = new AutoFromPathPlanner(swerve, "getFirstThree", 3.1, true);
+    final AutoFromPathPlanner testAuto = new AutoFromPathPlanner(swerve, "testPath2", 3.1, true);
 
     addCommands(
       new InstantCommand(() -> swerve.resetOdometry(testAuto.getInitialPose())),
       new ParallelCommandGroup(
-        testAuto,
-        new RunIntakeCommand(intake, false)
+        testAuto
       )
     );
   }

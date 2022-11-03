@@ -13,6 +13,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -31,7 +32,8 @@ public class SwerveSubsystem extends SubsystemBase {
       DriveConstants.kFrontLeftTurningReversed,
       DriveConstants.kFrontLeftDriveAbsoluteEncoderPort,
       DriveConstants.kFrontLeftDriveAbsoluteEncoderOffsetRad,
-      DriveConstants.kFrontLeftDriveAbsoluteEncoderOffsetReversed);
+      DriveConstants.kFrontLeftDriveAbsoluteEncoderOffsetReversed,
+      false);
 
   public final SwerveModule frontRight = new SwerveModule(
       DriveConstants.kFrontRightDriveMotorPort,
@@ -40,7 +42,8 @@ public class SwerveSubsystem extends SubsystemBase {
       DriveConstants.kFrontRightTurningReversed,
       DriveConstants.kFrontRightDriveAbsoluteEncoderPort,
       DriveConstants.kFrontRightDriveAbsoluteEncoderOffsetRad,
-      DriveConstants.kFrontRightDriveAbsoluteEncoderOffsetReversed);
+      DriveConstants.kFrontRightDriveAbsoluteEncoderOffsetReversed,
+      false);
 
   public final SwerveModule backRight = new SwerveModule(
       DriveConstants.kBackRightDriveMotorPort,
@@ -49,7 +52,8 @@ public class SwerveSubsystem extends SubsystemBase {
       DriveConstants.kBackRightTurningReversed,
       DriveConstants.kBackRightDriveAbsoluteEncoderPort,
       DriveConstants.kBackRightDriveAbsoluteEncoderOffsetRad,
-      DriveConstants.kBackRightDriveAbsoluteEncoderOffsetReversed);
+      DriveConstants.kBackRightDriveAbsoluteEncoderOffsetReversed,
+      true);
 
   public final SwerveModule backLeft = new SwerveModule(
       DriveConstants.kBackLeftDriveMotorPort,
@@ -58,7 +62,8 @@ public class SwerveSubsystem extends SubsystemBase {
       DriveConstants.kBackLeftTurningReversed,
       DriveConstants.kBackLeftDriveAbsoluteEncoderPort,
       DriveConstants.kBackLeftDriveAbsoluteEncoderOffsetRad,
-      DriveConstants.kBackLeftDriveAbsoluteEncoderOffsetReversed);
+      DriveConstants.kBackLeftDriveAbsoluteEncoderOffsetReversed,
+      true);
 
   // ? Code is using a Pigeon 1 for testing, we will be upgrading to a Pigeon 2 so make sure that this gets updated to reflect that!
   private Pigeon2 gyro = new Pigeon2(Constants.kPigeonCANID, "Default Name");
@@ -95,25 +100,20 @@ public class SwerveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
    // Prints out robot heading for debug purposes
-   
 
-  //  SmartDashboard.putNumber("Front Left Turning Encoder", frontLeft.getTurningPositionRads());
-  //  SmartDashboard.putNumber("Front Right Turning Encoder", frontRight.getTurningPositionRads());
-  //  SmartDashboard.putNumber("Back Left Turning Encoder", backLeft.getTurningPositionRads());
-  //  SmartDashboard.putNumber("Back Right Turning Encoder", backRight.getTurningPositionRads());
-
+  //  SmartDashboard.putNumber("ACTUAL Front Left Turning Encoder", frontLeft.getTurningTicks());
+  //  SmartDashboard.putNumber("ACTUAL Front Right Turning Encoder", frontRight.getTurningTicks());
+  //  SmartDashboard.putNumber("ACTUAL Back Left Turning Encoder", backLeft.getTurningTicks());
+  //  SmartDashboard.putNumber("ACTUAL Back Right Turning Encoder", backRight.getTurningTicks());
     
-   SmartDashboard.putNumber("0Front Left", frontLeft.getAbsoluteEncoderRadZero());
-   SmartDashboard.putNumber("0Front Right", frontRight.getAbsoluteEncoderRadZero());
-   SmartDashboard.putNumber("0Back Left", backLeft.getAbsoluteEncoderRadZero());
-   SmartDashboard.putNumber("0Back Right", backRight.getAbsoluteEncoderRadZero());
-
-    SmartDashboard.putNumber("Front Left Absolute Encoder: ", frontLeft.getAbsoluteEncoderRad());
-    SmartDashboard.putNumber("Front Left Encoder Value: ", frontLeft.getTurningPositionRads());
-
-    SmartDashboard.putNumber("Odom X: ", odometer.getPoseMeters().getX());
-    SmartDashboard.putNumber("Odom Y: ", odometer.getPoseMeters().getY());
-
+   SmartDashboard.putNumber("0Front Left", frontLeft.getAbsoluteEncoderRad());
+   SmartDashboard.putNumber("0Front Right", frontRight.getAbsoluteEncoderRad());
+   SmartDashboard.putNumber("0Back Left", backLeft.getAbsoluteEncoderRad());
+   SmartDashboard.putNumber("0Back Right", backRight.getAbsoluteEncoderRad());
+  
+    SmartDashboard.putNumber("Auto Odom X: ", auto_odometer.getPoseMeters().getX());
+    SmartDashboard.putNumber("Auto Odom Y: ", auto_odometer.getPoseMeters().getY());
+    SmartDashboard.putNumber("Auto Odom Theta: ", auto_odometer.getPoseMeters().getRotation().getDegrees());
     //SmartDashboard.putNumber("PID ERROR", frontLeft.getPIDError());
     
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
@@ -149,12 +149,6 @@ public class SwerveSubsystem extends SubsystemBase {
     return -Math.IEEEremainder(gyro.getPitch(), 360);
   }
 
-  public void resetEncoders(){
-    backLeft.resetEncoders();
-    backRight.resetEncoders();
-    frontLeft.resetEncoders();
-    frontRight.resetEncoders();
-  }
   // Returns a Rotation2d object from the gyro heading, for use with swerve classes
   public Rotation2d getRotation2d() {
     return Rotation2d.fromDegrees(getHeading());

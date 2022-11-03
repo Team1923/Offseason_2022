@@ -5,6 +5,7 @@
 package frc.robot.interfaces;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
@@ -24,7 +25,7 @@ import frc.robot.Constants.ModuleConstants;
 public class SwerveModule {
 
     // Motors
-    public final WPI_TalonFX driveMotor;
+    private final WPI_TalonFX driveMotor;
     public final WPI_TalonFX turningMotor;
 
     // Turning PID controller 
@@ -37,13 +38,15 @@ public class SwerveModule {
 
     private final boolean driveMotorR;
     private final boolean turningMotorR;
+    private final boolean invertTurningEncoder;
+
 
     private final double absoluteID;
 
     // Constructor to instantiate a new Swerve Module. A bunch of inputs that looks messy but Zero to Autonomous did it 
     // and I have faith in them, so lets roll with it
     public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed, 
-    int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
+    int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed, boolean invertTurningEncoder) {
 
         // Absolute encoder stuff so the wheel always knows where it is
         this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
@@ -52,6 +55,7 @@ public class SwerveModule {
         this.absoluteID = absoluteEncoderId;
         this.driveMotorR = driveMotorReversed;
         this.turningMotorR = turningMotorReversed;
+        this.invertTurningEncoder = invertTurningEncoder;
 
         // Initialize both motors of the module
         driveMotor = new WPI_TalonFX(driveMotorId, "Default Name");
@@ -59,7 +63,7 @@ public class SwerveModule {
 
         configDriveMotor();
         configSteerMotor();
-        
+
         // Instantiating PID controller for the steering motor, I think that a kP value will be 
         // enough to get the wheel to it's heading (pending testing)
         turningPidController = new PIDController(ModuleConstants.kPTurning, 0, ModuleConstants.kDTurning);
@@ -67,8 +71,11 @@ public class SwerveModule {
         // Set the PID controller to be "continious" between -PI and PI radians
         turningPidController.enableContinuousInput(-Math.PI, Math.PI);
 
-        // Resets the encoders when the module is instantiated
+        
+
+        // Resets the encoders when the module is instantiated            
         resetEncoders();
+
     }
 
     // ? Multiplies the raw feedback of ticks per 100ms to a constant hopefully that will convert the output from Ticks to Meters Traveled
@@ -101,7 +108,8 @@ public class SwerveModule {
         double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
         angle *= 2.0 * Math.PI;
         angle -= absoluteEncoderOffsetRad;
-        return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
+        double r = angle * (absoluteEncoderReversed ? -1.0 : 1.0);
+        return r;
     }
 
     public double getAbsoluteEncoderRadZero() {
@@ -117,8 +125,14 @@ public class SwerveModule {
     }
 
     public void resetTurningEncoder() {
-        double ticks_from_radians = ((getAbsoluteEncoderRad() / (2 * Math.PI)) / ModuleConstants.kTurningGearRatio) * ModuleConstants.kTicksPerRotation;
-        turningMotor.setSelectedSensorPosition(ticks_from_radians);
+        double absolute = getAbsoluteEncoderRad();
+        double ticks_from_radians = ((absolute / (2 * Math.PI)) / ModuleConstants.kTurningGearRatio) * ModuleConstants.kTicksPerRotation;
+        try {
+            Thread.sleep(400);
+            turningMotor.setSelectedSensorPosition(ticks_from_radians);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void resetEncoders() {
@@ -129,11 +143,11 @@ public class SwerveModule {
     // ? A way to visualize the current state of the module. WPILib requires this format for a lot of the actual swerve drive code.
     // Might be able to use it to print out a graph of each wheel on Shuffleboard? Requires investigation
     public SwerveModuleState getState() {
-        return new SwerveModuleState(getDriveVelocityMPS(), new Rotation2d(getTurningPositionRads()));
+        return new SwerveModuleState(-getDriveVelocityMPS(), new Rotation2d(getTurningPositionRads()));
     }
 
     public SwerveModuleState getAutoState() {
-        return new SwerveModuleState(getDriveVelocityMPS(), new Rotation2d(getTurningPositionRads()));
+        return new SwerveModuleState(-getDriveVelocityMPS(), new Rotation2d(getTurningPositionRads()));
     }
 
     public void resetState() {

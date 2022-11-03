@@ -86,7 +86,7 @@ public class MKIHolonomicController {
    */
   @SuppressWarnings("LocalVariableName")
   public ChassisSpeeds calculate(
-      Pose2d currentPose, Rotation2d rot, Pose2d poseRef, double linearVelocityRefMeters, Rotation2d angleRef) {
+      Pose2d currentPose, Pose2d poseRef, double linearVelocityRefMeters, Rotation2d angleRef) {
     // If this is the first run, then we need to reset the theta controller to the current pose's
     // heading.
     if (m_firstRun) {
@@ -97,7 +97,7 @@ public class MKIHolonomicController {
     // Calculate feedforward velocities (field-relative).
     double xFF = linearVelocityRefMeters * poseRef.getRotation().getCos();
     double yFF = linearVelocityRefMeters * poseRef.getRotation().getSin();
-    double thetaFF = m_thetaController.calculate(rot.getRadians(), angleRef.getRadians());
+    double thetaFF = m_thetaController.calculate(poseRef.getRotation().getRadians(), angleRef.getRadians());
 
     
 //currentPose.getRotation().getRadians()
@@ -105,6 +105,8 @@ public class MKIHolonomicController {
     SmartDashboard.putNumber("current rotation", currentPose.getRotation().getDegrees());
     SmartDashboard.putNumber("theta error", Math.toDegrees(m_thetaController.getPositionError()));
     SmartDashboard.putNumber("theta ff", thetaFF);
+    SmartDashboard.putNumber("x ff", xFF);
+    SmartDashboard.putNumber("y FF", yFF);
 
     m_poseError = poseRef.relativeTo(currentPose);
     m_rotationError = angleRef.minus(currentPose.getRotation());
@@ -118,9 +120,18 @@ public class MKIHolonomicController {
     double xFeedback = m_xController.calculate(currentPose.getX(), poseRef.getX());
     double yFeedback = m_yController.calculate(currentPose.getY(), poseRef.getY());
 
+    SmartDashboard.putNumber("xfeedback", xFeedback);
+    SmartDashboard.putNumber("yfeedback", yFeedback);
+
+    System.out.println("vxMetersPerSecond: " + (xFF + xFeedback) + "  vyMetersPerSecond: " + (yFF + yFeedback) + "  angle sin: " + poseRef.getRotation().getSin() + "  angle cos: " + poseRef.getRotation().getCos());
+    SmartDashboard.putNumber("y out", -(xFF+xFeedback) * poseRef.getRotation().getSin() + (yFF+yFeedback) * poseRef.getRotation().getCos());
+    SmartDashboard.putNumber("x out", (xFF+xFeedback) * poseRef.getRotation().getCos() + (yFF+yFeedback) * poseRef.getRotation().getSin());
+    SmartDashboard.putNumber("cos", poseRef.getRotation().getCos());
+    SmartDashboard.putNumber("sin", poseRef.getRotation().getSin());
+
     // Return next output.
     return ChassisSpeeds.fromFieldRelativeSpeeds(
-        xFF + xFeedback, yFF + yFeedback, thetaFF, rot);
+        xFF + xFeedback, yFF + yFeedback, thetaFF, poseRef.getRotation());
   }
 
   /**
@@ -132,9 +143,9 @@ public class MKIHolonomicController {
    * @return The next output of the holonomic drive controller.
    */
   public ChassisSpeeds calculate(
-      Pose2d currentPose, Rotation2d rot, Trajectory.State desiredState, Rotation2d angleRef) {
+      Pose2d currentPose, Trajectory.State desiredState, Rotation2d angleRef) {
     return calculate(
-        currentPose, rot, desiredState.poseMeters, desiredState.velocityMetersPerSecond, angleRef);
+        currentPose, desiredState.poseMeters, desiredState.velocityMetersPerSecond, angleRef);
   }
 
   /**
