@@ -1,0 +1,1 @@
+{"waypoints":[{"anchorPoint":{"x":1.0,"y":3.0},"prevControl":null,"nextControl":{"x":1.3429407609643897,"y":3.0},"holonomicAngle":0.3365525832326359,"isReversal":false,"velOverride":null,"isLocked":false},{"anchorPoint":{"x":3.0,"y":3.0},"prevControl":{"x":2.7200478096046687,"y":3.0},"nextControl":null,"holonomicAngle":0.0,"isReversal":false,"velOverride":null,"isLocked":false}]}

@@ -3,11 +3,13 @@ package frc.robot.autonomous.PathPlannerUtils;
 import static edu.wpi.first.wpilibj.util.ErrorMessages.requireNonNullParam;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
+import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -153,6 +155,7 @@ public class AutoSwerveController extends CommandBase {
   public void initialize() {
     m_timer.reset();
     m_timer.start();
+    m_controller.setTolerance(new Pose2d(new Translation2d(.1,.1), new Rotation2d((5.0*Math.PI)/180)));
     SmartDashboard.putBoolean("DONE OR NOT ", false);
   }
 

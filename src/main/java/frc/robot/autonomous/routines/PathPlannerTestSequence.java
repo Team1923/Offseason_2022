@@ -7,9 +7,7 @@ package frc.robot.autonomous.routines;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.autonomous.PathPlannerUtils.AutoFromPathPlanner;
-import frc.robot.commands.scoring.independent.RunIntakeCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -22,7 +20,7 @@ public class PathPlannerTestSequence extends SequentialCommandGroup {
 
   public PathPlannerTestSequence(SwerveSubsystem swerve, IntakeSubsystem intake) { 
     
-    final AutoFromPathPlanner testAuto = new AutoFromPathPlanner(swerve, "testPath2", 3.1, true);
+    final AutoFromPathPlanner testAuto = new AutoFromPathPlanner(swerve, "TwoMeterForward", 3.1, true);
 
     addCommands(
       new InstantCommand(() -> swerve.resetOdometry(testAuto.getInitialPose())),

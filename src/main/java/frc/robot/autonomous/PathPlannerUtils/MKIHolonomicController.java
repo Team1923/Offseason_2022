@@ -101,12 +101,6 @@ public class MKIHolonomicController {
 
     
 //currentPose.getRotation().getRadians()
-    SmartDashboard.putNumber("current angle ref", angleRef.getDegrees());
-    SmartDashboard.putNumber("current rotation", currentPose.getRotation().getDegrees());
-    SmartDashboard.putNumber("theta error", Math.toDegrees(m_thetaController.getPositionError()));
-    SmartDashboard.putNumber("theta ff", thetaFF);
-    SmartDashboard.putNumber("x ff", xFF);
-    SmartDashboard.putNumber("y FF", yFF);
 
     m_poseError = poseRef.relativeTo(currentPose);
     m_rotationError = angleRef.minus(currentPose.getRotation());
@@ -120,18 +114,12 @@ public class MKIHolonomicController {
     double xFeedback = m_xController.calculate(currentPose.getX(), poseRef.getX());
     double yFeedback = m_yController.calculate(currentPose.getY(), poseRef.getY());
 
-    SmartDashboard.putNumber("xfeedback", xFeedback);
-    SmartDashboard.putNumber("yfeedback", yFeedback);
-
-    System.out.println("vxMetersPerSecond: " + (xFF + xFeedback) + "  vyMetersPerSecond: " + (yFF + yFeedback) + "  angle sin: " + poseRef.getRotation().getSin() + "  angle cos: " + poseRef.getRotation().getCos());
-    SmartDashboard.putNumber("y out", -(xFF+xFeedback) * poseRef.getRotation().getSin() + (yFF+yFeedback) * poseRef.getRotation().getCos());
-    SmartDashboard.putNumber("x out", (xFF+xFeedback) * poseRef.getRotation().getCos() + (yFF+yFeedback) * poseRef.getRotation().getSin());
-    SmartDashboard.putNumber("cos", poseRef.getRotation().getCos());
-    SmartDashboard.putNumber("sin", poseRef.getRotation().getSin());
+SmartDashboard.putNumber("x error", m_xController.getPositionError());
+SmartDashboard.putNumber("y error", m_yController.getPositionError());
 
     // Return next output.
     return ChassisSpeeds.fromFieldRelativeSpeeds(
-        xFF + xFeedback, yFF + yFeedback, thetaFF, poseRef.getRotation());
+        xFF + xFeedback, yFF + yFeedback, thetaFF, currentPose.getRotation());
   }
 
   /**
