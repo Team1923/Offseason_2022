@@ -53,7 +53,7 @@ public class RunShooterCommand extends CommandBase {
     double goal_rpm;
 
     if(limelight.getIsGoalCentric()){
-      goal_rpm = -shooterData.getData(limelight.getDistance())[1];
+      goal_rpm = -shooterData.getData(limelight.getDistance())[1]*0.95;
     }
     else{
       goal_rpm = -2750;

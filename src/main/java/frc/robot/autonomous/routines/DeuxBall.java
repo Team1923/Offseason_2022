@@ -4,6 +4,7 @@
 
 package frc.robot.autonomous.routines;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.autonomous.autocommands.AutoShoot;
@@ -30,6 +31,7 @@ public class DeuxBall extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new InstantCommand(() -> stateHandler.resetState()),
       new ParallelCommandGroup(
         new HoodSingleSetpointCommand(hood, 0),
         new RunIntakeCommand(intake, false),
@@ -37,7 +39,7 @@ public class DeuxBall extends SequentialCommandGroup {
       ).withTimeout(2),
       new PIDRotateN(swerve, -180, false).withTimeout(1.5),
       new VisionTrack(swerve, () -> fake(), ()-> fake(), limelight).withTimeout(0.5),
-      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(24), 3050).withTimeout(1.5)
+      new AutoShoot(shooter, conveyor, hood, UnitConversion.angleToTicks(23.5), 3000).withTimeout(1.5)
         
     );
   }

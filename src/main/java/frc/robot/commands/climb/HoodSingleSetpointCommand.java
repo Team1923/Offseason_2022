@@ -21,7 +21,7 @@ public class HoodSingleSetpointCommand extends CommandBase {
   private double loopsInsideAllowableError;
   private double loopsThreshold = 5;
 
-  private double tickThreshold = 200;
+  private double tickThreshold = 400;
 
   /** Creates a new HoodSingleSetpointCommand. */
   public HoodSingleSetpointCommand(HoodSubsystem hood, double position) {

@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.MKILib.MKISpeaker;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -133,6 +134,9 @@ public class StateHandler {
         }
 
        // SmartDashboar.putString("Current Robot State: ", currentRobotState.toString());
+
+       SmartDashboard.putBoolean("BEAM BREAK ONE", frontBeamBreak);
+       SmartDashboard.putBoolean("BEAM BREAK TWO", backBeamBreak);
 
         currentState.setString(currentRobotState.toString());
 
